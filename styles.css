@@ -1,11 +1,11 @@
 /* ==========================================================================
-   Pacific Northwest Dark Mode Design System
+   Pacific Northwest Dark Mode Design System & Leaflet Map Styles
    ========================================================================== */
 
 :root {
   --bg-dark: #0F172A;
-  --bg-card: rgba(30, 41, 59, 0.7);
-  --bg-card-hover: rgba(51, 65, 85, 0.8);
+  --bg-card: rgba(30, 41, 59, 0.75);
+  --bg-card-hover: rgba(51, 65, 85, 0.85);
   --glass-border: rgba(255, 255, 255, 0.1);
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
@@ -322,127 +322,80 @@ body {
   overflow-y: auto;
 }
 
-/* Stat Highlight Cards */
-.stat-highlight-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.stat-box {
+/* Interactive Leaflet Route Map Card */
+.map-wrapper-card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  border-radius: var(--radius-lg);
+  padding: 16px;
   box-shadow: var(--shadow-glow);
+  position: relative;
 }
 
-.stat-icon {
-  font-size: 2.2rem;
-  background: rgba(255, 255, 255, 0.05);
-  width: 54px;
-  height: 54px;
-  border-radius: 12px;
+.map-legend-bar {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--glass-border);
-}
-
-.stat-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-num {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.stat-num.green { color: var(--emerald); }
-
-.stat-desc {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-/* Route Flow Diagram */
-.route-flow-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 10px;
   overflow-x: auto;
-  padding: 16px 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--glass-border);
+  margin-top: 14px;
 }
 
-.route-step {
+.map-legend-chip {
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  min-width: 180px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.route-icon {
-  font-size: 1.6rem;
-}
-
-.route-leg {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 0.5px;
-}
-
-.route-step h4 {
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.route-step p {
+  border-radius: 20px;
+  padding: 6px 14px;
   font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-.route-connector {
-  font-size: 1.4rem;
-  color: var(--primary);
-  font-weight: 700;
-}
-
-/* Day Overview Cards */
-.day-overview-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  padding: 16px;
+  font-weight: 600;
+  color: var(--text-main);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
   transition: all 0.2s ease;
 }
 
-.day-overview-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--primary);
-  transform: translateY(-2px);
+.map-legend-chip:hover, .map-legend-chip.active {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
 }
 
-.day-overview-card h4 {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 4px;
+.legend-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Custom Leaflet Tooltip & Dark Mode Overrides */
+.leaflet-container {
+  background: #0B1120 !important;
+  font-family: var(--font-main) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.95) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  color: #F8FAFC !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(15, 23, 42, 0.95) !important;
+}
+
+.leaflet-tooltip {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: #F8FAFC !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 6px 10px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Glass Cards & Forms */

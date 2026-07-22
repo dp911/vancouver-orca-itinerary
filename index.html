@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Chart.js CDN for Interactive Visual Analytics -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet CSS & JS for Interactive Route Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Firebase SDKs for optional live cloud sync -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -82,7 +83,7 @@
     <!-- Main Navigation Bar -->
     <nav class="nav-tabs">
       <button class="nav-tab active" data-tab="overview">
-        <span>📊</span> Overview Dashboard
+        <span>🗺️</span> Interactive Route Map
       </button>
       <button class="nav-tab" data-tab="day-board">
         <span>🗓️</span> Day Board
@@ -108,156 +109,44 @@
     <!-- Main Content Panels -->
     <main class="main-content">
 
-      <!-- View 1: Intuitive Visual Overview Dashboard -->
+      <!-- View 1: Interactive Map Dashboard -->
       <section class="tab-panel active" id="panel-overview">
         
-        <!-- Quick Stat Highlights Row -->
-        <div class="stat-highlight-grid">
-          <div class="stat-box">
-            <div class="stat-icon">⏱️</div>
-            <div class="stat-details">
-              <span class="stat-num">216 Hrs</span>
-              <span class="stat-desc">Total Trip Duration</span>
-            </div>
+        <!-- Map Header Control Bar -->
+        <div class="panel-toolbar" style="margin-bottom:16px;">
+          <div>
+            <h2 style="font-family:var(--font-heading); font-size:1.4rem; font-weight:700; color:var(--text-main);">
+              🗺️ Interactive Multi-Leg Expedition Map
+            </h2>
+            <p style="font-size:0.85rem; color:var(--text-muted);">
+              Hover or click any colored route leg or location marker to inspect that day's complete event schedule!
+            </p>
           </div>
-
-          <div class="stat-box">
-            <div class="stat-icon">🛶</div>
-            <div class="stat-details">
-              <span class="stat-num">15.5 Hrs</span>
-              <span class="stat-desc">Orca Kayak Paddling</span>
-            </div>
-          </div>
-
-          <div class="stat-box">
-            <div class="stat-icon">🚗</div>
-            <div class="stat-details">
-              <span class="stat-num">8.5 Hrs</span>
-              <span class="stat-desc">Scenic Highway Drives</span>
-            </div>
-          </div>
-
-          <div class="stat-box">
-            <div class="stat-icon">🛌</div>
-            <div class="stat-details">
-              <span class="stat-num green">64.0 Hrs</span>
-              <span class="stat-desc">Rest & Sleep Pass</span>
-            </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" id="btn-recenter-map">🎯 Recenter Map</button>
           </div>
         </div>
 
-        <!-- Visual Analytics Row (Charts & Visuals) -->
-        <div class="analytics-row" style="margin-top:24px; display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:20px;">
+        <!-- Interactive Map Wrapper with Glassmorphism Border -->
+        <div class="map-wrapper-card">
+          <div id="route-map-container" style="width:100%; height:550px; border-radius:var(--radius-lg); z-index:1;"></div>
           
-          <!-- Chart 1: Expedition Time Breakdown Donut Chart -->
-          <div class="glass-card chart-card">
-            <div class="card-header">
-              <h2>📊 Activity Time Distribution</h2>
-              <p class="subtitle">Breakdown of total expedition hours by category</p>
-            </div>
-            <div class="chart-container" style="position:relative; height:260px; margin-top:16px;">
-              <canvas id="chart-category-donut"></canvas>
-            </div>
-          </div>
-
-          <!-- Chart 2: Nightly Rest Guarantee Bar Chart -->
-          <div class="glass-card chart-card">
-            <div class="card-header">
-              <h2>🌙 Nightly Sleep Compliance (Target: 8.0h)</h2>
-              <p class="subtitle">Guaranteed rest hours for all 8 nights of the trip</p>
-            </div>
-            <div class="chart-container" style="position:relative; height:260px; margin-top:16px;">
-              <canvas id="chart-sleep-bar"></canvas>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Multi-Leg Route & Transportation Flow Map -->
-        <div class="glass-card" style="margin-top:24px;">
-          <div class="card-header">
-            <h2>🗺️ Multi-Leg Expedition Logistics Route</h2>
-            <p class="subtitle">Intermediary flight transfers, rental SUV highway legs, and island water taxis</p>
-          </div>
-
-          <div class="route-flow-container">
-            
-            <div class="route-step">
-              <div class="route-icon">✈️</div>
-              <div class="route-info">
-                <span class="route-leg">LEG 1 • AUG 6</span>
-                <h4>JFK ✈️ YVR Direct</h4>
-                <p>5h 29m Flight • Pick up Rental SUV #1</p>
-              </div>
-            </div>
-
-            <div class="route-connector">➔</div>
-
-            <div class="route-step">
-              <div class="route-icon">🏃</div>
-              <div class="route-info">
-                <span class="route-leg">LEG 2 • AUG 6-9</span>
-                <h4>Vancouver & SeaWheeze</h4>
-                <p>Stanley Park • Gastown • Half Marathon</p>
-              </div>
-            </div>
-
-            <div class="route-connector">➔</div>
-
-            <div class="route-step">
-              <div class="route-icon">🏔️</div>
-              <div class="route-info">
-                <span class="route-leg">LEG 3 • AUG 9-11</span>
-                <h4>Hwy 99 ➔ Whistler</h4>
-                <p>Peak 2 Peak • Joffre Lakes • Spa</p>
-              </div>
-            </div>
-
-            <div class="route-connector">➔</div>
-
-            <div class="route-step">
-              <div class="route-icon">✈️</div>
-              <div class="route-info">
-                <span class="route-leg">LEG 4 • AUG 11</span>
-                <h4>Flight YVR ✈️ YQQ</h4>
-                <p>Comox Airport • Pick up Rental SUV #2</p>
-              </div>
-            </div>
-
-            <div class="route-connector">➔</div>
-
-            <div class="route-step">
-              <div class="route-icon">🚤</div>
-              <div class="route-info">
-                <span class="route-leg">LEG 5 • AUG 12-14</span>
-                <h4>Hanson Island Orcas</h4>
-                <p>Water Taxi • Safari Tent • Kayaking</p>
-              </div>
-            </div>
-
-            <div class="route-connector">➔</div>
-
-            <div class="route-step">
-              <div class="route-icon">✈️</div>
-              <div class="route-info">
-                <span class="route-leg">LEG 6 • AUG 14</span>
-                <h4>YQQ ✈️ YVR ✈️ JFK</h4>
-                <p>35m Comox Flight + Red-eye Home</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Interactive 9-Day Summary Quick Navigator -->
-        <div class="glass-card" style="margin-top:24px;">
-          <div class="card-header">
-            <h2>📅 9-Day Quick Day Navigator</h2>
-            <p class="subtitle">Click any day card to open its detailed events on the Day Board.</p>
-          </div>
-
-          <div class="day-overview-grid" id="day-overview-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-top:16px;">
+          <!-- Interactive Leg Legend Bar -->
+          <div class="map-legend-bar" id="map-legend-bar">
             <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+
+        <!-- Selected Leg Detailed Itinerary Popover Panel -->
+        <div class="glass-card leg-detail-card" id="leg-detail-panel" style="margin-top:20px; display:none;">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <div id="leg-detail-title">
+              <!-- Title populated by app.js -->
+            </div>
+            <button class="btn btn-secondary" id="btn-jump-dayboard">🗓️ View on Day Board ➔</button>
+          </div>
+          <div class="leg-events-grid" id="leg-events-list" style="margin-top:16px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+            <!-- Events populated by app.js -->
           </div>
         </div>
 

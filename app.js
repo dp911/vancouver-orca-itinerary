@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Maximally Beautiful Visual Analytics Dashboard + Detailed Day Board
+   Interactive Multi-Leg Expedition Route Map + Detailed Day Board Dashboard
    ========================================================================== */
 
 const MASTER_SCHEDULE = [
@@ -101,12 +101,98 @@ const SEASICKNESS_CHECKLIST = [
   { id: 'chk6', title: 'Visual Horizon Focus', desc: 'Keep gaze on forested Hanson Island coastline; avoid looking down at phone screens.', checked: true }
 ];
 
+// 8 Distinct Colored Route Legs Data
+const ROUTE_LEGS = [
+  {
+    id: 1,
+    day: 1,
+    name: 'Leg 1: JFK ✈️ YVR & Vancouver Hotel',
+    color: '#38BDF8', // Cyan
+    coords: [[49.1967, -123.1815], [49.2827, -123.1207]],
+    desc: 'Day 1 (Aug 6): Arrival at YVR 9:55 PM, pick up rental SUV #1, drive to Coal Harbour hotel.'
+  },
+  {
+    id: 2,
+    day: 2,
+    name: 'Leg 2: SeaWheeze Expo & Vancouver Highlights',
+    color: '#F59E0B', // Gold
+    coords: [[49.2827, -123.1207], [49.2888, -123.1172], [49.3428, -123.1149], [49.3100, -123.0800]],
+    desc: 'Day 2 & 3 (Aug 7-8): Jack Poole Plaza, Granville Market, Capilano Suspension Bridge, SeaWheeze 13.1 & Sunset Festival.'
+  },
+  {
+    id: 3,
+    day: 4,
+    name: 'Leg 3: Sea-to-Sky Hwy 99 ➔ Whistler',
+    color: '#A855F7', // Purple
+    coords: [[49.2827, -123.1207], [49.6693, -123.1558], [50.1163, -122.9574]],
+    desc: 'Day 4 (Aug 9): Scenic Hwy 99 fjord drive, Shannon Falls, Sea to Sky Gondola, Whistler Peak 2 Peak Gondola.'
+  },
+  {
+    id: 4,
+    day: 5,
+    name: 'Leg 4: Joffre Glacial Lakes & Scandinave Spa',
+    color: '#EC4899', // Pink
+    coords: [[50.1163, -122.9574], [50.3547, -122.4854], [50.1345, -122.9535]],
+    desc: 'Day 5 (Aug 10): 10km Joffre Lakes turquoise glacial hike, Lost Lake trail, Scandinave Spa hydrotherapy.'
+  },
+  {
+    id: 5,
+    day: 6,
+    name: 'Leg 5: Drive YVR ✈️ Flight YQQ (Comox)',
+    color: '#0284C7', // Deep Cyan / Dashed Air Flight
+    coords: [[50.1163, -122.9574], [49.1967, -123.1815], [49.7108, -124.8864]],
+    isDash: true,
+    desc: 'Day 6 (Aug 11 Part 1): Drive Whistler to YVR, 12:30 PM scenic flight across Georgia Strait landing Comox YQQ 1:05 PM.'
+  },
+  {
+    id: 6,
+    day: 6,
+    name: 'Leg 6: Drive Comox ➔ Telegraph Cove',
+    color: '#F97316', // Orange
+    coords: [[49.7108, -124.8864], [50.0410, -125.3341], [50.5471, -126.8329]],
+    desc: 'Day 6 (Aug 11 Part 2): Pick up Island SUV #2, drive Hwy 19 North via Elk Falls Suspension Bridge to Telegraph Cove.'
+  },
+  {
+    id: 7,
+    day: 7,
+    name: 'Leg 7: At Water’s Edge Hanson Island Base Camp',
+    color: '#10B981', // Emerald Orca
+    coords: [[50.5471, -126.8329], [50.5694, -126.7028]],
+    desc: 'Day 7 & 8 (Aug 12-13): Water taxi to Hanson Island safari tents, tandem sea kayaking with Resident Orcas, cedar sauna.'
+  },
+  {
+    id: 8,
+    day: 9,
+    name: 'Leg 8: Water Taxi ➔ Flight YQQ-YVR ➔ JFK',
+    color: '#F43F5E', // Rose Red
+    coords: [[50.5694, -126.7028], [50.5471, -126.8329], [49.7108, -124.8864], [49.1967, -123.1815]],
+    isDash: true,
+    desc: 'Day 9 (Aug 14): Water taxi return, drive Comox YQQ, 6:30 PM flight YQQ ➔ YVR, Miku Aburi sushi dinner, 11:15 PM flight home.'
+  }
+];
+
+// Map Waypoint Markers
+const MAP_WAYPOINTS = [
+  { lat: 49.1967, lng: -123.1815, title: '🛫 YVR Vancouver Airport', day: 1, desc: 'Baggage claim & Rental SUV Pickup' },
+  { lat: 49.2827, lng: -123.1207, title: '🏙️ Downtown Vancouver', day: 2, desc: 'Coal Harbour Hotel & City Base' },
+  { lat: 49.2888, lng: -123.1172, title: '🏃 Jack Poole Plaza / Stanley Park', day: 3, desc: 'SeaWheeze 13.1 & Sunset Festival' },
+  { lat: 49.6693, lng: -123.1558, title: '🌊 Shannon Falls & Squamish', day: 4, desc: 'Sea-to-Sky Hwy 99 Stop' },
+  { lat: 50.1163, lng: -122.9574, title: '🏔️ Whistler Village', day: 4, desc: 'Peak 2 Peak & Cloudraker Skybridge' },
+  { lat: 50.3547, lng: -122.4854, title: '🥾 Joffre Lakes Provincial Park', day: 5, desc: '3 Turquoise Glacial Lakes 10km Hike' },
+  { lat: 50.1345, lng: -122.9535, title: '♨️ Scandinave Spa Whistler', day: 5, desc: 'Thermal Baths & Cold Plunges' },
+  { lat: 49.7108, lng: -124.8864, title: '✈️ Comox Airport (YQQ)', day: 6, desc: 'Island Air Transfer & SUV #2 Pickup' },
+  { lat: 50.0410, lng: -125.3341, title: '🌲 Elk Falls Suspension Bridge', day: 6, desc: 'Campbell River Gorge Walk' },
+  { lat: 50.5471, lng: -126.8329, title: '⚓ Telegraph Cove Boardwalk', day: 6, desc: 'At Water’s Edge Outfitter & Water Taxi Launch' },
+  { lat: 50.5694, lng: -126.7028, title: '🐋 Hanson Island Orca Base Camp', day: 7, desc: '3-Day Safari Tent Glamping & Johnstone Strait Kayaking' }
+];
+
 // State Management
 let currentSchedule = [];
 let changeLog = [];
 let dbRef = null;
-let donutChartInstance = null;
-let barChartInstance = null;
+let leafletMap = null;
+let activePolylineLayers = [];
+let selectedDayForPanel = 1;
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
@@ -132,10 +218,10 @@ function checkLockState() {
 // Load Schedule from LocalStorage or Default
 function loadData() {
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '6.0_visual_charts_dashboard') {
+  if (version !== '7.0_interactive_leaflet_map') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '6.0_visual_charts_dashboard');
+    localStorage.setItem('vancouver_app_version', '7.0_interactive_leaflet_map');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
@@ -201,8 +287,7 @@ function saveData() {
 // Render Master Views
 function renderAll() {
   renderMetrics();
-  renderOverviewDashboard();
-  renderCharts();
+  initInteractiveRouteMap();
   renderDayBoard();
   renderChangelog();
   renderSeasicknessProtocol();
@@ -216,139 +301,152 @@ function renderMetrics() {
   if (countElem) countElem.innerText = changeLog.length;
 }
 
-// Render Visual Analytics & Overview Dashboard
-function renderOverviewDashboard() {
-  const grid = document.getElementById('day-overview-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
+// Render Interactive Multi-Leg Leaflet Route Map
+function initInteractiveRouteMap() {
+  const mapContainer = document.getElementById('route-map-container');
+  if (!mapContainer || typeof L === 'undefined') return;
 
-  const daySummaries = [
-    { day: 1, date: 'Thurs Aug 6', title: 'Arrival & SUV Pickup', icon: '✈️', highlight: 'JFK ➔ YVR Direct Flight (9:55 PM arrival), SUV pickup & Coal Harbour check-in.', count: 4 },
-    { day: 2, date: 'Fri Aug 7', title: 'SeaWheeze Expo & Vancouver', icon: '🎽', highlight: 'Package pickup, Gastown, Granville Island market lunch, Capilano Suspension Bridge, Shipyards Night Market.', count: 9 },
-    { day: 3, date: 'Sat Aug 8', title: 'RACE DAY: SeaWheeze 13.1', icon: '🏃', highlight: '7:00 AM Half Marathon start, Convention Centre recovery zone, Sunset Festival at Stanley Park.', count: 7 },
-    { day: 4, date: 'Sun Aug 9', title: 'Drive to Whistler (Whistler Day 1)', icon: '🚘', highlight: 'Sea-to-Sky Hwy 99 drive, Shannon Falls, Sea to Sky Gondola, Whistler Peak 2 Peak & Cloudraker Skybridge.', count: 9 },
-    { day: 5, date: 'Mon Aug 10', title: 'Whistler Hikes & Thermal Spa', icon: '🥾', highlight: 'Joffre Glacial Lakes 10km hike (3 turquoise lakes), Lost Lake & Train Wreck trail, Scandinave Spa hydrotherapy.', count: 7 },
-    { day: 6, date: 'Tues Aug 11', title: 'Drive YVR ➔ Flight YQQ ➔ Telegraph Cove', icon: '✈️', highlight: 'Drive down Hwy 99, 12:30 PM scenic flight YVR ➔ YQQ (Comox), pick up Island SUV, Elk Falls gorge, drive to Telegraph Cove.', count: 9 },
-    { day: 7, date: 'Wed Aug 12', title: 'At Water’s Edge Glamping (Day 1)', icon: '🐋', highlight: '1-hr water taxi to Hanson Island Base Camp, safari tent check-in, first Orca & Humpback kayak paddle, oceanfront hot tub.', count: 7 },
-    { day: 8, date: 'Thurs Aug 13', title: 'At Water’s Edge Glamping (Day 2)', icon: '🛶', highlight: 'Tent coffee watching Orcas, full-day remote paddle in Blackney Passage & Robson Bight, cedar sauna & campfire dinner.', count: 6 },
-    { day: 9, date: 'Fri Aug 14', title: 'Dawn Paddle ➔ Flight YQQ-YVR ➔ JFK', icon: '✈️', highlight: 'Dawn reef paddle, 1:30 PM water taxi return, drive to Comox YQQ, 6:30 PM flight YQQ ➔ YVR, Miku Aburi sushi dinner, 11:15 PM flight YVR ➔ JFK.', count: 10 }
-  ];
+  // Initialize Map if not created
+  if (!leafletMap) {
+    leafletMap = L.map('route-map-container', {
+      center: [49.85, -124.50],
+      zoom: 7,
+      zoomControl: true
+    });
 
-  daySummaries.forEach(d => {
-    const card = document.createElement('div');
-    card.className = 'day-overview-card';
-    card.setAttribute('data-day', d.day);
+    // Dark Matter Map Tiles
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap & CartoDB',
+      maxZoom: 18,
+      subdomains: 'abcd'
+    }).addTo(leafletMap);
+  } else {
+    leafletMap.invalidateSize();
+  }
 
-    card.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:0.8rem; font-weight:700; color:var(--primary);">${d.date}</span>
-        <span class="pill-tag emerald" style="font-size:0.7rem;">${d.count} Events</span>
-      </div>
-      <h4>${d.icon} Day ${d.day}: ${d.title}</h4>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px; line-height:1.4;">${d.highlight}</p>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; border-top:1px solid var(--glass-border); padding-top:8px;">
-        <span style="font-size:0.75rem; color:var(--emerald); font-weight:600;">🌙 8.0h Rest Pass</span>
-        <span style="font-size:0.75rem; color:var(--primary); font-weight:700;">View Day Board ➔</span>
-      </div>
+  // Clear existing polylines
+  activePolylineLayers.forEach(l => leafletMap.removeLayer(l));
+  activePolylineLayers = [];
+
+  // Render 8 Distinct Colored Route Leg Polylines
+  ROUTE_LEGS.forEach(leg => {
+    const polylineOptions = {
+      color: leg.color,
+      weight: 6,
+      opacity: 0.85,
+      dashArray: leg.isDash ? '8, 8' : null,
+      lineCap: 'round'
+    };
+
+    const polyline = L.polyline(leg.coords, polylineOptions).addTo(leafletMap);
+    activePolylineLayers.push(polyline);
+
+    // Interactive Hover & Click Listeners on Leg Line
+    polyline.on('mouseover', function(e) {
+      this.setStyle({ weight: 10, opacity: 1.0 });
+      polyline.bindTooltip(`
+        <div style="font-size:0.9rem; font-weight:700; color:${leg.color};">${leg.name}</div>
+        <div style="font-size:0.8rem; color:#94A3B8;">${leg.desc}</div>
+        <div style="font-size:0.75rem; color:#38BDF8; margin-top:4px;">👉 Click to view Day ${leg.day} Itinerary below</div>
+      `, { sticky: true }).openTooltip();
+    });
+
+    polyline.on('mouseout', function(e) {
+      this.setStyle({ weight: 6, opacity: 0.85 });
+    });
+
+    polyline.on('click', function() {
+      displayLegDetailPanel(leg.day, leg.name, leg.color);
+    });
+  });
+
+  // Render Waypoint Custom Circle Markers
+  MAP_WAYPOINTS.forEach(wp => {
+    const circle = L.circleMarker([wp.lat, wp.lng], {
+      radius: 7,
+      fillColor: '#F8FAFC',
+      color: '#38BDF8',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.9
+    }).addTo(leafletMap);
+    activePolylineLayers.push(circle);
+
+    circle.bindTooltip(`
+      <div style="font-size:0.9rem; font-weight:700; color:#F8FAFC;">${wp.title}</div>
+      <div style="font-size:0.8rem; color:#94A3B8;">${wp.desc}</div>
+      <div style="font-size:0.75rem; color:#38BDF8; margin-top:4px;">👉 Click to view Day ${wp.day} events</div>
+    `, { sticky: true });
+
+    circle.on('click', () => {
+      displayLegDetailPanel(wp.day, wp.title, '#38BDF8');
+    });
+  });
+
+  // Render Legend Bar Chips
+  renderMapLegendBar();
+}
+
+// Render Interactive Legend Bar
+function renderMapLegendBar() {
+  const legendBar = document.getElementById('map-legend-bar');
+  if (!legendBar) return;
+  legendBar.innerHTML = '';
+
+  ROUTE_LEGS.forEach(leg => {
+    const chip = document.createElement('div');
+    chip.className = `map-legend-chip ${selectedDayForPanel === leg.day ? 'active' : ''}`;
+    chip.innerHTML = `
+      <span class="legend-color-dot" style="background-color:${leg.color};"></span>
+      <span>${leg.name}</span>
     `;
 
-    grid.appendChild(card);
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.map-legend-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      displayLegDetailPanel(leg.day, leg.name, leg.color);
+    });
+
+    legendBar.appendChild(chip);
   });
 }
 
-// Render Chart.js Donut & Bar Graphs
-function renderCharts() {
-  if (typeof Chart === 'undefined') return;
+// Display Glassmorphism Popover Panel for Selected Leg Day
+function displayLegDetailPanel(dayNum, title, color) {
+  selectedDayForPanel = dayNum;
+  const panel = document.getElementById('leg-detail-panel');
+  const titleElem = document.getElementById('leg-detail-title');
+  const listElem = document.getElementById('leg-events-list');
 
-  // Donut Chart: Category Breakdown
-  const ctxDonut = document.getElementById('chart-category-donut')?.getContext('2d');
-  if (ctxDonut) {
-    if (donutChartInstance) donutChartInstance.destroy();
+  if (!panel || !titleElem || !listElem) return;
 
-    donutChartInstance = new Chart(ctxDonut, {
-      type: 'doughnut',
-      data: {
-        labels: ['Orca Glamping (35h)', 'Rest & Sleep (64h)', 'Whistler Alpine (20h)', 'SeaWheeze Race (16h)', 'Drives & Transports (22h)', 'Flights (14h)'],
-        datasets: [{
-          data: [35, 64, 20, 16, 22, 14],
-          backgroundColor: [
-            '#10B981', // Emerald Orca
-            '#6366F1', // Sleep Indigo
-            '#A855F7', // Whistler Purple
-            '#F59E0B', // SeaWheeze Gold
-            '#F97316', // City Drives
-            '#38BDF8'  // Flights
-          ],
-          borderWidth: 2,
-          borderColor: '#0F172A'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'right',
-            labels: { color: '#F8FAFC', font: { family: 'Plus Jakarta Sans', size: 11 } }
-          }
-        }
-      }
-    });
-  }
+  const dayEvents = currentSchedule.filter(e => e.day === dayNum);
 
-  // Bar Chart: Sleep Compliance per Night
-  const ctxBar = document.getElementById('chart-sleep-bar')?.getContext('2d');
-  if (ctxBar) {
-    if (barChartInstance) barChartInstance.destroy();
+  titleElem.innerHTML = `
+    <h3 style="font-family:var(--font-heading); font-size:1.3rem; font-weight:700; color:${color};">
+      📍 ${title} (Day ${dayNum} Complete Schedule)
+    </h3>
+    <span style="font-size:0.85rem; color:var(--text-muted);">
+      ${dayEvents.length} Events Scheduled • 🌙 8.0 Hours Rest Guaranteed
+    </span>
+  `;
 
-    barChartInstance = new Chart(ctxBar, {
-      type: 'bar',
-      data: {
-        labels: ['Night 1', 'Night 2', 'Night 3', 'Night 4', 'Night 5', 'Night 6', 'Night 7', 'Night 8'],
-        datasets: [
-          {
-            label: 'Actual Sleep (Hours)',
-            data: [8, 8, 8, 8, 8, 8, 8, 8],
-            backgroundColor: 'rgba(16, 185, 129, 0.7)',
-            borderColor: '#10B981',
-            borderWidth: 1.5,
-            borderRadius: 6
-          },
-          {
-            label: 'Target Sleep (8.0 Hours)',
-            data: [8, 8, 8, 8, 8, 8, 8, 8],
-            type: 'line',
-            borderColor: '#38BDF8',
-            borderWidth: 2,
-            pointBackgroundColor: '#38BDF8',
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            min: 0,
-            max: 10,
-            ticks: { color: '#94A3B8' },
-            grid: { color: 'rgba(255, 255, 255, 0.05)' }
-          },
-          x: {
-            ticks: { color: '#94A3B8' },
-            grid: { display: false }
-          }
-        },
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: { color: '#F8FAFC', font: { family: 'Plus Jakarta Sans', size: 11 } }
-          }
-        }
-      }
-    });
-  }
+  listElem.innerHTML = dayEvents.map(e => `
+    <div class="event-card cat-${e.category}" style="padding:14px;">
+      <div style="width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <strong style="font-size:0.85rem; color:var(--primary);">${e.startTime} - ${e.endTime}</strong>
+          ${e.isLocked ? '<span class="lock-badge">🔒 Locked</span>' : ''}
+        </div>
+        <div style="font-size:0.95rem; font-weight:700; margin-bottom:4px; color:var(--text-main);">${e.title}</div>
+        <div style="font-size:0.8rem; color:var(--text-muted);">📍 ${e.location || ''}</div>
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">📝 ${e.notes || ''}</div>
+      </div>
+    </div>
+  `).join('');
+
+  panel.style.display = 'block';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Render Primary Day Board Grid
@@ -472,17 +570,24 @@ function setupEventListeners() {
     });
   }
 
-  // Delegate Click on Day Overview Cards to Jump to Day Board
-  const overviewGrid = document.getElementById('day-overview-grid');
-  if (overviewGrid) {
-    overviewGrid.addEventListener('click', (e) => {
-      const card = e.target.closest('.day-overview-card');
-      if (card) {
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        document.querySelector('.nav-tab[data-tab="day-board"]')?.classList.add('active');
-        document.getElementById('panel-day-board')?.classList.add('active');
+  // Recenter Map Button
+  const btnRecenter = document.getElementById('btn-recenter-map');
+  if (btnRecenter) {
+    btnRecenter.addEventListener('click', () => {
+      if (leafletMap) {
+        leafletMap.setView([49.85, -124.50], 7);
       }
+    });
+  }
+
+  // Jump to Day Board Button
+  const btnJumpDayboard = document.getElementById('btn-jump-dayboard');
+  if (btnJumpDayboard) {
+    btnJumpDayboard.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('.nav-tab[data-tab="day-board"]')?.classList.add('active');
+      document.getElementById('panel-day-board')?.classList.add('active');
     });
   }
 
@@ -498,7 +603,9 @@ function setupEventListeners() {
       if (panel) panel.classList.add('active');
 
       if (targetTab === 'overview') {
-        setTimeout(renderCharts, 100);
+        setTimeout(() => {
+          if (leafletMap) leafletMap.invalidateSize();
+        }, 150);
       }
     });
   });
