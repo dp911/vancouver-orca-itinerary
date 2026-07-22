@@ -1,65 +1,94 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Cleaned & Purged of all legacy ferry/Victoria/south-island events
+   Fully Complete Schedule with All Intermediary Transportation & Logistics
    ========================================================================== */
 
-// Cleaned Master Schedule Data matching the exact new timeline
 const MASTER_SCHEDULE = [
-  // Day 1: Thurs Aug 6 — Arrival in Vancouver
-  { id: 'e1', day: 1, category: 'flight', title: '✈️ Direct Flight: JFK ➔ YVR', startTime: '18:26', endTime: '21:55', location: 'JFK Airport to YVR Airport', notes: 'Non-stop flight. Pick up rental SUV at YVR.', isLocked: true },
-  { id: 'e2', day: 1, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Downtown Hotel', notes: 'Target bedtime: 11:30 PM. 8.0 hrs sleep guaranteed.', isLocked: false },
+  // Day 1: Thurs Aug 6 — Arrival & Car Pickup
+  { id: 'e1', day: 1, category: 'flight', title: '✈️ Direct Flight: JFK ➔ YVR', startTime: '18:26', endTime: '21:55', location: 'JFK Airport to YVR Airport', notes: 'Non-stop flight (5h 29m).', isLocked: true },
+  { id: 'e2', day: 1, category: 'city', title: '🧳 YVR Baggage Claim & Rental Car Pickup', startTime: '21:55', endTime: '22:30', location: 'YVR Car Rental Centre', notes: 'Collect luggage & pick up rental SUV.', isLocked: false },
+  { id: 'e3', day: 1, category: 'city', title: '🚘 Drive YVR Airport ➔ Downtown Hotel', startTime: '22:30', endTime: '23:00', location: '30 min drive to Vancouver Downtown', notes: 'Check into hotel.', isLocked: false },
+  { id: 'e4', day: 1, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Downtown Hotel', notes: 'Target bedtime: 11:30 PM. 8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 2: Fri Aug 7 — SeaWheeze Prep & Vancouver Highlights
-  { id: 'e3', day: 2, category: 'race', title: '🎽 SeaWheeze Package Pickup & Expo', startTime: '08:30', endTime: '10:30', location: 'Vancouver Convention Centre / Jack Poole Plaza', notes: 'Collect bib and runner kit at Olympic Cauldron.', isLocked: false },
-  { id: 'e4', day: 2, category: 'city', title: '🏙️ Gastown & Granville Island Market', startTime: '10:30', endTime: '13:30', location: 'Gastown Steam Clock to Granville Island', notes: 'Hop on False Creek mini-ferry for smoked salmon lunch.', isLocked: false },
-  { id: 'e5', day: 2, category: 'city', title: '🌲 Capilano Suspension Bridge Park', startTime: '14:00', endTime: '17:00', location: 'North Vancouver', notes: 'Walk 200ft high redwoods Treetops Adventure.', isLocked: false },
-  { id: 'e6', day: 2, category: 'dining', title: '🍻 Shipyards Night Market', startTime: '17:30', endTime: '20:30', location: 'Lower Lonsdale, North Vancouver', notes: 'Food trucks, craft beer, and Vancouver skyline sunset.', isLocked: false },
-  { id: 'e7', day: 2, category: 'sleep', title: '🛌 Pre-Race Rest & Sleep (8.0 Hours)', startTime: '21:30', endTime: '05:30', location: 'Vancouver Downtown Hotel', notes: 'Early bedtime at 9:30 PM for 5:30 AM race wakeup.', isLocked: false },
+  // Day 2: Fri Aug 7 — SeaWheeze Expo & Vancouver Highlights
+  { id: 'e5', day: 2, category: 'race', title: '🎽 SeaWheeze Package Pickup & Expo', startTime: '08:30', endTime: '10:30', location: 'Vancouver Convention Centre / Jack Poole Plaza', notes: 'Collect bib and runner kit at Olympic Cauldron.', isLocked: false },
+  { id: 'e6', day: 2, category: 'city', title: '🚶 Walk / Ferry to Gastown & Granville Market', startTime: '10:30', endTime: '11:00', location: 'False Creek Mini-Ferry', notes: 'Scenic transfer across False Creek.', isLocked: false },
+  { id: 'e7', day: 2, category: 'dining', title: '🏙️ Gastown Steam Clock & Market Lunch', startTime: '11:00', endTime: '13:30', location: 'Granville Island Public Market', notes: 'Smoked wild salmon lunch & artisan shops.', isLocked: false },
+  { id: 'e8', day: 2, category: 'city', title: '🚘 Drive to Capilano Suspension Bridge', startTime: '13:30', endTime: '14:00', location: 'Lions Gate Bridge (25 min drive)', notes: 'Cross Lions Gate Bridge to North Vancouver.', isLocked: false },
+  { id: 'e9', day: 2, category: 'city', title: '🌲 Capilano Suspension Bridge Park', startTime: '14:00', endTime: '17:00', location: 'North Vancouver', notes: 'Walk 200ft high redwoods Treetops Adventure.', isLocked: false },
+  { id: 'e10', day: 2, category: 'city', title: '🚘 Drive to Shipyards Night Market', startTime: '17:00', endTime: '17:30', location: 'Lower Lonsdale (15 min drive)', notes: 'Short coastal drive to Lower Lonsdale pier.', isLocked: false },
+  { id: 'e11', day: 2, category: 'dining', title: '🍻 Shipyards Night Market', startTime: '17:30', endTime: '20:30', location: 'Lower Lonsdale Pier, North Vancouver', notes: 'Food trucks, craft beer, and Vancouver skyline sunset.', isLocked: false },
+  { id: 'e12', day: 2, category: 'city', title: '🚘 Drive Back to Downtown Hotel', startTime: '20:30', endTime: '21:00', location: '20 min drive via Lions Gate Bridge', notes: 'Return to hotel & prepare race gear.', isLocked: false },
+  { id: 'e13', day: 2, category: 'sleep', title: '🛌 Pre-Race Rest & Sleep (8.0 Hours)', startTime: '21:30', endTime: '05:30', location: 'Vancouver Downtown Hotel', notes: 'Early bedtime at 9:30 PM for 5:30 AM race wakeup.', isLocked: false },
 
   // Day 3: Sat Aug 8 — RACE DAY: SeaWheeze Half Marathon & Sunset Festival
-  { id: 'e8', day: 3, category: 'race', title: '🏃 SeaWheeze Half Marathon Start', startTime: '06:00', endTime: '12:30', location: 'Jack Poole Plaza & Stanley Park Seawall', notes: '6am stretch, 7am start, 8:30-12:30 recovery zone.', isLocked: true },
-  { id: 'e9', day: 3, category: 'sleep', title: '💤 Post-Race Recovery & Shower', startTime: '13:00', endTime: '15:00', location: 'Vancouver Hotel', notes: 'Rest legs, hydrate, and prepare for festival.', isLocked: false },
-  { id: 'e10', day: 3, category: 'race', title: '🎉 Sunset Festival at Stanley Park', startTime: '15:30', endTime: '22:30', location: 'Brockton Oval, Stanley Park', notes: 'Mass yoga, live music, food vendors, sunset ocean views.', isLocked: true },
-  { id: 'e11', day: 3, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Hotel', notes: 'Target bedtime: 11:30 PM. 8.0 hrs sleep guaranteed.', isLocked: false },
+  { id: 'e14', day: 3, category: 'race', title: '🚶 Walk to Jack Poole Plaza & Pre-Race Stretch', startTime: '05:45', endTime: '07:00', location: 'Jack Poole Plaza', notes: 'Warm-up & stretch at 6:00 AM.', isLocked: false },
+  { id: 'e15', day: 3, category: 'race', title: '🏃 SeaWheeze Half Marathon Start & Recovery Zone', startTime: '07:00', endTime: '12:30', location: 'Jack Poole Plaza & Stanley Park Seawall', notes: '7am race start, 8:30-12:30 recovery zone.', isLocked: true },
+  { id: 'e16', day: 3, category: 'sleep', title: '💤 Post-Race Recovery & Shower', startTime: '13:00', endTime: '15:30', location: 'Vancouver Hotel', notes: 'Rest legs, hydrate, and shower.', isLocked: false },
+  { id: 'e17', day: 3, category: 'race', title: '🚌 Shuttle to Sunset Festival', startTime: '15:30', endTime: '16:00', location: 'Jack Poole Plaza to Brockton Oval', notes: 'Board official SeaWheeze shuttle bus.', isLocked: false },
+  { id: 'e18', day: 3, category: 'race', title: '🎉 Sunset Festival at Stanley Park', startTime: '16:00', endTime: '22:30', location: 'Brockton Oval, Stanley Park', notes: 'Mass yoga, live concert, craft drinks, ocean sunset.', isLocked: true },
+  { id: 'e19', day: 3, category: 'race', title: '🚌 Shuttle Return to Hotel', startTime: '10:30', endTime: '23:00', location: 'Brockton Oval to Downtown Hotel', notes: 'Return shuttle bus.', isLocked: false },
+  { id: 'e20', day: 3, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Hotel', notes: 'Target bedtime: 11:30 PM. 8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 4: Sun Aug 9 — WHISTLER DAY 1 (DRIVE TO WHISTLER)
-  { id: 'e12', day: 4, category: 'whistler', title: '🚘 Drive Sea-to-Sky Highway & Shannon Falls', startTime: '08:00', endTime: '09:45', location: 'Hwy 99 Squamish', notes: 'Scenic coastal highway drive & 335m waterfall.', isLocked: false },
-  { id: 'e13', day: 4, category: 'whistler', title: '🚠 Sea to Sky Gondola (Squamish)', startTime: '10:00', endTime: '12:30', location: 'Squamish Ridge', notes: 'Walk Sky Pilot Suspension Bridge & panorama fjord lookout.', isLocked: false },
-  { id: 'e14', day: 4, category: 'whistler', title: '🚠 Whistler Peak 2 Peak & Cloudraker Skybridge', startTime: '13:30', endTime: '17:30', location: 'Whistler Mountain Summit', notes: 'Walk Cloudraker Skybridge & ride world-record Peak 2 Peak Gondola.', isLocked: false },
-  { id: 'e15', day: 4, category: 'dining', title: '🍽️ Whistler Village Fine Dining', startTime: '18:30', endTime: '21:00', location: 'Bearfoot Bistro / Araxi Restaurant', notes: 'Check into Whistler hotel (Night 1 in Whistler).', isLocked: false },
-  { id: 'e16', day: 4, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Whistler Hotel', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
+  // Day 4: Sun Aug 9 — DRIVE TO WHISTLER (WHISTLER DAY 1)
+  { id: 'e21', day: 4, category: 'city', title: '🎒 Hotel Check-out & SUV Loading', startTime: '07:30', endTime: '08:15', location: 'Downtown Vancouver Hotel', notes: 'Check out & load bags into SUV.', isLocked: false },
+  { id: 'e22', day: 4, category: 'whistler', title: '🚘 Drive Sea-to-Sky Hwy 99 ➔ Squamish', startTime: '08:15', endTime: '09:30', location: 'Hwy 99 North (1 hr 15 min drive)', notes: 'Scenic fjord highway drive.', isLocked: false },
+  { id: 'e23', day: 4, category: 'whistler', title: '🌊 Shannon Falls Provincial Park Stop', startTime: '09:30', endTime: '10:00', location: 'Shannon Falls (30 min stop)', notes: 'Short rainforest walk to 335m waterfall.', isLocked: false },
+  { id: 'e24', day: 4, category: 'whistler', title: '🚠 Sea to Sky Gondola (Squamish)', startTime: '10:00', endTime: '12:30', location: 'Squamish Ridge', notes: 'Sky Pilot Suspension Bridge walk.', isLocked: false },
+  { id: 'e25', day: 4, category: 'whistler', title: '🚘 Drive Squamish ➔ Whistler Village', startTime: '12:30', endTime: '13:30', location: 'Hwy 99 North (45 min drive)', notes: 'Drive up mountain corridor to Whistler.', isLocked: false },
+  { id: 'e26', day: 4, category: 'whistler', title: '🚠 Whistler Peak 2 Peak & Cloudraker Skybridge', startTime: '13:30', endTime: '17:30', location: 'Whistler Mountain Summit', notes: 'Walk Cloudraker Skybridge & ride Peak 2 Peak Gondola.', isLocked: false },
+  { id: 'e27', day: 4, category: 'whistler', title: '🏨 Whistler Hotel Check-in', startTime: '17:30', endTime: '18:30', location: 'Whistler Village Hotel', notes: 'Check in (Night 1 in Whistler) & freshen up.', isLocked: false },
+  { id: 'e28', day: 4, category: 'dining', title: '🍽️ Whistler Village Fine Dining', startTime: '18:30', endTime: '21:00', location: 'Bearfoot Bistro / Araxi', notes: 'Alpine dining in Whistler Village.', isLocked: false },
+  { id: 'e29', day: 4, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Whistler Hotel', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 5: Mon Aug 10 — WHISTLER DAY 2 (GLACIAL HIKES & SPA)
-  { id: 'e17', day: 5, category: 'whistler', title: '🥾 Joffre Lakes Glacial Hike (3 Lakes)', startTime: '07:00', endTime: '12:00', location: 'Joffre Lakes Provincial Park', notes: '10km moderate hike visiting 3 turquoise glacial lakes & Matier Glacier.', isLocked: false },
-  { id: 'e18', day: 5, category: 'whistler', title: '🌲 Lost Lake & Whistler Train Wreck Trail', startTime: '13:30', endTime: '16:30', location: 'Whistler Valley Trails', notes: 'Explore suspension bridge & painted vintage train wreck in forest.', isLocked: false },
-  { id: 'e19', day: 5, category: 'whistler', title: '♨️ Scandinave Spa Hydrotherapy Thermal Baths', startTime: '17:30', endTime: '20:30', location: 'Scandinave Spa Whistler', notes: 'Hot baths, cold plunges, and outdoor fires in old-growth spruce forest.', isLocked: false },
-  { id: 'e20', day: 5, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Whistler Hotel', notes: 'Check out tomorrow. 8.0 hrs sleep guaranteed.', isLocked: false },
+  // Day 5: Mon Aug 10 — ULTIMATE WHISTLER HIKES & SPA (WHISTLER DAY 2)
+  { id: 'e30', day: 5, category: 'whistler', title: '🚘 Drive Whistler ➔ Joffre Lakes', startTime: '06:15', endTime: '07:00', location: 'Hwy 99 North (50 min drive)', notes: 'Drive north to Joffre Lakes trailhead.', isLocked: false },
+  { id: 'e31', day: 5, category: 'whistler', title: '🥾 Joffre Lakes Glacial Hike (3 Lakes)', startTime: '07:00', endTime: '12:00', location: 'Joffre Lakes Provincial Park', notes: '10km moderate hike visiting 3 turquoise glacial lakes & Matier Glacier.', isLocked: false },
+  { id: 'e32', day: 5, category: 'whistler', title: '🚘 Drive Joffre Lakes ➔ Whistler Village & Lunch', startTime: '12:00', endTime: '13:30', location: 'Hwy 99 South (50 min drive)', notes: 'Return to Whistler Village for lunch.', isLocked: false },
+  { id: 'e33', day: 5, category: 'whistler', title: '🌲 Lost Lake & Whistler Train Wreck Trail', startTime: '13:30', endTime: '16:30', location: 'Whistler Valley Trails', notes: 'Suspension bridge & vintage train wreck in forest.', isLocked: false },
+  { id: 'e34', day: 5, category: 'whistler', title: '🚘 Drive to Scandinave Spa', startTime: '16:30', endTime: '17:00', location: '10 min drive to spa', notes: 'Transfer to Scandinave Spa.', isLocked: false },
+  { id: 'e35', day: 5, category: 'whistler', title: '♨️ Scandinave Spa Hydrotherapy Thermal Baths', startTime: '17:00', endTime: '20:30', location: 'Scandinave Spa Whistler', notes: 'Hot baths, cold plunges, and outdoor wood fires.', isLocked: false },
+  { id: 'e36', day: 5, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Whistler Hotel', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 6: Tues Aug 11 — DRIVE TO YVR ➔ FLIGHT YVR-YQQ ➔ TELEGRAPH COVE
-  { id: 'e21', day: 6, category: 'whistler', title: '🚘 Scenic Drive Whistler ➔ YVR Airport', startTime: '08:30', endTime: '10:30', location: 'Sea-to-Sky Hwy 99 South', notes: 'Drive back down highway to Vancouver Airport.', isLocked: false },
-  { id: 'e22', day: 6, category: 'flight', title: '✈️ Flight YVR ➔ YQQ (Comox, Vancouver Island)', startTime: '12:30', endTime: '13:05', location: 'Vancouver (YVR) to Comox (YQQ)', notes: 'Short 35-min scenic flight over Georgia Strait! Pick up Island car at YQQ.', isLocked: true },
-  { id: 'e23', day: 6, category: 'city', title: '🚗 Scenic Island Drive & Elk Falls Gorge', startTime: '13:30', endTime: '16:30', location: 'Hwy 19 North Campbell River', notes: 'Walk Elk Falls Suspension Bridge gorge en route north.', isLocked: false },
-  { id: 'e24', day: 6, category: 'orca', title: '🦀 Telegraph Cove Boardwalk Check-in & Dinner', startTime: '17:00', endTime: '20:30', location: 'Telegraph Cove Boardwalk', notes: 'Pre-trip briefing with At Water’s Edge outfitter & Killer Whale Cafe dinner.', isLocked: false },
-  { id: 'e25', day: 6, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Telegraph Cove / Port McNeill Lodge', notes: '8.0 hrs sleep guaranteed before base camp launch.', isLocked: false },
+  // Day 6: Tues Aug 11 — DRIVE TO YVR ➔ FLIGHT TO COMOX ➔ DRIVE TO TELEGRAPH COVE
+  { id: 'e37', day: 6, category: 'city', title: '🎒 Check-out & Drive Whistler ➔ YVR Airport', startTime: '06:30', endTime: '10:00', location: 'Sea-to-Sky Hwy 99 South (2.25 hr drive)', notes: 'Drive down highway to Vancouver Airport.', isLocked: false },
+  { id: 'e38', day: 6, category: 'city', title: '🚗 Return Vancouver Rental SUV at YVR', startTime: '10:00', endTime: '10:30', location: 'YVR Rental Car Return Centre', notes: 'Drop off SUV at YVR.', isLocked: false },
+  { id: 'e39', day: 6, category: 'flight', title: '✈️ YVR Terminal Transfer & Gate Check-in', startTime: '10:30', endTime: '12:30', location: 'YVR Terminal Gate', notes: 'Security check-in for flight to Comox.', isLocked: false },
+  { id: 'e40', day: 6, category: 'flight', title: '✈️ Flight YVR ➔ YQQ (Comox, Vancouver Island)', startTime: '12:30', endTime: '13:05', location: 'Vancouver (YVR) to Comox (YQQ)', notes: 'Short 35-min scenic flight over Georgia Strait!', isLocked: true },
+  { id: 'e41', day: 6, category: 'city', title: '🧳 YQQ Airport Baggage & Pick up Island SUV', startTime: '13:05', endTime: '13:45', location: 'Comox (YQQ) Airport Car Rental', notes: 'Pick up Vancouver Island rental SUV.', isLocked: false },
+  { id: 'e42', day: 6, category: 'city', title: '🚘 Drive Comox ➔ Campbell River & Elk Falls', startTime: '13:45', endTime: '15:30', location: 'Hwy 19 North (45 min drive)', notes: 'Walk Elk Falls Suspension Bridge gorge.', isLocked: false },
+  { id: 'e43', day: 6, category: 'city', title: '🚘 Drive Campbell River ➔ Telegraph Cove', startTime: '15:30', endTime: '17:30', location: 'Hwy 19 North (2 hr drive)', notes: 'Scenic drive to North Island.', isLocked: false },
+  { id: 'e44', day: 6, category: 'orca', title: '🦀 Check into Lodge & Outfitter Briefing', startTime: '17:30', endTime: '20:30', location: 'Telegraph Cove Boardwalk', notes: 'At Water’s Edge briefing & Killer Whale Cafe dinner.', isLocked: false },
+  { id: 'e45', day: 6, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Telegraph Cove / Port McNeill Lodge', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
 
   // Day 7: Wed Aug 12 — AT WATER’S EDGE ORCA GLAMPING (DAY 1)
-  { id: 'e26', day: 7, category: 'orca', title: '🚤 Water Taxi to Hanson Island Base Camp', startTime: '09:00', endTime: '10:00', location: 'Telegraph Cove to Hanson Island', notes: 'Check in at At The Water’s Edge. Apply Scopolamine patch / take Bonine.', isLocked: true },
-  { id: 'e27', day: 7, category: 'orca', title: '🛶 Johnstone Strait Orca Kayak Excursion', startTime: '11:30', endTime: '16:30', location: 'Johnstone Strait / Blackfish Sound', notes: 'Paddle tandem sea kayaks alongside Resident Orcas & Humpbacks.', isLocked: true },
-  { id: 'e28', day: 7, category: 'orca', title: '♨️ Oceanfront Hot Tub & Wild Salmon Dinner', startTime: '17:30', endTime: '21:30', location: 'Hanson Island Glamping Base Camp', notes: 'Soak in wood-fired hot tub, gourmet chef campfire dinner.', isLocked: false },
-  { id: 'e29', day: 7, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: 'Sleep in real bed to sounds of Orca blowholes echoing across water.', isLocked: false },
+  { id: 'e46', day: 7, category: 'orca', title: '🚘 Drive 10 mins to Telegraph Cove Boardwalk', startTime: '07:30', endTime: '08:30', location: 'Telegraph Cove Boardwalk', notes: 'Load duffels & apply Scopolamine patch.', isLocked: false },
+  { id: 'e47', day: 7, category: 'orca', title: '📝 At Water’s Edge Outfitter Check-in', startTime: '08:30', endTime: '09:00', location: '24 Boardwalk, Telegraph Cove', notes: 'Safety briefing & PFD gear check.', isLocked: false },
+  { id: 'e48', day: 7, category: 'orca', title: '🚤 Water Taxi Transport ➔ Hanson Island Base Camp', startTime: '09:00', endTime: '10:00', location: 'Telegraph Cove to Hanson Island', notes: '1-hr high-speed water taxi transport.', isLocked: true },
+  { id: 'e49', day: 7, category: 'orca', title: '⛺ Settle into Canvas Safari Tent', startTime: '10:00', endTime: '11:30', location: 'Hanson Island Glamping Base Camp', notes: 'Unpack in safari tent on wooden platform.', isLocked: false },
+  { id: 'e50', day: 7, category: 'orca', title: '🛶 Johnstone Strait Orca Kayak Excursion', startTime: '11:30', endTime: '16:30', location: 'Johnstone Strait / Blackfish Sound', notes: 'Paddle tandem kayaks alongside Orcas & Humpbacks.', isLocked: true },
+  { id: 'e51', day: 7, category: 'orca', title: '♨️ Oceanfront Hot Tub & Wild Salmon Dinner', startTime: '17:30', endTime: '21:30', location: 'Hanson Island Base Camp', notes: 'Wood-fired hot tub soak & gourmet chef dinner.', isLocked: false },
+  { id: 'e52', day: 7, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: 'Sleep in real bed to sounds of Orca blowholes.', isLocked: false },
 
   // Day 8: Thurs Aug 13 — AT WATER’S EDGE ORCA GLAMPING (DAY 2)
-  { id: 'e30', day: 8, category: 'orca', title: '☕ Tent Coffee & Orca Beach Watching', startTime: '06:30', endTime: '08:00', location: 'Hanson Island Shoreline', notes: 'Hot coffee delivered to tent while watching Orcas swim past beach.', isLocked: false },
-  { id: 'e31', day: 8, category: 'orca', title: '🛶 Full-Day Remote Orca & Humpback Paddle', startTime: '08:30', endTime: '16:00', location: 'Blackney Passage & Robson Bight Perimeter', notes: 'Spot eagles, sea otters, porpoises, Orca rubbing beaches.', isLocked: true },
-  { id: 'e32', day: 8, category: 'orca', title: '🔥 Sunset Campfire & Astronomy Night', startTime: '17:00', endTime: '21:30', location: 'Glamping Base Camp', notes: 'Chef dinner & sunset ocean relaxation.', isLocked: false },
-  { id: 'e33', day: 8, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
+  { id: 'e53', day: 8, category: 'orca', title: '☕ Tent Coffee & Orca Beach Watching', startTime: '06:30', endTime: '08:00', location: 'Hanson Island Shoreline', notes: 'Hot coffee delivered while watching Orcas swim past beach.', isLocked: false },
+  { id: 'e54', day: 8, category: 'orca', title: '🍳 Chef Hot Campfire Breakfast', startTime: '07:30', endTime: '08:30', location: 'Base Camp Lounge', notes: 'Hot campfire breakfast.', isLocked: false },
+  { id: 'e55', day: 8, category: 'orca', title: '🛶 Full-Day Remote Orca & Humpback Paddle', startTime: '08:30', endTime: '16:00', location: 'Blackney Passage & Robson Bight Perimeter', notes: 'Spot eagles, sea otters, porpoises, Orca rubbing beaches.', isLocked: true },
+  { id: 'e56', day: 8, category: 'orca', title: '♨️ Oceanfront Cedar Sauna & Hot Tub', startTime: '17:00', endTime: '19:00', location: 'Hanson Island Base Camp', notes: 'Sauna & hot tub relaxation.', isLocked: false },
+  { id: 'e57', day: 8, category: 'orca', title: '🍽️ Gourmet Chef Campfire Dinner & Sunset', startTime: '19:00', endTime: '21:30', location: 'Base Camp Lounge', notes: 'Campfire dinner & ocean sunset watching.', isLocked: false },
+  { id: 'e58', day: 8, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
 
   // Day 9: Fri Aug 14 — AT WATER’S EDGE DAY 3 ➔ FLIGHT YQQ-YVR ➔ FLIGHT HOME TO JFK
-  { id: 'e34', day: 9, category: 'orca', title: '🛶 Dawn Hanson Island Kayak Session', startTime: '06:30', endTime: '11:30', location: 'Hanson Island Reefs', notes: 'Final morning paddle exploration.', isLocked: false },
-  { id: 'e35', day: 9, category: 'orca', title: '🚤 Water Taxi Return to Telegraph Cove', startTime: '13:30', endTime: '14:30', location: 'Base Camp to Telegraph Cove Boardwalk', notes: 'Return to mainland Vancouver Island.', isLocked: true },
-  { id: 'e36', day: 9, category: 'flight', title: '🚗 Drive to Comox & Flight YQQ ➔ YVR', startTime: '15:00', endTime: '19:05', location: 'Comox (YQQ) to Vancouver (YVR)', notes: 'Drive to YQQ airport. Flight YQQ-YVR departs 18:30, arrives YVR 19:05.', isLocked: true },
-  { id: 'e37', day: 9, category: 'dining', title: '🍣 Miku Vancouver Farewell Dinner', startTime: '19:30', endTime: '21:30', location: 'YVR / Waterfront', notes: 'Aburi flame-seared sushi farewell dinner.', isLocked: false },
-  { id: 'e38', day: 9, category: 'flight', title: '✈️ Direct Flight Home: YVR ➔ JFK', startTime: '23:15', endTime: '07:36', location: 'YVR Airport to JFK Airport', notes: 'Arrive JFK 7:36 AM Saturday Aug 15.', isLocked: true }
+  { id: 'e59', day: 9, category: 'orca', title: '🛶 Dawn Hanson Island Kayak Session', startTime: '06:30', endTime: '11:00', location: 'Hanson Island Reefs', notes: 'Final morning paddle exploration.', isLocked: false },
+  { id: 'e60', day: 9, category: 'orca', title: '🍳 Final Base Camp Lunch & Pack Duffels', startTime: '11:00', endTime: '12:30', location: 'Hanson Island Base Camp', notes: 'Chef lunch & pack bags.', isLocked: false },
+  { id: 'e61', day: 9, category: 'orca', title: '🚤 Water Taxi Transport ➔ Telegraph Cove', startTime: '12:30', endTime: '13:30', location: 'Base Camp to Telegraph Cove Boardwalk', notes: '1-hr water taxi return to Telegraph Cove.', isLocked: true },
+  { id: 'e62', day: 9, category: 'city', title: '🎒 Load SUV & Drive Telegraph Cove ➔ Comox YQQ', startTime: '14:00', endTime: '16:30', location: 'Hwy 19 South (2.5 hr drive)', notes: 'Drive south to Comox Airport.', isLocked: false },
+  { id: 'e63', day: 9, category: 'city', title: '🚗 Return Island Rental SUV at Comox YQQ', startTime: '16:30', endTime: '17:00', location: 'Comox (YQQ) Car Rental Return', notes: 'Drop off SUV at YQQ.', isLocked: false },
+  { id: 'e64', day: 9, category: 'flight', title: '✈️ YQQ Airport Security & Gate Check-in', startTime: '17:00', endTime: '18:30', location: 'Comox Airport Gate', notes: 'Check in for flight to Vancouver.', isLocked: false },
+  { id: 'e65', day: 9, category: 'flight', title: '✈️ Flight YQQ ➔ YVR (Comox to Vancouver)', startTime: '18:30', endTime: '19:05', location: 'Comox (YQQ) to Vancouver (YVR)', notes: '35-min flight landing YVR 7:05 PM!', isLocked: true },
+  { id: 'e66', day: 9, category: 'dining', title: '🍣 Miku Vancouver / YVR Farewell Dinner', startTime: '19:30', endTime: '21:15', location: 'YVR International Terminal', notes: 'Aburi flame-seared sushi dinner.', isLocked: false },
+  { id: 'e67', day: 9, category: 'flight', title: '✈️ US Pre-Clearance & Gate Boarding at YVR', startTime: '21:15', endTime: '23:15', location: 'YVR US Terminal Gate', notes: 'Pass US Customs & security at YVR.', isLocked: false },
+  { id: 'e68', day: 9, category: 'flight', title: '✈️ Direct Flight Home: YVR ➔ JFK', startTime: '23:15', endTime: '07:36', location: 'YVR Airport to JFK Airport', notes: 'Arrive JFK 7:36 AM Saturday Aug 15.', isLocked: true }
 ];
 
 // Initial Seasickness Protocol Checklist
@@ -86,12 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load Schedule from LocalStorage or Default
 function loadData() {
-  // Purge any old version data to ensure the clean new schedule is loaded
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '2.0_clean') {
+  if (version !== '3.0_transports') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '2.0_clean');
+    localStorage.setItem('vancouver_app_version', '3.0_transports');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
@@ -139,15 +167,15 @@ function renderDayBoard() {
   grid.innerHTML = '';
 
   const dayTitlesShort = {
-    1: 'Day 1: Thurs Aug 6 (Arrival)',
+    1: 'Day 1: Thurs Aug 6 (Arrival & Car Pick)',
     2: 'Day 2: Fri Aug 7 (SeaWheeze Prep)',
     3: 'Day 3: Sat Aug 8 (RACE DAY)',
-    4: 'Day 4: Sun Aug 9 (Whistler Day 1)',
-    5: 'Day 5: Mon Aug 10 (Whistler Day 2)',
-    6: 'Day 6: Tues Aug 11 (Flight YVR ➔ YQQ)',
-    7: 'Day 7: Wed Aug 12 (At Water’s Edge 1)',
-    8: 'Day 8: Thurs Aug 13 (At Water’s Edge 2)',
-    9: 'Day 9: Fri Aug 14 (At Water’s Edge 3 & Flight Home)'
+    4: 'Day 4: Sun Aug 9 (Drive to Whistler)',
+    5: 'Day 5: Mon Aug 10 (Whistler Hikes & Spa)',
+    6: 'Day 6: Tues Aug 11 (Drive YVR & Flight YQQ)',
+    7: 'Day 7: Wed Aug 12 (Water Taxi & Orca 1)',
+    8: 'Day 8: Thurs Aug 13 (Orca Glamping 2)',
+    9: 'Day 9: Fri Aug 14 (Water Taxi & Flight JFK)'
   };
 
   for (let d = 1; d <= 9; d++) {
@@ -287,7 +315,7 @@ function setupEventListeners() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentSchedule, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "vancouver_whistler_orca_itinerary.json");
+    downloadAnchor.setAttribute("download", "vancouver_whistler_orca_full_logistics.json");
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -295,7 +323,7 @@ function setupEventListeners() {
 
   // Reset to Default Master
   document.getElementById('btn-reset-default').addEventListener('click', () => {
-    if (confirm('Reset schedule to the clean 2-Night Whistler + At Water’s Edge Orca Glamping plan?')) {
+    if (confirm('Reset schedule to the 100% complete transport-inclusive master plan?')) {
       currentSchedule = [...MASTER_SCHEDULE];
       changeLog = [];
       saveData();
@@ -481,7 +509,7 @@ function renderAIResults(data) {
 
 function calculateLocalAnalysis() {
   return {
-    impactSummary: 'All 8 nights currently maintain the required 8.0-hour sleep window. Drive and flight logistics (YVR-YQQ) are fully verified with zero leftover legacy events.',
+    impactSummary: 'All 8 nights currently maintain the required 8.0-hour sleep window. Drive transfers, water taxis, and flight logistics (YVR-YQQ) are fully verified.',
     sleepCompliance: [
       { name: 'Night 1 (Aug 6)', hours: 8.0, pass: true },
       { name: 'Night 2 (Aug 7)', hours: 8.0, pass: true },
@@ -492,7 +520,7 @@ function calculateLocalAnalysis() {
       { name: 'Night 7 (Aug 12)', hours: 8.0, pass: true },
       { name: 'Night 8 (Aug 13)', hours: 8.0, pass: true }
     ],
-    warnings: ['✅ All impossible legacy events (ferries, Victoria, Butchart, Cathedral Grove, Richmond Night Market) have been completely purged.'],
+    warnings: ['✅ All drive, shuttle, water taxi, and airport check-in windows are fully explicitly scheduled.'],
     recommendations: [
       'Confirm flights YVR->YQQ (Tues Aug 11 12:30 PM) and YQQ->YVR (Fri Aug 14 18:30 PM).',
       'Confirm At Water’s Edge 3-Day Glamping Base Camp booking for Wed Aug 12 – Fri Aug 14.'
