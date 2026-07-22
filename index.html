@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌸 Vancouver, 2-Night Whistler & At Water's Edge Orca Master Itinerary</title>
+  <title>Vancouver, 2-Night Whistler & At Water's Edge Orca Master Itinerary</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,24 +16,19 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
-  <!-- Full Screen Private Passcode Lock Gate with Pretty Pink Flowers -->
+  <!-- Full Screen Private Passcode Lock Gate -->
   <div class="lock-screen-overlay active" id="app-lock-screen">
-    <div class="lock-card pink-floral-card">
-      <div class="floral-decor top-left">🌸</div>
-      <div class="floral-decor top-right">🌺</div>
-      <div class="floral-decor bottom-left">🌺</div>
-      <div class="floral-decor bottom-right">🌸</div>
-
-      <div class="lock-icon pink-glow-icon">🔒 🌸</div>
-      <h2 class="pink-title">Private Expedition Access</h2>
-      <p class="subtitle pink-sub">🌸 Enter your trip group passcode to view & edit the itinerary 🌸</p>
+    <div class="lock-card">
+      <div class="lock-icon">🔒</div>
+      <h2>Private Expedition Access</h2>
+      <p class="subtitle">Enter your trip group passcode to view & edit the itinerary.</p>
       
       <form id="form-lock-gate" style="margin-top:20px;">
         <div class="form-group">
-          <input type="password" id="lock-passcode-input" placeholder="Enter Passcode" required style="text-align:center; font-size:1.2rem; letter-spacing:2px; border-color:var(--pink-neon); box-shadow:0 0 12px rgba(255, 46, 147, 0.4);">
+          <input type="password" id="lock-passcode-input" placeholder="Enter Passcode" required style="text-align:center; font-size:1.2rem; letter-spacing:2px;">
         </div>
-        <button type="submit" class="btn btn-pink-glow" style="width:100%; padding:14px; font-size:1rem; margin-top:10px;">🌸 Unlock Itinerary 🌸</button>
-        <p id="lock-error-msg" style="color:var(--pink-neon); font-size:0.85rem; margin-top:10px; display:none; font-weight:700;">⚠️ Incorrect passcode. Please try again.</p>
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:14px; font-size:1rem; margin-top:10px;">Unlock Itinerary</button>
+        <p id="lock-error-msg" style="color:var(--rose); font-size:0.85rem; margin-top:10px; display:none; font-weight:700;">⚠️ Incorrect passcode. Please try again.</p>
       </form>
     </div>
   </div>
@@ -42,24 +37,24 @@
     <!-- Header & Navigation -->
     <header class="app-header">
       <div class="header-brand">
-        <div class="brand-badge pink-badge">
-          <span class="pulse-dot pink-pulse"></span> 🌸 REALTIME COLLABORATIVE
+        <div class="brand-badge">
+          <span class="pulse-dot"></span> REALTIME COLLABORATIVE
         </div>
-        <h1 class="pink-gradient-text">Vancouver, 2-Night Whistler & Orca Expedition</h1>
-        <p class="subtitle">Aug 6 – Aug 15, 2026 • 9-Day Master Bucket-List Trip 🌸</p>
+        <h1>Vancouver, 2-Night Whistler & Orca Expedition</h1>
+        <p class="subtitle">Aug 6 – Aug 15, 2026 • 9-Day Master Bucket-List Trip</p>
       </div>
 
       <!-- Realtime Metrics Bar -->
       <div class="metrics-grid">
-        <div class="metric-card pink-border">
+        <div class="metric-card">
           <div class="metric-icon">🌙</div>
           <div class="metric-info">
-            <span class="metric-value pink" id="stat-sleep">8/8 Pass</span>
+            <span class="metric-value green" id="stat-sleep">8/8 Pass</span>
             <span class="metric-label">8-Hr Sleep Guarantee</span>
           </div>
         </div>
 
-        <div class="metric-card pink-border">
+        <div class="metric-card">
           <div class="metric-icon">🐋</div>
           <div class="metric-info">
             <span class="metric-value emerald">At Water's Edge</span>
@@ -67,15 +62,15 @@
           </div>
         </div>
 
-        <div class="metric-card pink-border">
-          <div class="metric-icon">🌸</div>
+        <div class="metric-card">
+          <div class="metric-icon">🏔️</div>
           <div class="metric-info">
             <span class="metric-value purple">2 Nights</span>
             <span class="metric-label">Whistler Exploration</span>
           </div>
         </div>
 
-        <div class="metric-card pink-border">
+        <div class="metric-card">
           <div class="metric-icon">📝</div>
           <div class="metric-info">
             <span class="metric-value cyan" id="stat-edits">0 Edits</span>
@@ -88,7 +83,7 @@
     <!-- Main Navigation Bar -->
     <nav class="nav-tabs">
       <button class="nav-tab active" data-tab="overview">
-        <span>🗺️ 🌸</span> Interactive Route Map
+        <span>🗺️</span> Interactive Route Map
       </button>
       <button class="nav-tab" data-tab="day-board">
         <span>🗓️</span> Day Board
@@ -106,25 +101,25 @@
         <span>⚙️</span> Sync & Deployment
       </button>
 
-      <button class="btn btn-pink-glow add-event-btn" id="btn-add-event">
-        <span>+ 🌸</span> Add Custom Event
+      <button class="btn btn-primary add-event-btn" id="btn-add-event">
+        <span>+</span> Add Custom Event
       </button>
     </nav>
 
     <!-- Main Content Panels -->
     <main class="main-content">
 
-      <!-- View 1: Interactive Map Dashboard -->
+      <!-- View 1: Interactive Curved Map Dashboard -->
       <section class="tab-panel active" id="panel-overview">
         
         <!-- Map Header Control Bar -->
         <div class="panel-toolbar" style="margin-bottom:16px;">
           <div>
-            <h2 style="font-family:var(--font-heading); font-size:1.4rem; font-weight:700; color:var(--pink-neon);">
-              🗺️ 🌸 Interactive Multi-Leg Expedition Map
+            <h2 style="font-family:var(--font-heading); font-size:1.4rem; font-weight:700; color:var(--text-main);">
+              🗺️ Interactive Curved Multi-Leg Route Map
             </h2>
             <p style="font-size:0.85rem; color:var(--text-muted);">
-              Hover or click any colored route leg or location marker to inspect that day's complete event schedule!
+              Hover or click any distinct curved route leg or location marker to inspect that day's complete event schedule!
             </p>
           </div>
           <div class="view-actions">
@@ -132,8 +127,8 @@
           </div>
         </div>
 
-        <!-- Interactive Map Wrapper with Glassmorphism Pink Border -->
-        <div class="map-wrapper-card pink-map-wrapper">
+        <!-- Interactive Map Wrapper -->
+        <div class="map-wrapper-card">
           <div id="route-map-container" style="width:100%; height:550px; border-radius:var(--radius-lg); z-index:1;"></div>
           
           <!-- Interactive Leg Legend Bar -->
@@ -143,12 +138,12 @@
         </div>
 
         <!-- Selected Leg Detailed Itinerary Popover Panel -->
-        <div class="glass-card leg-detail-card pink-border-card" id="leg-detail-panel" style="margin-top:20px; display:none;">
+        <div class="glass-card leg-detail-card" id="leg-detail-panel" style="margin-top:20px; display:none;">
           <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
             <div id="leg-detail-title">
               <!-- Title populated by app.js -->
             </div>
-            <button class="btn btn-pink-glow" id="btn-jump-dayboard">🗓️ View on Day Board ➔</button>
+            <button class="btn btn-primary" id="btn-jump-dayboard">🗓️ View on Day Board ➔</button>
           </div>
           <div class="leg-events-grid" id="leg-events-list" style="margin-top:16px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
             <!-- Events populated by app.js -->
@@ -266,7 +261,7 @@
               <small class="help-text">Vercel serverless function `/api/ai-optimize` will automatically use `process.env.GEMINI_API_KEY` when deployed.</small>
             </div>
 
-            <button class="btn btn-pink-glow" id="btn-save-settings">Save Settings</button>
+            <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
           </div>
         </div>
       </section>
@@ -367,7 +362,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="btn-modal-cancel">Cancel</button>
-          <button type="submit" class="btn btn-pink-glow" id="btn-modal-save">Save & Run Autonomous AI Audit</button>
+          <button type="submit" class="btn btn-primary" id="btn-modal-save">Save & Run Autonomous AI Audit</button>
         </div>
       </form>
     </div>
