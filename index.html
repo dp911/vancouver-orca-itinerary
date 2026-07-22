@@ -22,7 +22,7 @@
       
       <form id="form-lock-gate" style="margin-top:20px;">
         <div class="form-group">
-          <input type="password" id="lock-passcode-input" placeholder="Enter Passcode (Default: 2026)" required style="text-align:center; font-size:1.2rem; letter-spacing:2px;">
+          <input type="password" id="lock-passcode-input" placeholder="Enter Passcode" required style="text-align:center; font-size:1.2rem; letter-spacing:2px;">
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%; padding:14px; font-size:1rem; margin-top:10px;">Unlock Itinerary</button>
         <p id="lock-error-msg" style="color:var(--rose); font-size:0.85rem; margin-top:10px; display:none;">⚠️ Incorrect passcode. Please try again.</p>
@@ -79,8 +79,8 @@
 
     <!-- Main Navigation Bar -->
     <nav class="nav-tabs">
-      <button class="nav-tab active" data-tab="timeline">
-        <span>📅</span> Master Timeline
+      <button class="nav-tab active" data-tab="overview">
+        <span>📊</span> Overview Dashboard
       </button>
       <button class="nav-tab" data-tab="day-board">
         <span>🗓️</span> Day Board
@@ -95,7 +95,7 @@
         <span>🤖</span> Gemini AI Guardian
       </button>
       <button class="nav-tab" data-tab="settings">
-        <span>⚙️</span> Sync & Security
+        <span>⚙️</span> Sync & Deployment
       </button>
 
       <button class="btn btn-primary add-event-btn" id="btn-add-event">
@@ -106,27 +106,72 @@
     <!-- Main Content Panels -->
     <main class="main-content">
 
-      <!-- View 1: Maximally Beautiful Master Timeline -->
-      <section class="tab-panel active" id="panel-timeline">
-        <div class="panel-toolbar">
-          <div class="filter-group">
-            <button class="filter-chip active" data-filter="all">All Categories</button>
-            <button class="filter-chip" data-filter="flight">✈️ Flights</button>
-            <button class="filter-chip" data-filter="race">🏃 SeaWheeze Race</button>
-            <button class="filter-chip" data-filter="whistler">🏔️ Whistler Alpine</button>
-            <button class="filter-chip" data-filter="orca">🛶 Orca Glamping</button>
-            <button class="filter-chip" data-filter="city">🚗 Drives & Transports</button>
-            <button class="filter-chip" data-filter="sleep">🛌 Rest & Sleep</button>
-          </div>
-          <div class="view-actions">
-            <button class="btn btn-secondary" id="btn-export-json">📥 Export JSON</button>
-            <button class="btn btn-secondary" id="btn-reset-default">🔄 Reset to Master</button>
+      <!-- View 1: Maximally Beautiful Overview Dashboard -->
+      <section class="tab-panel active" id="panel-overview">
+        
+        <!-- Hero Section Banner -->
+        <div class="overview-hero-card">
+          <div class="hero-content">
+            <span class="hero-tag">🌲 PACIFIC NORTHWEST BUCKET-LIST EXPEDITION</span>
+            <h2>Vancouver, Alpine Whistler & Hanson Island Orca Glamping</h2>
+            <p>9 Days • 8 Nights • 64 Hours Sleep Guaranteed • Air Transfers YVR ✈️ YQQ • 0 Ferries</p>
+            <div class="hero-actions" style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+              <button class="btn btn-primary" id="btn-hero-dayboard">🗓️ View Full Day Board</button>
+              <button class="btn btn-emerald" id="btn-hero-ai">🤖 Run AI Guardian Audit</button>
+            </div>
           </div>
         </div>
 
-        <div class="timeline-container" id="timeline-list">
-          <!-- Rendered dynamically by app.js -->
+        <!-- 3 Master Destination Feature Cards -->
+        <div class="destinations-grid" style="margin-top:24px; display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+          
+          <!-- Card 1: Vancouver & SeaWheeze -->
+          <div class="destination-card">
+            <div class="dest-badge gold">DAYS 1 – 3 • VANCOUVER</div>
+            <h3>🏃 SeaWheeze Half Marathon & Coastal Vibe</h3>
+            <p class="dest-desc">Jack Poole Plaza packet pickup, Granville Island Public Market salmon lunch, Capilano Suspension Bridge redwoods walk, Shipyards Night Market, and Saturday SeaWheeze Half Marathon & Brockton Oval Sunset Festival.</p>
+            <div class="dest-footer">
+              <span>📍 Downtown Vancouver & Stanley Park</span>
+              <span class="pill-tag green">🛌 8.0h Sleep Target</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Whistler 2 Nights -->
+          <div class="destination-card">
+            <div class="dest-badge purple">DAYS 4 – 5 • WHISTLER</div>
+            <h3>🏔️ Alpine Peak 2 Peak, Joffre Lakes & Spa</h3>
+            <p class="dest-desc">Sea-to-Sky Hwy 99 fjord drive, Shannon Falls & Sea to Sky Gondola, Whistler Peak 2 Peak Gondola & Cloudraker Skybridge, 3 turquoise Joffre Glacial Lakes hike, and outdoor Scandinave Spa thermal baths.</p>
+            <div class="dest-footer">
+              <span>📍 Whistler Village & Pemberton</span>
+              <span class="pill-tag green">🛌 8.0h Sleep Target</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Orca Glamping Base Camp -->
+          <div class="destination-card">
+            <div class="dest-badge emerald">DAYS 6 – 9 • HANSON ISLAND</div>
+            <h3>🐋 At Water's Edge 3-Day Orca Glamping</h3>
+            <p class="dest-desc">Direct scenic flight YVR ✈️ YQQ, drive north to Telegraph Cove, 1-hr water taxi to Hanson Island Base Camp, tandem sea kayaking alongside Resident Orcas & Humpbacks, oceanfront wood-fired hot tub & cedar sauna.</p>
+            <div class="dest-footer">
+              <span>📍 Johnstone Strait & Hanson Island</span>
+              <span class="pill-tag green">🛌 8.0h Sleep Target</span>
+            </div>
+          </div>
+
         </div>
+
+        <!-- Interactive 9-Day Summary Quick Navigator -->
+        <div class="glass-card" style="margin-top:24px;">
+          <div class="card-header">
+            <h2>📅 9-Day Expedition Route Navigator</h2>
+            <p class="subtitle">Click any day card to jump directly to its complete timeline on the Day Board.</p>
+          </div>
+
+          <div class="day-overview-grid" id="day-overview-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-top:16px;">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+
       </section>
 
       <!-- View 2: Day Board Dashboard -->
@@ -134,6 +179,10 @@
         <div class="panel-toolbar" style="margin-bottom:16px;">
           <div style="font-family:var(--font-heading); font-size:1.1rem; font-weight:700; color:var(--text-main);">
             🗓️ 9-Day Column Overview (All 68 Transportation & Activity Events)
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" id="btn-export-json">📥 Export JSON</button>
+            <button class="btn btn-secondary" id="btn-reset-default">🔄 Reset to Master</button>
           </div>
         </div>
         <div class="day-board-grid" id="day-board-grid">
@@ -219,15 +268,9 @@
       <section class="tab-panel" id="panel-settings">
         <div class="glass-card">
           <div class="card-header">
-            <h2>⚙️ Multi-User Security & Cloud Sync Settings</h2>
+            <h2>⚙️ Multi-User Cloud Sync Settings</h2>
           </div>
           <div class="settings-form">
-            <div class="form-group">
-              <label for="cfg-app-passcode">Trip Group Private Passcode (PIN):</label>
-              <input type="text" id="cfg-app-passcode" placeholder="Default: 2026">
-              <small class="help-text">Anyone visiting your website must enter this passcode to view or edit the itinerary.</small>
-            </div>
-
             <div class="form-group">
               <label for="cfg-firebase-url">Firebase Realtime Database URL (Optional for live WebSockets sync across devices):</label>
               <input type="url" id="cfg-firebase-url" placeholder="https://your-project-default-rtdb.firebaseio.com/">
@@ -240,10 +283,7 @@
               <small class="help-text">Vercel serverless function `/api/ai-optimize` will automatically use `process.env.GEMINI_API_KEY` when deployed.</small>
             </div>
 
-            <div style="display:flex; gap:12px;">
-              <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
-              <button class="btn btn-secondary" id="btn-lock-app">🔒 Lock App Now</button>
-            </div>
+            <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
           </div>
         </div>
       </section>

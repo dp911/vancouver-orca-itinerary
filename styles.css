@@ -317,112 +317,6 @@ body {
   border-color: rgba(56, 189, 248, 0.4);
 }
 
-/* Timeline Layout */
-.timeline-container {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.day-timeline-group {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-glow);
-}
-
-.timeline-day-header {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--glass-border);
-  padding-bottom: 12px;
-}
-
-.sleep-indicator-bar {
-  font-size: 0.8rem;
-  color: var(--emerald);
-  background: rgba(16, 185, 129, 0.12);
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-.event-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid var(--glass-border);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.2s ease;
-}
-
-.event-card:hover {
-  background: var(--bg-card-hover);
-  transform: translateX(3px);
-}
-
-.event-card.cat-flight { border-left-color: var(--cat-flight); }
-.event-card.cat-race { border-left-color: var(--cat-race); }
-.event-card.cat-whistler { border-left-color: var(--cat-whistler); }
-.event-card.cat-orca { border-left-color: var(--cat-orca); }
-.event-card.cat-ferry { border-left-color: var(--cat-ferry); }
-.event-card.cat-sleep { border-left-color: var(--cat-sleep); opacity: 0.85; }
-.event-card.cat-dining { border-left-color: var(--cat-dining); }
-.event-card.cat-city { border-left-color: var(--cat-city); }
-
-.event-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.event-time {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 0.95rem;
-  min-width: 100px;
-}
-
-.event-info h3 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.event-meta {
-  display: flex;
-  gap: 16px;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-top: 4px;
-  flex-wrap: wrap;
-}
-
-.lock-badge {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--gold);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-weight: 700;
-}
-
 /* Day Board Grid */
 .day-board-grid {
   display: grid;
@@ -455,6 +349,115 @@ body {
   gap: 10px;
   max-height: 650px;
   overflow-y: auto;
+}
+
+/* Overview Dashboard Styles */
+.overview-hero-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%),
+              radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.2) 0%, transparent 60%);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.hero-tag {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.hero-content h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-top: 6px;
+}
+
+.hero-content p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+.destination-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-glow);
+  transition: all 0.25s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.dest-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+.dest-badge.gold { background: rgba(245, 158, 11, 0.15); color: var(--gold); border: 1px solid rgba(245, 158, 11, 0.3); }
+.dest-badge.purple { background: rgba(168, 85, 247, 0.15); color: var(--purple); border: 1px solid rgba(168, 85, 247, 0.3); }
+.dest-badge.emerald { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+.destination-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dest-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.dest-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--glass-border);
+  padding-top: 12px;
+}
+
+.day-overview-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.day-overview-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.day-overview-card h4 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
 }
 
 /* Glass Cards & Forms */

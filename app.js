@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Maximally Beautiful Master Timeline + Detailed Day Board Dashboard
+   Maximally Beautiful Overview Dashboard + Detailed Day Board Dashboard
    ========================================================================== */
 
 const MASTER_SCHEDULE = [
@@ -104,7 +104,6 @@ const SEASICKNESS_CHECKLIST = [
 // State Management
 let currentSchedule = [];
 let changeLog = [];
-let activeCategoryFilter = 'all';
 let dbRef = null;
 
 // Initialize Application
@@ -131,10 +130,10 @@ function checkLockState() {
 // Load Schedule from LocalStorage or Default
 function loadData() {
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '4.0_master_timeline_beauty') {
+  if (version !== '5.0_overview_dashboard') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '4.0_master_timeline_beauty');
+    localStorage.setItem('vancouver_app_version', '5.0_overview_dashboard');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
@@ -158,15 +157,12 @@ function loadData() {
 function initFirebaseSync() {
   const fbUrl = localStorage.getItem('vancouver_firebase_url');
   const gemKey = localStorage.getItem('vancouver_gemini_key');
-  const passCode = localStorage.getItem('vancouver_passcode') || '2026';
 
   const fbInput = document.getElementById('cfg-firebase-url');
   const gemInput = document.getElementById('cfg-gemini-key');
-  const passInput = document.getElementById('cfg-app-passcode');
 
   if (fbInput && fbUrl) fbInput.value = fbUrl;
   if (gemInput && gemKey) gemInput.value = gemKey;
-  if (passInput) passInput.value = passCode;
 
   if (fbUrl && typeof firebase !== 'undefined') {
     try {
@@ -203,7 +199,7 @@ function saveData() {
 // Render Master Views
 function renderAll() {
   renderMetrics();
-  renderTimeline();
+  renderOverviewDashboard();
   renderDayBoard();
   renderChangelog();
   renderSeasicknessProtocol();
@@ -217,71 +213,43 @@ function renderMetrics() {
   if (countElem) countElem.innerText = changeLog.length;
 }
 
-// Render Maximally Beautiful Master Timeline
-function renderTimeline() {
-  const container = document.getElementById('timeline-list');
-  if (!container) return;
-  container.innerHTML = '';
+// Render Maximally Beautiful Overview Dashboard
+function renderOverviewDashboard() {
+  const grid = document.getElementById('day-overview-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
 
-  const days = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const dayTitles = {
-    1: 'Day 1: Thurs Aug 6 — Arrival & SUV Pickup at YVR',
-    2: 'Day 2: Fri Aug 7 — SeaWheeze Prep & Vancouver Highlights',
-    3: 'Day 3: Sat Aug 8 — RACE DAY: SeaWheeze Half Marathon & Sunset Festival',
-    4: 'Day 4: Sun Aug 9 — DRIVE TO WHISTLER (Peak 2 Peak & Cloudraker Skybridge)',
-    5: 'Day 5: Mon Aug 10 — ULTIMATE WHISTLER HIKES (Joffre Lakes & Scandinave Spa)',
-    6: 'Day 6: Tues Aug 11 — Drive to YVR ➔ Flight YVR-YQQ (Comox) ➔ Drive to Telegraph Cove',
-    7: 'Day 7: Wed Aug 12 — 🐋 AT WATER’S EDGE ORCA GLAMPING BASE CAMP (Day 1)',
-    8: 'Day 8: Thurs Aug 13 — 🐋 AT WATER’S EDGE ORCA GLAMPING BASE CAMP (Day 2)',
-    9: 'Day 9: Fri Aug 14 — 🐋 Base Camp Day 3 ➔ Flight YQQ-YVR ➔ Flight Home to JFK'
-  };
+  const daySummaries = [
+    { day: 1, date: 'Thurs Aug 6', title: 'Arrival & SUV Pickup', icon: '✈️', highlight: 'JFK ➔ YVR Direct Flight (9:55 PM arrival), SUV pickup & Coal Harbour check-in.', count: 4 },
+    { day: 2, date: 'Fri Aug 7', title: 'SeaWheeze Expo & Vancouver', icon: '🎽', highlight: 'Package pickup, Gastown, Granville Island market lunch, Capilano Suspension Bridge, Shipyards Night Market.', count: 9 },
+    { day: 3, date: 'Sat Aug 8', title: 'RACE DAY: SeaWheeze 13.1', icon: '🏃', highlight: '7:00 AM Half Marathon start, Convention Centre recovery zone, Sunset Festival at Stanley Park.', count: 7 },
+    { day: 4, date: 'Sun Aug 9', title: 'Drive to Whistler (Whistler Day 1)', icon: '🚘', highlight: 'Sea-to-Sky Hwy 99 drive, Shannon Falls, Sea to Sky Gondola, Whistler Peak 2 Peak & Cloudraker Skybridge.', count: 9 },
+    { day: 5, date: 'Mon Aug 10', title: 'Whistler Hikes & Thermal Spa', icon: '🥾', highlight: 'Joffre Glacial Lakes 10km hike (3 turquoise lakes), Lost Lake & Train Wreck trail, Scandinave Spa hydrotherapy.', count: 7 },
+    { day: 6, date: 'Tues Aug 11', title: 'Drive YVR ➔ Flight YQQ ➔ Telegraph Cove', icon: '✈️', highlight: 'Drive down Hwy 99, 12:30 PM scenic flight YVR ➔ YQQ (Comox), pick up Island SUV, Elk Falls gorge, drive to Telegraph Cove.', count: 9 },
+    { day: 7, date: 'Wed Aug 12', title: 'At Water’s Edge Glamping (Day 1)', icon: '🐋', highlight: '1-hr water taxi to Hanson Island Base Camp, safari tent check-in, first Orca & Humpback kayak paddle, oceanfront hot tub.', count: 7 },
+    { day: 8, date: 'Thurs Aug 13', title: 'At Water’s Edge Glamping (Day 2)', icon: '🛶', highlight: 'Tent coffee watching Orcas, full-day remote paddle in Blackney Passage & Robson Bight, cedar sauna & campfire dinner.', count: 6 },
+    { day: 9, date: 'Fri Aug 14', title: 'Dawn Paddle ➔ Flight YQQ-YVR ➔ JFK', icon: '✈️', highlight: 'Dawn reef paddle, 1:30 PM water taxi return, drive to Comox YQQ, 6:30 PM flight YQQ ➔ YVR, Miku Aburi sushi dinner, 11:15 PM flight YVR ➔ JFK.', count: 10 }
+  ];
 
-  days.forEach(dayNum => {
-    let dayEvents = currentSchedule.filter(e => e.day === dayNum);
-    
-    if (activeCategoryFilter !== 'all') {
-      dayEvents = dayEvents.filter(e => e.category === activeCategoryFilter);
-    }
+  daySummaries.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'day-overview-card';
+    card.setAttribute('data-day', d.day);
 
-    if (dayEvents.length === 0 && activeCategoryFilter !== 'all') return;
-
-    const dayGroup = document.createElement('div');
-    dayGroup.className = 'day-timeline-group';
-
-    dayGroup.innerHTML = `
-      <div class="timeline-day-header">
-        <span>${dayTitles[dayNum]}</span>
-        <span class="sleep-indicator-bar">🌙 8.0 Hrs Sleep Guaranteed</span>
+    card.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:0.8rem; font-weight:700; color:var(--primary);">${d.date}</span>
+        <span class="pill-tag emerald" style="font-size:0.7rem;">${d.count} Events</span>
+      </div>
+      <h4>${d.icon} Day ${d.day}: ${d.title}</h4>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px; line-height:1.4;">${d.highlight}</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; border-top:1px solid var(--glass-border); padding-top:8px;">
+        <span style="font-size:0.75rem; color:var(--emerald); font-weight:600;">🌙 8.0h Rest Pass</span>
+        <span style="font-size:0.75rem; color:var(--primary); font-weight:700;">View Day Board ➔</span>
       </div>
     `;
 
-    dayEvents.forEach(evt => {
-      const card = document.createElement('div');
-      card.className = `event-card cat-${evt.category}`;
-
-      const lockBadge = evt.isLocked ? `<span class="lock-badge">🔒 Protected Anchor</span>` : '';
-
-      card.innerHTML = `
-        <div class="event-left">
-          <div class="event-time">${evt.startTime} - ${evt.endTime}</div>
-          <div class="event-info">
-            <h3>${evt.title} ${lockBadge}</h3>
-            <div class="event-meta">
-              <span>📍 ${evt.location || 'Vancouver / BC'}</span>
-              <span>📝 ${evt.notes || ''}</span>
-            </div>
-          </div>
-        </div>
-        <div class="event-actions">
-          <button class="btn-icon btn-edit" data-id="${evt.id}" title="Edit Event">✏️</button>
-          ${!evt.isLocked ? `<button class="btn-icon btn-delete" data-id="${evt.id}" title="Delete Event">🗑️</button>` : ''}
-        </div>
-      `;
-
-      dayGroup.appendChild(card);
-    });
-
-    container.appendChild(dayGroup);
+    grid.appendChild(card);
   });
 }
 
@@ -393,7 +361,7 @@ function setupEventListeners() {
     formLock.addEventListener('submit', (e) => {
       e.preventDefault();
       const enteredPass = document.getElementById('lock-passcode-input')?.value?.trim();
-      const currentPass = localStorage.getItem('vancouver_passcode') || '2026';
+      const currentPass = '2026';
       const errorMsg = document.getElementById('lock-error-msg');
 
       if (enteredPass === currentPass) {
@@ -406,12 +374,39 @@ function setupEventListeners() {
     });
   }
 
-  // Lock App Button
-  const btnLockApp = document.getElementById('btn-lock-app');
-  if (btnLockApp) {
-    btnLockApp.addEventListener('click', () => {
-      sessionStorage.removeItem('vancouver_unlocked');
-      document.getElementById('app-lock-screen')?.classList.add('active');
+  // Hero Buttons
+  const btnHeroDayboard = document.getElementById('btn-hero-dayboard');
+  const btnHeroAi = document.getElementById('btn-hero-ai');
+
+  if (btnHeroDayboard) {
+    btnHeroDayboard.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('.nav-tab[data-tab="day-board"]')?.classList.add('active');
+      document.getElementById('panel-day-board')?.classList.add('active');
+    });
+  }
+
+  if (btnHeroAi) {
+    btnHeroAi.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('.nav-tab[data-tab="ai-guardian"]')?.classList.add('active');
+      document.getElementById('panel-ai-guardian')?.classList.add('active');
+    });
+  }
+
+  // Delegate Click on Day Overview Cards to Jump to Day Board
+  const overviewGrid = document.getElementById('day-overview-grid');
+  if (overviewGrid) {
+    overviewGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('.day-overview-card');
+      if (card) {
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('.nav-tab[data-tab="day-board"]')?.classList.add('active');
+        document.getElementById('panel-day-board')?.classList.add('active');
+      }
     });
   }
 
@@ -425,16 +420,6 @@ function setupEventListeners() {
       e.currentTarget.classList.add('active');
       const panel = document.getElementById(`panel-${targetTab}`);
       if (panel) panel.classList.add('active');
-    });
-  });
-
-  // Category Filters
-  document.querySelectorAll('.filter-chip').forEach(chip => {
-    chip.addEventListener('click', (e) => {
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      activeCategoryFilter = e.currentTarget.dataset.filter;
-      renderTimeline();
     });
   });
 
@@ -457,24 +442,20 @@ function setupEventListeners() {
     btnSaveSettings.addEventListener('click', () => {
       const fbUrl = document.getElementById('cfg-firebase-url')?.value?.trim();
       const gemKey = document.getElementById('cfg-gemini-key')?.value?.trim();
-      const passCode = document.getElementById('cfg-app-passcode')?.value?.trim();
 
-      if (passCode) localStorage.setItem('vancouver_passcode', passCode);
       if (fbUrl) {
         localStorage.setItem('vancouver_firebase_url', fbUrl);
         initFirebaseSync();
       }
       if (gemKey) localStorage.setItem('vancouver_gemini_key', gemKey);
-      alert('⚙️ Security Passcode & Settings saved successfully!');
+      alert('⚙️ Settings saved successfully!');
     });
   }
 
-  // Delegate Edit/Delete buttons on Timeline & Day Board
-  ['timeline-list', 'day-board-grid'].forEach(containerId => {
-    const elem = document.getElementById(containerId);
-    if (!elem) return;
-
-    elem.addEventListener('click', (e) => {
+  // Delegate Edit/Delete buttons on Day Board
+  const dayBoardGrid = document.getElementById('day-board-grid');
+  if (dayBoardGrid) {
+    dayBoardGrid.addEventListener('click', (e) => {
       const editBtn = e.target.closest('.btn-edit');
       const deleteBtn = e.target.closest('.btn-delete');
 
@@ -493,7 +474,7 @@ function setupEventListeners() {
         }
       }
     });
-  });
+  }
 
   // Delegate Revert buttons on Changelog
   const logContainer = document.getElementById('changelog-list');
