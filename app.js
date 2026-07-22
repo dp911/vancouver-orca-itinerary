@@ -159,8 +159,10 @@ function renderAll() {
 }
 
 function renderMetrics() {
-  document.getElementById('stat-edits').innerText = `${changeLog.length} Edits`;
-  document.getElementById('changelog-count').innerText = changeLog.length;
+  const editsElem = document.getElementById('stat-edits');
+  const countElem = document.getElementById('changelog-count');
+  if (editsElem) editsElem.innerText = `${changeLog.length} Edits`;
+  if (countElem) countElem.innerText = changeLog.length;
 }
 
 // Render Maximally Beautiful Master Timeline
@@ -341,7 +343,8 @@ function setupEventListeners() {
 
       const targetTab = e.currentTarget.dataset.tab;
       e.currentTarget.classList.add('active');
-      document.getElementById(`panel-${targetTab}`).classList.add('active');
+      const panel = document.getElementById(`panel-${targetTab}`);
+      if (panel) panel.classList.add('active');
     });
   });
 
@@ -356,12 +359,29 @@ function setupEventListeners() {
   });
 
   // Modal Open / Close
-  document.getElementById('btn-add-event').addEventListener('click', () => openEditModal());
-  document.getElementById('btn-modal-close').addEventListener('click', closeEditModal);
-  document.getElementById('btn-modal-cancel').addEventListener('click', closeEditModal);
+  const btnAdd = document.getElementById('btn-add-event');
+  const btnClose = document.getElementById('btn-modal-close');
+  const btnCancel = document.getElementById('btn-modal-cancel');
+  
+  if (btnAdd) btnAdd.addEventListener('click', () => openEditModal());
+  if (btnClose) btnClose.addEventListener('click', closeEditModal);
+  if (btnCancel) btnCancel.addEventListener('click', closeEditModal);
 
   // Form Submit
-  document.getElementById('form-edit-event').addEventListener('submit', handleFormSubmit);
+  const formEdit = document.getElementById('form-edit-event');
+  if (formEdit) formEdit.addEventListener('submit', handleFormSubmit);
+
+  // Save Settings Button
+  const btnSaveSettings = document.getElementById('btn-save-settings');
+  if (btnSaveSettings) {
+    btnSaveSettings.addEventListener('click', () => {
+      const fbUrl = document.getElementById('cfg-firebase-url')?.value;
+      const gemKey = document.getElementById('cfg-gemini-key')?.value;
+      if (fbUrl) localStorage.setItem('vancouver_firebase_url', fbUrl);
+      if (gemKey) localStorage.setItem('vancouver_gemini_key', gemKey);
+      alert('⚙️ Settings saved successfully to local environment!');
+    });
+  }
 
   // Delegate Edit/Delete buttons on Timeline & Day Board
   ['timeline-list', 'day-board-grid'].forEach(containerId => {
@@ -390,39 +410,51 @@ function setupEventListeners() {
   });
 
   // Delegate Revert buttons on Changelog
-  document.getElementById('changelog-list').addEventListener('click', (e) => {
-    const revertBtn = e.target.closest('.btn-revert');
-    if (revertBtn) {
-      const logIdx = parseInt(revertBtn.dataset.index);
-      revertChange(logIdx);
-    }
-  });
+  const logContainer = document.getElementById('changelog-list');
+  if (logContainer) {
+    logContainer.addEventListener('click', (e) => {
+      const revertBtn = e.target.closest('.btn-revert');
+      if (revertBtn) {
+        const logIdx = parseInt(revertBtn.dataset.index);
+        revertChange(logIdx);
+      }
+    });
+  }
 
   // Export JSON
-  document.getElementById('btn-export-json').addEventListener('click', () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentSchedule, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "vancouver_whistler_orca_full_logistics.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  });
+  const btnExport = document.getElementById('btn-export-json');
+  if (btnExport) {
+    btnExport.addEventListener('click', () => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentSchedule, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "vancouver_whistler_orca_full_logistics.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    });
+  }
 
   // Reset to Default Master
-  document.getElementById('btn-reset-default').addEventListener('click', () => {
-    if (confirm('Reset schedule to the 100% complete transport-inclusive master plan?')) {
-      currentSchedule = [...MASTER_SCHEDULE];
-      changeLog = [];
-      saveData();
-      renderAll();
-    }
-  });
+  const btnReset = document.getElementById('btn-reset-default');
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      if (confirm('Reset schedule to the 100% complete transport-inclusive master plan?')) {
+        currentSchedule = [...MASTER_SCHEDULE];
+        changeLog = [];
+        saveData();
+        renderAll();
+      }
+    });
+  }
 
   // Run AI Audit Button
-  document.getElementById('btn-run-ai').addEventListener('click', () => {
-    runAutonomousAIAudit();
-  });
+  const btnAi = document.getElementById('btn-run-ai');
+  if (btnAi) {
+    btnAi.addEventListener('click', () => {
+      runAutonomousAIAudit();
+    });
+  }
 }
 
 // Modal Handlers
@@ -537,7 +569,9 @@ function revertChange(logIdx) {
 // Autonomous Gemini AI Engine Call
 async function runAutonomousAIAudit(modifiedEvent = null, authorName = '', changeReason = '') {
   const statusElem = document.getElementById('ai-status');
-  statusElem.innerHTML = `<span class="pulse-dot green"></span> Running Autonomous Gemini AI Audit...`;
+  if (statusElem) {
+    statusElem.innerHTML = `<span class="pulse-dot green"></span> Running Autonomous Gemini AI Audit...`;
+  }
 
   try {
     const response = await fetch('/api/ai-optimize', {
@@ -553,46 +587,59 @@ async function runAutonomousAIAudit(modifiedEvent = null, authorName = '', chang
 
     const data = await response.json();
     renderAIResults(data);
-    statusElem.innerHTML = `<span class="pulse-dot green"></span> Gemini AI Active (${data.source || 'gemini-2.0-flash'})`;
+    if (statusElem) {
+      statusElem.innerHTML = `<span class="pulse-dot green"></span> Gemini AI Active (${data.source || 'gemini-2.0-flash'})`;
+    }
   } catch (err) {
     console.warn('Backend API unavailable, using local rules engine:', err);
     renderAIResults(calculateLocalAnalysis());
-    statusElem.innerHTML = `<span class="pulse-dot green"></span> Gemini AI Active (Local Rules Mode)`;
+    if (statusElem) {
+      statusElem.innerHTML = `<span class="pulse-dot green"></span> Gemini AI Active (Local Rules Mode)`;
+    }
   }
 }
 
 function renderAIResults(data) {
-  document.getElementById('ai-impact-text').innerText = data.impactSummary || 'Schedule is fully optimized with 8-hour sleep compliance across all nights.';
+  const impactElem = document.getElementById('ai-impact-text');
+  if (impactElem) {
+    impactElem.innerText = data.impactSummary || 'Schedule is fully optimized with 8-hour sleep compliance across all nights.';
+  }
 
   // Sleep Grid
   const sleepGrid = document.getElementById('ai-sleep-grid');
-  sleepGrid.innerHTML = '';
-  const nights = data.sleepCompliance || calculateLocalAnalysis().sleepCompliance;
+  if (sleepGrid) {
+    sleepGrid.innerHTML = '';
+    const nights = data.sleepCompliance || calculateLocalAnalysis().sleepCompliance;
 
-  nights.forEach(n => {
-    const chip = document.createElement('div');
-    chip.className = `sleep-chip ${n.pass ? 'pass' : 'fail'}`;
-    chip.innerHTML = `<span>${n.name}</span> <strong>${n.hours}h (${n.pass ? 'PASS' : 'FAIL'})</strong>`;
-    sleepGrid.appendChild(chip);
-  });
+    nights.forEach(n => {
+      const chip = document.createElement('div');
+      chip.className = `sleep-chip ${n.pass ? 'pass' : 'fail'}`;
+      chip.innerHTML = `<span>${n.name}</span> <strong>${n.hours}h (${n.pass ? 'PASS' : 'FAIL'})</strong>`;
+      sleepGrid.appendChild(chip);
+    });
+  }
 
   // Warnings
   const warnList = document.getElementById('ai-warning-list');
-  warnList.innerHTML = '';
-  (data.warnings || []).forEach(w => {
-    const li = document.createElement('li');
-    li.innerText = w;
-    warnList.appendChild(li);
-  });
+  if (warnList) {
+    warnList.innerHTML = '';
+    (data.warnings || []).forEach(w => {
+      const li = document.createElement('li');
+      li.innerText = w;
+      warnList.appendChild(li);
+    });
+  }
 
   // Recommendations
   const recList = document.getElementById('ai-rec-list');
-  recList.innerHTML = '';
-  (data.recommendations || []).forEach(r => {
-    const li = document.createElement('li');
-    li.innerText = r;
-    recList.appendChild(li);
-  });
+  if (recList) {
+    recList.innerHTML = '';
+    (data.recommendations || []).forEach(r => {
+      const li = document.createElement('li');
+      li.innerText = r;
+      recList.appendChild(li);
+    });
+  }
 }
 
 function calculateLocalAnalysis() {

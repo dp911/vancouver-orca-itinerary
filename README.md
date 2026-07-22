@@ -1,73 +1,39 @@
-# 🌲 Collaborative Vancouver, Whistler & 3-Day Orca Expedition Web App
+# 🌲 Ultimate Vancouver, 2-Night Whistler & At Water's Edge Orca Expedition App
 
-A high-performance, real-time, interactive web dashboard for managing, editing, and optimizing your 9-day trip to Vancouver, Whistler, and Hanson Island / Johnstone Strait Orca Glamping.
-
-Built with **Pacific Northwest Dark Mode Glassmorphism**, real-time collaborator audit logging, protected anchor locks, and an **Autonomous Gemini AI Trip Guardian** that evaluates every change for the **strict 8-hour sleep rule** and drive logistics.
+A high-performance, responsive, collaborative web application built for managing and optimizing your 9-day Southwestern British Columbia master expedition (Aug 6 – Aug 15, 2026).
 
 ---
 
-## 🚀 Free Deployment Guide (Step-by-Step)
+## 📌 Verified 7 Non-Negotiable Anchors
 
-### Option A: 1-Click Vercel Deployment (Recommended - $0/mo)
-
-1. **Push to GitHub:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit of Vancouver Orca Itinerary Dashboard"
-   git remote add origin https://github.com/YOUR_USERNAME/vancouver-orca-itinerary.git
-   git push -u origin main
-   ```
-
-2. **Deploy on Vercel:**
-   * Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
-   * Import your `vancouver-orca-itinerary` repository.
-   * Click **"Deploy"** (Vercel automatically detects the static frontend and `/api/ai-optimize.js` serverless function).
-
-3. **Add Free Gemini API Key to Vercel:**
-   * Get a free API key at [aistudio.google.com](https://aistudio.google.com).
-   * In Vercel, go to **Project Settings ➔ Environment Variables**.
-   * Add `GEMINI_API_KEY` = `your_actual_key_here`.
-   * Redeploy. Now Gemini 2.0 Flash will autonomously analyze every edit made by anyone with the link!
+1. **Inbound Flight**: Direct flight JFK ✈️ YVR (**Thurs 8/6** arriving 9:55 PM).
+2. **Outbound Flight**: Direct flight YVR ✈️ JFK (**Fri 8/14** departing 11:15 PM).
+3. **Race Day**: SeaWheeze Half Marathon & Sunset Festival at Stanley Park (**Sat 8/8**).
+4. **Whistler Branch**: 2 Full Nights in Whistler (**Sun 8/9 & Mon 8/10**) featuring Peak 2 Peak Gondola, Cloudraker Skybridge, Joffre Lakes Glacial Hike, Lost Lake & Scandinave Spa.
+5. **Island Flight Transfers**: Flight YVR ✈️ YQQ Comox (**Tues 8/11 12:30 PM**) and Flight YQQ ✈️ YVR (**Fri 8/14 6:30 PM**).
+6. **Orca Expedition**: 3-Day / 2-Night Base Camp with **At Water's Edge Adventures** on Hanson Island / Johnstone Strait (**Wed 8/12 – Fri 8/14**).
+7. **Strict 8-Hour Sleep Guarantee**: Minimum **8.0 Hours of Continuous Rest Every Single Night** (8/8 nights pass).
 
 ---
 
-### Option B: Optional Free Firebase Realtime Database (Multi-Device Live Sync)
+## ✨ Features & Architecture
 
-If you want live WebSocket updates across multiple devices simultaneously (when Person A makes an edit, Person B's screen updates instantly without refreshing):
-
-1. Go to [console.firebase.google.com](https://console.firebase.google.com) and create a free project.
-2. Click **Build ➔ Realtime Database ➔ Create Database**.
-3. Set rules to public read/write for your trip group:
-   ```json
-   {
-     "rules": {
-       ".read": true,
-       ".write": true
-     }
-   }
-   ```
-4. Copy your Database URL (`https://your-app-default-rtdb.firebaseio.com/`).
-5. Open the web app ➔ Navigate to **⚙️ Sync & Deployment** tab ➔ Paste your Database URL and click **Save Settings**.
+* **📅 Maximally Beautiful Master Timeline**: Rich Pacific Northwest dark glassmorphism design with category filters (Flights, Race, Whistler, Orca, Drives & Transports, Sleep).
+* **🗓️ Day Board Dashboard**: 9-column kanban board displaying all 68 detailed events including every rental SUV pickup/return, drive segment (Hwy 99, Hwy 19), water taxi, and check-in window.
+* **🤖 Autonomous Gemini AI Guardian**: Serverless function (`/api/ai-optimize.js`) powered by `gemini-2.0-flash` evaluating edit impacts and sleep compliance in real-time.
+* **📜 Realtime Audit Changelog**: Every modification requires author name & rationale, with one-click instant state revert.
+* **🛶 6-Step Vomit-Free Seasickness Protocol**: Hanson Island Orca kayaking guidelines tailored for seasickness prevention.
 
 ---
 
-## 🛠️ Local Development
+## 🚀 How to Deploy on Vercel ($0 Free Tier)
 
-To run the web application on your local machine:
-
-```bash
-# Start local server
-npm start
-```
-Then open `http://localhost:3000` in your browser.
-
----
-
-## 📌 Features Included
-
-* 🔒 **Protected Anchor Locks:** Non-negotiable flights and race start cannot be accidentally overwritten.
-* 🌙 **Strict 8-Hour Sleep Rule Engine:** Verifies 8.0 hours of continuous rest for all 8 nights.
-* 📜 **Collaborator Audit Changelog & 1-Click Revert:** Tracks editor name, timestamp, reason, and supports instant rollback.
-* 🛶 **Interactive Seasickness Protocol Tracker:** 6-step checklist for Hanson Island Orca Glamping.
-* 🤖 **Autonomous Gemini AI Guardian:** Evaluates logistics and suggests 1-click schedule optimizations.
+1. **Push Repository to GitHub**:
+   * Drag & drop the entire folder onto GitHub Web or use `git push`.
+2. **Deploy on Vercel**:
+   * Log into [Vercel](https://vercel.com).
+   * Click **New Project** ➔ Import your `vancouver-orca-itinerary` GitHub repository.
+   * Add Environment Variable:
+     * `GEMINI_API_KEY`: *(Your Google Gemini API Key from Google AI Studio)*
+   * Click **Deploy**.
+3. **Done!** Your app will be live with real-time AI reasoning and full mobile responsiveness!
