@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Pacific Northwest Dark Mode Design System
+   Pacific Northwest Dark Mode Design System with Subtle Pink Accent Touch
    ========================================================================== */
 
 :root {
@@ -11,12 +11,12 @@
   --text-muted: #94A3B8;
   --text-inverse: #0F172A;
 
-  /* Refined Sophisticated Color Palette */
+  /* Color Palette with Subtle Warm Pink Accent */
   --primary: #38BDF8;      /* Cyan Sky */
   --emerald: #10B981;      /* Orca Emerald */
   --gold: #F59E0B;         /* SeaWheeze Gold */
   --purple: #A855F7;       /* Whistler Purple */
-  --pink-subtle: #EC4899;  /* Subtle Magenta Accent */
+  --pink-subtle: #EC4899;  /* Subtle Magenta/Pink Accent */
   --rose: #F43F5E;         /* Alert Red */
 
   --radius-sm: 8px;
@@ -38,7 +38,8 @@ body {
   background-color: var(--bg-dark);
   background-image: 
     radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+    radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 20%, rgba(236, 72, 153, 0.04) 0%, transparent 50%); /* Subtle touch of warm pink in background */
   color: var(--text-main);
   min-height: 100vh;
   line-height: 1.5;
