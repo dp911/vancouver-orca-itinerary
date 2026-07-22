@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN for Interactive Visual Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Firebase SDKs for optional live cloud sync -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -106,65 +108,152 @@
     <!-- Main Content Panels -->
     <main class="main-content">
 
-      <!-- View 1: Maximally Beautiful Overview Dashboard -->
+      <!-- View 1: Intuitive Visual Overview Dashboard -->
       <section class="tab-panel active" id="panel-overview">
         
-        <!-- Hero Section Banner -->
-        <div class="overview-hero-card">
-          <div class="hero-content">
-            <span class="hero-tag">🌲 PACIFIC NORTHWEST BUCKET-LIST EXPEDITION</span>
-            <h2>Vancouver, Alpine Whistler & Hanson Island Orca Glamping</h2>
-            <p>9 Days • 8 Nights • 64 Hours Sleep Guaranteed • Air Transfers YVR ✈️ YQQ • 0 Ferries</p>
-            <div class="hero-actions" style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
-              <button class="btn btn-primary" id="btn-hero-dayboard">🗓️ View Full Day Board</button>
-              <button class="btn btn-emerald" id="btn-hero-ai">🤖 Run AI Guardian Audit</button>
+        <!-- Quick Stat Highlights Row -->
+        <div class="stat-highlight-grid">
+          <div class="stat-box">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-details">
+              <span class="stat-num">216 Hrs</span>
+              <span class="stat-desc">Total Trip Duration</span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon">🛶</div>
+            <div class="stat-details">
+              <span class="stat-num">15.5 Hrs</span>
+              <span class="stat-desc">Orca Kayak Paddling</span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon">🚗</div>
+            <div class="stat-details">
+              <span class="stat-num">8.5 Hrs</span>
+              <span class="stat-desc">Scenic Highway Drives</span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon">🛌</div>
+            <div class="stat-details">
+              <span class="stat-num green">64.0 Hrs</span>
+              <span class="stat-desc">Rest & Sleep Pass</span>
             </div>
           </div>
         </div>
 
-        <!-- 3 Master Destination Feature Cards -->
-        <div class="destinations-grid" style="margin-top:24px; display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+        <!-- Visual Analytics Row (Charts & Visuals) -->
+        <div class="analytics-row" style="margin-top:24px; display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:20px;">
           
-          <!-- Card 1: Vancouver & SeaWheeze -->
-          <div class="destination-card">
-            <div class="dest-badge gold">DAYS 1 – 3 • VANCOUVER</div>
-            <h3>🏃 SeaWheeze Half Marathon & Coastal Vibe</h3>
-            <p class="dest-desc">Jack Poole Plaza packet pickup, Granville Island Public Market salmon lunch, Capilano Suspension Bridge redwoods walk, Shipyards Night Market, and Saturday SeaWheeze Half Marathon & Brockton Oval Sunset Festival.</p>
-            <div class="dest-footer">
-              <span>📍 Downtown Vancouver & Stanley Park</span>
-              <span class="pill-tag green">🛌 8.0h Sleep Target</span>
+          <!-- Chart 1: Expedition Time Breakdown Donut Chart -->
+          <div class="glass-card chart-card">
+            <div class="card-header">
+              <h2>📊 Activity Time Distribution</h2>
+              <p class="subtitle">Breakdown of total expedition hours by category</p>
+            </div>
+            <div class="chart-container" style="position:relative; height:260px; margin-top:16px;">
+              <canvas id="chart-category-donut"></canvas>
             </div>
           </div>
 
-          <!-- Card 2: Whistler 2 Nights -->
-          <div class="destination-card">
-            <div class="dest-badge purple">DAYS 4 – 5 • WHISTLER</div>
-            <h3>🏔️ Alpine Peak 2 Peak, Joffre Lakes & Spa</h3>
-            <p class="dest-desc">Sea-to-Sky Hwy 99 fjord drive, Shannon Falls & Sea to Sky Gondola, Whistler Peak 2 Peak Gondola & Cloudraker Skybridge, 3 turquoise Joffre Glacial Lakes hike, and outdoor Scandinave Spa thermal baths.</p>
-            <div class="dest-footer">
-              <span>📍 Whistler Village & Pemberton</span>
-              <span class="pill-tag green">🛌 8.0h Sleep Target</span>
+          <!-- Chart 2: Nightly Rest Guarantee Bar Chart -->
+          <div class="glass-card chart-card">
+            <div class="card-header">
+              <h2>🌙 Nightly Sleep Compliance (Target: 8.0h)</h2>
+              <p class="subtitle">Guaranteed rest hours for all 8 nights of the trip</p>
+            </div>
+            <div class="chart-container" style="position:relative; height:260px; margin-top:16px;">
+              <canvas id="chart-sleep-bar"></canvas>
             </div>
           </div>
 
-          <!-- Card 3: Orca Glamping Base Camp -->
-          <div class="destination-card">
-            <div class="dest-badge emerald">DAYS 6 – 9 • HANSON ISLAND</div>
-            <h3>🐋 At Water's Edge 3-Day Orca Glamping</h3>
-            <p class="dest-desc">Direct scenic flight YVR ✈️ YQQ, drive north to Telegraph Cove, 1-hr water taxi to Hanson Island Base Camp, tandem sea kayaking alongside Resident Orcas & Humpbacks, oceanfront wood-fired hot tub & cedar sauna.</p>
-            <div class="dest-footer">
-              <span>📍 Johnstone Strait & Hanson Island</span>
-              <span class="pill-tag green">🛌 8.0h Sleep Target</span>
-            </div>
+        </div>
+
+        <!-- Multi-Leg Route & Transportation Flow Map -->
+        <div class="glass-card" style="margin-top:24px;">
+          <div class="card-header">
+            <h2>🗺️ Multi-Leg Expedition Logistics Route</h2>
+            <p class="subtitle">Intermediary flight transfers, rental SUV highway legs, and island water taxis</p>
           </div>
 
+          <div class="route-flow-container">
+            
+            <div class="route-step">
+              <div class="route-icon">✈️</div>
+              <div class="route-info">
+                <span class="route-leg">LEG 1 • AUG 6</span>
+                <h4>JFK ✈️ YVR Direct</h4>
+                <p>5h 29m Flight • Pick up Rental SUV #1</p>
+              </div>
+            </div>
+
+            <div class="route-connector">➔</div>
+
+            <div class="route-step">
+              <div class="route-icon">🏃</div>
+              <div class="route-info">
+                <span class="route-leg">LEG 2 • AUG 6-9</span>
+                <h4>Vancouver & SeaWheeze</h4>
+                <p>Stanley Park • Gastown • Half Marathon</p>
+              </div>
+            </div>
+
+            <div class="route-connector">➔</div>
+
+            <div class="route-step">
+              <div class="route-icon">🏔️</div>
+              <div class="route-info">
+                <span class="route-leg">LEG 3 • AUG 9-11</span>
+                <h4>Hwy 99 ➔ Whistler</h4>
+                <p>Peak 2 Peak • Joffre Lakes • Spa</p>
+              </div>
+            </div>
+
+            <div class="route-connector">➔</div>
+
+            <div class="route-step">
+              <div class="route-icon">✈️</div>
+              <div class="route-info">
+                <span class="route-leg">LEG 4 • AUG 11</span>
+                <h4>Flight YVR ✈️ YQQ</h4>
+                <p>Comox Airport • Pick up Rental SUV #2</p>
+              </div>
+            </div>
+
+            <div class="route-connector">➔</div>
+
+            <div class="route-step">
+              <div class="route-icon">🚤</div>
+              <div class="route-info">
+                <span class="route-leg">LEG 5 • AUG 12-14</span>
+                <h4>Hanson Island Orcas</h4>
+                <p>Water Taxi • Safari Tent • Kayaking</p>
+              </div>
+            </div>
+
+            <div class="route-connector">➔</div>
+
+            <div class="route-step">
+              <div class="route-icon">✈️</div>
+              <div class="route-info">
+                <span class="route-leg">LEG 6 • AUG 14</span>
+                <h4>YQQ ✈️ YVR ✈️ JFK</h4>
+                <p>35m Comox Flight + Red-eye Home</p>
+              </div>
+            </div>
+
+          </div>
         </div>
 
         <!-- Interactive 9-Day Summary Quick Navigator -->
         <div class="glass-card" style="margin-top:24px;">
           <div class="card-header">
-            <h2>📅 9-Day Expedition Route Navigator</h2>
-            <p class="subtitle">Click any day card to jump directly to its complete timeline on the Day Board.</p>
+            <h2>📅 9-Day Quick Day Navigator</h2>
+            <p class="subtitle">Click any day card to open its detailed events on the Day Board.</p>
           </div>
 
           <div class="day-overview-grid" id="day-overview-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-top:16px;">

@@ -288,35 +288,6 @@ body {
   gap: 12px;
 }
 
-.filter-group {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.filter-chip {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  color: var(--text-muted);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.filter-chip:hover {
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.filter-chip.active {
-  background: rgba(56, 189, 248, 0.2);
-  color: var(--primary);
-  border-color: rgba(56, 189, 248, 0.4);
-}
-
 /* Day Board Grid */
 .day-board-grid {
   display: grid;
@@ -351,92 +322,106 @@ body {
   overflow-y: auto;
 }
 
-/* Overview Dashboard Styles */
-.overview-hero-card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%),
-              radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.2) 0%, transparent 60%);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-  border-radius: var(--radius-lg);
-  padding: 32px;
+/* Stat Highlight Cards */
+.stat-highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
 }
 
-.hero-tag {
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-}
-
-.hero-content h2 {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-top: 6px;
-}
-
-.hero-content p {
-  color: var(--text-muted);
-  font-size: 1rem;
-  margin-top: 4px;
-}
-
-.destination-card {
+.stat-box {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-glow);
+}
+
+.stat-icon {
+  font-size: 2.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border);
+}
+
+.stat-details {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow: var(--shadow-glow);
-  transition: all 0.25s ease;
 }
 
-.destination-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(56, 189, 248, 0.4);
-}
-
-.dest-badge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 12px;
-  width: fit-content;
-  margin-bottom: 12px;
-}
-
-.dest-badge.gold { background: rgba(245, 158, 11, 0.15); color: var(--gold); border: 1px solid rgba(245, 158, 11, 0.3); }
-.dest-badge.purple { background: rgba(168, 85, 247, 0.15); color: var(--purple); border: 1px solid rgba(168, 85, 247, 0.3); }
-.dest-badge.emerald { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
-
-.destination-card h3 {
+.stat-num {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  color: var(--text-main);
 }
 
-.dest-desc {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin-bottom: 16px;
-}
+.stat-num.green { color: var(--emerald); }
 
-.dest-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.stat-desc {
   font-size: 0.8rem;
   color: var(--text-muted);
-  border-top: 1px solid var(--glass-border);
-  padding-top: 12px;
 }
 
+/* Route Flow Diagram */
+.route-flow-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 16px 4px;
+}
+
+.route-step {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.route-icon {
+  font-size: 1.6rem;
+}
+
+.route-leg {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.route-step h4 {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.route-step p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.route-connector {
+  font-size: 1.4rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Day Overview Cards */
 .day-overview-card {
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--glass-border);
@@ -472,8 +457,8 @@ body {
 
 .card-header h2 {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  margin-bottom: 6px;
+  font-size: 1.4rem;
+  margin-bottom: 4px;
 }
 
 .card-lead {

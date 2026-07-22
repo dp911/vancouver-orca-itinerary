@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Maximally Beautiful Overview Dashboard + Detailed Day Board Dashboard
+   Maximally Beautiful Visual Analytics Dashboard + Detailed Day Board
    ========================================================================== */
 
 const MASTER_SCHEDULE = [
@@ -105,6 +105,8 @@ const SEASICKNESS_CHECKLIST = [
 let currentSchedule = [];
 let changeLog = [];
 let dbRef = null;
+let donutChartInstance = null;
+let barChartInstance = null;
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
@@ -130,10 +132,10 @@ function checkLockState() {
 // Load Schedule from LocalStorage or Default
 function loadData() {
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '5.0_overview_dashboard') {
+  if (version !== '6.0_visual_charts_dashboard') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '5.0_overview_dashboard');
+    localStorage.setItem('vancouver_app_version', '6.0_visual_charts_dashboard');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
@@ -200,6 +202,7 @@ function saveData() {
 function renderAll() {
   renderMetrics();
   renderOverviewDashboard();
+  renderCharts();
   renderDayBoard();
   renderChangelog();
   renderSeasicknessProtocol();
@@ -213,7 +216,7 @@ function renderMetrics() {
   if (countElem) countElem.innerText = changeLog.length;
 }
 
-// Render Maximally Beautiful Overview Dashboard
+// Render Visual Analytics & Overview Dashboard
 function renderOverviewDashboard() {
   const grid = document.getElementById('day-overview-grid');
   if (!grid) return;
@@ -251,6 +254,101 @@ function renderOverviewDashboard() {
 
     grid.appendChild(card);
   });
+}
+
+// Render Chart.js Donut & Bar Graphs
+function renderCharts() {
+  if (typeof Chart === 'undefined') return;
+
+  // Donut Chart: Category Breakdown
+  const ctxDonut = document.getElementById('chart-category-donut')?.getContext('2d');
+  if (ctxDonut) {
+    if (donutChartInstance) donutChartInstance.destroy();
+
+    donutChartInstance = new Chart(ctxDonut, {
+      type: 'doughnut',
+      data: {
+        labels: ['Orca Glamping (35h)', 'Rest & Sleep (64h)', 'Whistler Alpine (20h)', 'SeaWheeze Race (16h)', 'Drives & Transports (22h)', 'Flights (14h)'],
+        datasets: [{
+          data: [35, 64, 20, 16, 22, 14],
+          backgroundColor: [
+            '#10B981', // Emerald Orca
+            '#6366F1', // Sleep Indigo
+            '#A855F7', // Whistler Purple
+            '#F59E0B', // SeaWheeze Gold
+            '#F97316', // City Drives
+            '#38BDF8'  // Flights
+          ],
+          borderWidth: 2,
+          borderColor: '#0F172A'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: { color: '#F8FAFC', font: { family: 'Plus Jakarta Sans', size: 11 } }
+          }
+        }
+      }
+    });
+  }
+
+  // Bar Chart: Sleep Compliance per Night
+  const ctxBar = document.getElementById('chart-sleep-bar')?.getContext('2d');
+  if (ctxBar) {
+    if (barChartInstance) barChartInstance.destroy();
+
+    barChartInstance = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Night 1', 'Night 2', 'Night 3', 'Night 4', 'Night 5', 'Night 6', 'Night 7', 'Night 8'],
+        datasets: [
+          {
+            label: 'Actual Sleep (Hours)',
+            data: [8, 8, 8, 8, 8, 8, 8, 8],
+            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+            borderColor: '#10B981',
+            borderWidth: 1.5,
+            borderRadius: 6
+          },
+          {
+            label: 'Target Sleep (8.0 Hours)',
+            data: [8, 8, 8, 8, 8, 8, 8, 8],
+            type: 'line',
+            borderColor: '#38BDF8',
+            borderWidth: 2,
+            pointBackgroundColor: '#38BDF8',
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            min: 0,
+            max: 10,
+            ticks: { color: '#94A3B8' },
+            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+          },
+          x: {
+            ticks: { color: '#94A3B8' },
+            grid: { display: false }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { color: '#F8FAFC', font: { family: 'Plus Jakarta Sans', size: 11 } }
+          }
+        }
+      }
+    });
+  }
 }
 
 // Render Primary Day Board Grid
@@ -374,28 +472,6 @@ function setupEventListeners() {
     });
   }
 
-  // Hero Buttons
-  const btnHeroDayboard = document.getElementById('btn-hero-dayboard');
-  const btnHeroAi = document.getElementById('btn-hero-ai');
-
-  if (btnHeroDayboard) {
-    btnHeroDayboard.addEventListener('click', () => {
-      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.querySelector('.nav-tab[data-tab="day-board"]')?.classList.add('active');
-      document.getElementById('panel-day-board')?.classList.add('active');
-    });
-  }
-
-  if (btnHeroAi) {
-    btnHeroAi.addEventListener('click', () => {
-      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.querySelector('.nav-tab[data-tab="ai-guardian"]')?.classList.add('active');
-      document.getElementById('panel-ai-guardian')?.classList.add('active');
-    });
-  }
-
   // Delegate Click on Day Overview Cards to Jump to Day Board
   const overviewGrid = document.getElementById('day-overview-grid');
   if (overviewGrid) {
@@ -420,6 +496,10 @@ function setupEventListeners() {
       e.currentTarget.classList.add('active');
       const panel = document.getElementById(`panel-${targetTab}`);
       if (panel) panel.classList.add('active');
+
+      if (targetTab === 'overview') {
+        setTimeout(renderCharts, 100);
+      }
     });
   });
 
