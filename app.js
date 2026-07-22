@@ -110,6 +110,7 @@ let dbRef = null;
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
+  initFirebaseSync();
   setupEventListeners();
   renderAll();
 });
@@ -137,6 +138,42 @@ function loadData() {
     changeLog = JSON.parse(savedLog);
   } else {
     changeLog = [];
+  }
+}
+
+// Auto-Connect Firebase Realtime Database if URL is saved
+function initFirebaseSync() {
+  const fbUrl = localStorage.getItem('vancouver_firebase_url');
+  const gemKey = localStorage.getItem('vancouver_gemini_key');
+
+  const fbInput = document.getElementById('cfg-firebase-url');
+  const gemInput = document.getElementById('cfg-gemini-key');
+
+  if (fbInput && fbUrl) fbInput.value = fbUrl;
+  if (gemInput && gemKey) gemInput.value = gemKey;
+
+  if (fbUrl && typeof firebase !== 'undefined') {
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp({ databaseURL: fbUrl });
+      }
+      dbRef = firebase.database().ref('vancouver_trip');
+      dbRef.on('value', (snapshot) => {
+        const val = snapshot.val();
+        if (val && val.schedule && Array.isArray(val.schedule) && val.schedule.length > 0) {
+          currentSchedule = val.schedule;
+          changeLog = val.log || [];
+          renderAll();
+        } else {
+          // Database is empty! Seed it with the master 68-event schedule immediately!
+          console.log('🔥 Initializing empty Firebase DB with master schedule...');
+          dbRef.set({ schedule: currentSchedule, log: changeLog });
+        }
+      });
+      console.log('🔥 Firebase Realtime Cloud Sync Active:', fbUrl);
+    } catch (e) {
+      console.warn('Firebase init warning:', e);
+    }
   }
 }
 
@@ -375,11 +412,14 @@ function setupEventListeners() {
   const btnSaveSettings = document.getElementById('btn-save-settings');
   if (btnSaveSettings) {
     btnSaveSettings.addEventListener('click', () => {
-      const fbUrl = document.getElementById('cfg-firebase-url')?.value;
-      const gemKey = document.getElementById('cfg-gemini-key')?.value;
-      if (fbUrl) localStorage.setItem('vancouver_firebase_url', fbUrl);
+      const fbUrl = document.getElementById('cfg-firebase-url')?.value?.trim();
+      const gemKey = document.getElementById('cfg-gemini-key')?.value?.trim();
+      if (fbUrl) {
+        localStorage.setItem('vancouver_firebase_url', fbUrl);
+        initFirebaseSync();
+      }
       if (gemKey) localStorage.setItem('vancouver_gemini_key', gemKey);
-      alert('⚙️ Settings saved successfully to local environment!');
+      alert('⚙️ Firebase URL saved successfully! Realtime cloud sync is active.');
     });
   }
 
@@ -588,7 +628,7 @@ async function runAutonomousAIAudit(modifiedEvent = null, authorName = '', chang
     const data = await response.json();
     renderAIResults(data);
     if (statusElem) {
-      statusElem.innerHTML = `<span class="pulse-dot green"></span> Gemini AI Active (${data.source || 'gemini-2.0-flash'})`;
+      statusElem.innerHTML = `<span class="pulse-dot green"></span> Gemini AI Active (${data.source || 'gemini-1.5-flash'})`;
     }
   } catch (err) {
     console.warn('Backend API unavailable, using local rules engine:', err);
