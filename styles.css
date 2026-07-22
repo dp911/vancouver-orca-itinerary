@@ -1,40 +1,33 @@
 /* ==========================================================================
-   Pacific Northwest Dark Mode Design System & Leaflet Map Styles
+   Pacific Northwest Dark Mode Design System & Pink Glow Aesthetic
    ========================================================================== */
 
 :root {
   --bg-dark: #0F172A;
   --bg-card: rgba(30, 41, 59, 0.75);
   --bg-card-hover: rgba(51, 65, 85, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.12);
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
   --text-inverse: #0F172A;
 
-  /* Accent Colors */
-  --primary: #38BDF8;      /* Cyan Sky */
-  --emerald: #10B981;      /* Orca Wilderness Emerald */
-  --gold: #F59E0B;         /* SeaWheeze Race Gold */
-  --purple: #A855F7;       /* Whistler Alpine Purple */
-  --rose: #F43F5E;         /* Alert Red */
-  --indigo: #6366F1;
-
-  /* Category Specific Colors */
-  --cat-flight: #38BDF8;
-  --cat-race: #F59E0B;
-  --cat-whistler: #A855F7;
-  --cat-orca: #10B981;
-  --cat-ferry: #06B6D4;
-  --cat-sleep: #6366F1;
-  --cat-dining: #EC4899;
-  --cat-city: #F97316;
+  /* Accent Colors with Pretty Pink Palette */
+  --primary: #FF2E93;      /* Hot Sunset Pink */
+  --pink-neon: #FF2E93;
+  --pink-soft: #F472B6;    /* Sakura Pink */
+  --pink-rose: #EC4899;    /* Magenta Pink */
+  --cyan-sky: #38BDF8;     /* Cyan Sky */
+  --emerald: #10B981;      /* Orca Emerald */
+  --gold: #F59E0B;         /* SeaWheeze Gold */
+  --purple: #A855F7;       /* Whistler Purple */
 
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
   --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
   --font-heading: 'Outfit', sans-serif;
-  --shadow-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --shadow-pink: 0 8px 24px rgba(255, 46, 147, 0.35);
 }
 
 * {
@@ -47,8 +40,8 @@ body {
   font-family: var(--font-main);
   background-color: var(--bg-dark);
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+    radial-gradient(circle at 15% 15%, rgba(255, 46, 147, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.1) 0%, transparent 45%);
   color: var(--text-main);
   min-height: 100vh;
   line-height: 1.5;
@@ -60,7 +53,7 @@ body {
   padding: 24px;
 }
 
-/* Header & Brand */
+/* Header & Brand with Glowing Pink Gradient */
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -74,7 +67,7 @@ body {
   font-family: var(--font-heading);
   font-size: 2.2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #F8FAFC 0%, #38BDF8 100%);
+  background: linear-gradient(135deg, #FF2E93 0%, #F472B6 40%, #38BDF8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-top: 4px;
@@ -84,22 +77,23 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: var(--emerald);
-  padding: 4px 10px;
+  background: rgba(255, 46, 147, 0.15);
+  border: 1px solid rgba(255, 46, 147, 0.4);
+  color: var(--pink-neon);
+  padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.5px;
+  box-shadow: 0 0 12px rgba(255, 46, 147, 0.3);
 }
 
 .pulse-dot {
   width: 8px;
   height: 8px;
-  background-color: var(--emerald);
+  background-color: var(--pink-neon);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--emerald);
+  box-shadow: 0 0 10px var(--pink-neon);
   animation: pulse 1.8s infinite;
 }
 
@@ -150,8 +144,8 @@ body {
 
 .metric-value.green { color: var(--emerald); }
 .metric-value.emerald { color: #34D399; }
-.metric-value.gold { color: var(--gold); }
-.metric-value.cyan { color: var(--primary); }
+.metric-value.pink { color: var(--pink-neon); }
+.metric-value.purple { color: var(--purple); }
 
 .metric-label {
   font-size: 0.75rem;
@@ -163,7 +157,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   padding: 8px;
@@ -195,9 +189,10 @@ body {
 }
 
 .nav-tab.active {
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--primary);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(255, 46, 147, 0.18);
+  color: var(--pink-neon);
+  border: 1px solid rgba(255, 46, 147, 0.4);
+  box-shadow: 0 0 14px rgba(255, 46, 147, 0.25);
 }
 
 .badge-count {
@@ -211,7 +206,7 @@ body {
   margin-left: auto;
 }
 
-/* Buttons */
+/* Pretty Pink Buttons */
 .btn {
   padding: 10px 20px;
   border-radius: var(--radius-sm);
@@ -227,14 +222,14 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+  background: linear-gradient(135deg, #FF2E93 0%, #EC4899 100%);
   color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+  box-shadow: 0 4px 16px rgba(255, 46, 147, 0.45);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+  box-shadow: 0 6px 22px rgba(255, 46, 147, 0.65);
 }
 
 .btn-secondary {
@@ -251,10 +246,6 @@ body {
   background: linear-gradient(135deg, #10B981 0%, #059669 100%);
   color: #FFFFFF;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
-}
-
-.btn-emerald:hover {
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
 }
 
 .btn-icon {
@@ -322,14 +313,14 @@ body {
   overflow-y: auto;
 }
 
-/* Interactive Leaflet Route Map Card */
+/* Interactive Leaflet Route Map Card with Pink Border Glow */
 .map-wrapper-card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 46, 147, 0.35);
   border-radius: var(--radius-lg);
   padding: 16px;
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 12px 40px rgba(255, 46, 147, 0.15);
   position: relative;
 }
 
@@ -343,7 +334,7 @@ body {
 }
 
 .map-legend-chip {
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.75);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 6px 14px;
@@ -359,7 +350,8 @@ body {
 }
 
 .map-legend-chip:hover, .map-legend-chip.active {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 46, 147, 0.2);
+  border-color: var(--pink-neon);
   transform: translateY(-1px);
 }
 
@@ -367,6 +359,7 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
 }
 
 /* Custom Leaflet Tooltip & Dark Mode Overrides */
@@ -378,10 +371,10 @@ body {
 .leaflet-popup-content-wrapper {
   background: rgba(15, 23, 42, 0.95) !important;
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  border: 1px solid rgba(255, 46, 147, 0.4) !important;
   color: #F8FAFC !important;
   border-radius: var(--radius-md) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 10px 30px rgba(255, 46, 147, 0.3) !important;
 }
 
 .leaflet-popup-tip {
@@ -390,12 +383,12 @@ body {
 
 .leaflet-tooltip {
   background: rgba(15, 23, 42, 0.95) !important;
-  border: 1px solid var(--glass-border) !important;
+  border: 1px solid rgba(255, 46, 147, 0.3) !important;
   color: #F8FAFC !important;
   border-radius: 8px !important;
   font-weight: 600 !important;
   padding: 6px 10px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 4px 12px rgba(255, 46, 147, 0.2) !important;
 }
 
 /* Glass Cards & Forms */
@@ -433,6 +426,12 @@ body {
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
+.pill-tag.pink {
+  background: rgba(255, 46, 147, 0.15);
+  color: var(--pink-neon);
+  border: 1px solid rgba(255, 46, 147, 0.3);
+}
+
 .protocol-checklist {
   display: flex;
   flex-direction: column;
@@ -452,7 +451,7 @@ body {
 .chk-item input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: var(--emerald);
+  accent-color: var(--pink-neon);
   margin-top: 2px;
   cursor: pointer;
 }
@@ -467,14 +466,14 @@ body {
 
 .ai-avatar {
   font-size: 2.5rem;
-  background: rgba(56, 189, 248, 0.15);
+  background: rgba(255, 46, 147, 0.15);
   width: 60px;
   height: 60px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  border: 1px solid rgba(255, 46, 147, 0.3);
 }
 
 .ai-output-container {
@@ -506,7 +505,7 @@ body {
 
 .ai-box h3 {
   font-size: 1rem;
-  color: var(--primary);
+  color: var(--pink-neon);
   margin-bottom: 8px;
 }
 
@@ -549,7 +548,7 @@ body {
 
 .log-author {
   font-weight: 700;
-  color: var(--primary);
+  color: var(--pink-neon);
 }
 
 .log-reason {
@@ -570,7 +569,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(12px);
   z-index: 1000;
   display: flex;
@@ -589,8 +588,8 @@ body {
 
 .modal-card {
   background: var(--bg-dark);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 46, 147, 0.3);
+  box-shadow: 0 20px 40px rgba(255, 46, 147, 0.2);
   border-radius: var(--radius-lg);
   max-width: 550px;
   width: 100%;
@@ -650,8 +649,8 @@ textarea {
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+  border-color: var(--pink-neon);
+  box-shadow: 0 0 10px rgba(255, 46, 147, 0.35);
 }
 
 .checkbox-group {
@@ -669,15 +668,15 @@ input:focus, select:focus, textarea:focus {
 }
 
 .collaborator-section {
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px dashed rgba(56, 189, 248, 0.3);
+  background: rgba(255, 46, 147, 0.08);
+  border: 1px dashed rgba(255, 46, 147, 0.35);
   padding: 16px;
   border-radius: var(--radius-md);
   margin-bottom: 20px;
 }
 
 .collaborator-section h4 {
-  color: var(--primary);
+  color: var(--pink-neon);
   margin-bottom: 12px;
   font-size: 0.95rem;
 }
@@ -725,8 +724,8 @@ input:focus, select:focus, textarea:focus {
 
 .lock-card {
   background: var(--bg-card);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 46, 147, 0.4);
+  box-shadow: 0 20px 50px rgba(255, 46, 147, 0.25);
   padding: 36px 32px;
   border-radius: var(--radius-lg);
   max-width: 440px;

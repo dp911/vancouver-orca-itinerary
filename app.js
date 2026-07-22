@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Interactive Multi-Leg Expedition Route Map + Detailed Day Board Dashboard
+   Interactive Multi-Leg Route Map with Pretty Pink Palette & Non-Overlapping Paths
    ========================================================================== */
 
 const MASTER_SCHEDULE = [
@@ -101,13 +101,13 @@ const SEASICKNESS_CHECKLIST = [
   { id: 'chk6', title: 'Visual Horizon Focus', desc: 'Keep gaze on forested Hanson Island coastline; avoid looking down at phone screens.', checked: true }
 ];
 
-// 8 Distinct Colored Route Legs Data
+// 8 Non-Overlapping Route Legs Data featuring Pretty Pink Palette!
 const ROUTE_LEGS = [
   {
     id: 1,
     day: 1,
     name: 'Leg 1: JFK ✈️ YVR & Vancouver Hotel',
-    color: '#38BDF8', // Cyan
+    color: '#38BDF8', // Cyan Sky
     coords: [[49.1967, -123.1815], [49.2827, -123.1207]],
     desc: 'Day 1 (Aug 6): Arrival at YVR 9:55 PM, pick up rental SUV #1, drive to Coal Harbour hotel.'
   },
@@ -115,75 +115,75 @@ const ROUTE_LEGS = [
     id: 2,
     day: 2,
     name: 'Leg 2: SeaWheeze Expo & Vancouver Highlights',
-    color: '#F59E0B', // Gold
+    color: '#FF2E93', // Pretty Hot Pink
     coords: [[49.2827, -123.1207], [49.2888, -123.1172], [49.3428, -123.1149], [49.3100, -123.0800]],
     desc: 'Day 2 & 3 (Aug 7-8): Jack Poole Plaza, Granville Market, Capilano Suspension Bridge, SeaWheeze 13.1 & Sunset Festival.'
   },
   {
     id: 3,
     day: 4,
-    name: 'Leg 3: Sea-to-Sky Hwy 99 ➔ Whistler',
-    color: '#A855F7', // Purple
-    coords: [[49.2827, -123.1207], [49.6693, -123.1558], [50.1163, -122.9574]],
-    desc: 'Day 4 (Aug 9): Scenic Hwy 99 fjord drive, Shannon Falls, Sea to Sky Gondola, Whistler Peak 2 Peak Gondola.'
+    name: 'Leg 3: Sea-to-Sky Hwy 99 ➔ Whistler (Northbound)',
+    color: '#A855F7', // Vibrant Purple
+    coords: [[49.2827, -123.1357], [49.6693, -123.1708], [50.1163, -122.9724]],
+    desc: 'Day 4 (Aug 9): Scenic Hwy 99 Northbound drive, Shannon Falls, Sea to Sky Gondola, Whistler Peak 2 Peak Gondola.'
   },
   {
     id: 4,
     day: 5,
     name: 'Leg 4: Joffre Glacial Lakes & Scandinave Spa',
-    color: '#EC4899', // Pink
+    color: '#EC4899', // Pretty Magenta Pink
     coords: [[50.1163, -122.9574], [50.3547, -122.4854], [50.1345, -122.9535]],
     desc: 'Day 5 (Aug 10): 10km Joffre Lakes turquoise glacial hike, Lost Lake trail, Scandinave Spa hydrotherapy.'
   },
   {
     id: 5,
     day: 6,
-    name: 'Leg 5: Drive YVR ✈️ Flight YQQ (Comox)',
-    color: '#0284C7', // Deep Cyan / Dashed Air Flight
-    coords: [[50.1163, -122.9574], [49.1967, -123.1815], [49.7108, -124.8864]],
+    name: 'Leg 5: Whistler ➔ YVR (Southbound) & Flight YQQ',
+    color: '#0284C7', // Deep Ocean Blue
+    coords: [[50.1163, -122.9424], [49.6693, -123.1408], [49.1967, -123.1665], [49.4500, -124.0300], [49.7108, -124.8864]],
     isDash: true,
-    desc: 'Day 6 (Aug 11 Part 1): Drive Whistler to YVR, 12:30 PM scenic flight across Georgia Strait landing Comox YQQ 1:05 PM.'
+    desc: 'Day 6 (Aug 11 Part 1): Southbound Hwy 99 drive Whistler to YVR, 12:30 PM scenic flight across Georgia Strait to Comox YQQ.'
   },
   {
     id: 6,
     day: 6,
-    name: 'Leg 6: Drive Comox ➔ Telegraph Cove',
-    color: '#F97316', // Orange
-    coords: [[49.7108, -124.8864], [50.0410, -125.3341], [50.5471, -126.8329]],
-    desc: 'Day 6 (Aug 11 Part 2): Pick up Island SUV #2, drive Hwy 19 North via Elk Falls Suspension Bridge to Telegraph Cove.'
+    name: 'Leg 6: Drive Comox ➔ Telegraph Cove (Northbound)',
+    color: '#F97316', // Neon Orange
+    coords: [[49.7108, -124.8984], [50.0410, -125.3461], [50.5471, -126.8449]],
+    desc: 'Day 6 (Aug 11 Part 2): Island SUV #2 pickup, Northbound Hwy 19 drive via Elk Falls Suspension Bridge to Telegraph Cove.'
   },
   {
     id: 7,
     day: 7,
     name: 'Leg 7: At Water’s Edge Hanson Island Base Camp',
     color: '#10B981', // Emerald Orca
-    coords: [[50.5471, -126.8329], [50.5694, -126.7028]],
-    desc: 'Day 7 & 8 (Aug 12-13): Water taxi to Hanson Island safari tents, tandem sea kayaking with Resident Orcas, cedar sauna.'
+    coords: [[50.5471, -126.8329], [50.5750, -126.7700], [50.5694, -126.7028]],
+    desc: 'Day 7 & 8 (Aug 12-13): North water taxi to Hanson Island safari tents, tandem sea kayaking with Resident Orcas, cedar sauna.'
   },
   {
     id: 8,
     day: 9,
-    name: 'Leg 8: Water Taxi ➔ Flight YQQ-YVR ➔ JFK',
-    color: '#F43F5E', // Rose Red
-    coords: [[50.5694, -126.7028], [50.5471, -126.8329], [49.7108, -124.8864], [49.1967, -123.1815]],
+    name: 'Leg 8: Water Taxi Return ➔ Flight YQQ-YVR-JFK',
+    color: '#F472B6', // Pretty Sakura Soft Pink
+    coords: [[50.5694, -126.7028], [50.5400, -126.7700], [50.5471, -126.8209], [50.0410, -125.3221], [49.7108, -124.8744], [49.4000, -123.8000], [49.1967, -123.1815]],
     isDash: true,
-    desc: 'Day 9 (Aug 14): Water taxi return, drive Comox YQQ, 6:30 PM flight YQQ ➔ YVR, Miku Aburi sushi dinner, 11:15 PM flight home.'
+    desc: 'Day 9 (Aug 14): South water taxi return, Southbound Hwy 19 drive to Comox YQQ, 6:30 PM flight YQQ ➔ YVR, Miku Aburi sushi, 11:15 PM flight home.'
   }
 ];
 
-// Map Waypoint Markers
+// Map Waypoint Markers with Pink Halo Ring Highlights!
 const MAP_WAYPOINTS = [
-  { lat: 49.1967, lng: -123.1815, title: '🛫 YVR Vancouver Airport', day: 1, desc: 'Baggage claim & Rental SUV Pickup' },
-  { lat: 49.2827, lng: -123.1207, title: '🏙️ Downtown Vancouver', day: 2, desc: 'Coal Harbour Hotel & City Base' },
-  { lat: 49.2888, lng: -123.1172, title: '🏃 Jack Poole Plaza / Stanley Park', day: 3, desc: 'SeaWheeze 13.1 & Sunset Festival' },
-  { lat: 49.6693, lng: -123.1558, title: '🌊 Shannon Falls & Squamish', day: 4, desc: 'Sea-to-Sky Hwy 99 Stop' },
-  { lat: 50.1163, lng: -122.9574, title: '🏔️ Whistler Village', day: 4, desc: 'Peak 2 Peak & Cloudraker Skybridge' },
-  { lat: 50.3547, lng: -122.4854, title: '🥾 Joffre Lakes Provincial Park', day: 5, desc: '3 Turquoise Glacial Lakes 10km Hike' },
-  { lat: 50.1345, lng: -122.9535, title: '♨️ Scandinave Spa Whistler', day: 5, desc: 'Thermal Baths & Cold Plunges' },
-  { lat: 49.7108, lng: -124.8864, title: '✈️ Comox Airport (YQQ)', day: 6, desc: 'Island Air Transfer & SUV #2 Pickup' },
-  { lat: 50.0410, lng: -125.3341, title: '🌲 Elk Falls Suspension Bridge', day: 6, desc: 'Campbell River Gorge Walk' },
-  { lat: 50.5471, lng: -126.8329, title: '⚓ Telegraph Cove Boardwalk', day: 6, desc: 'At Water’s Edge Outfitter & Water Taxi Launch' },
-  { lat: 50.5694, lng: -126.7028, title: '🐋 Hanson Island Orca Base Camp', day: 7, desc: '3-Day Safari Tent Glamping & Johnstone Strait Kayaking' }
+  { lat: 49.1967, lng: -123.1815, title: '🛫 YVR Vancouver Airport', day: 1, desc: 'Baggage claim & Rental SUV Pickup', color: '#38BDF8' },
+  { lat: 49.2827, lng: -123.1207, title: '🏙️ Downtown Vancouver', day: 2, desc: 'Coal Harbour Hotel & City Base', color: '#FF2E93' },
+  { lat: 49.2888, lng: -123.1172, title: '🏃 Jack Poole Plaza / Stanley Park', day: 3, desc: 'SeaWheeze 13.1 & Sunset Festival', color: '#FF2E93' },
+  { lat: 49.6693, lng: -123.1558, title: '🌊 Shannon Falls & Squamish', day: 4, desc: 'Sea-to-Sky Hwy 99 Stop', color: '#A855F7' },
+  { lat: 50.1163, lng: -122.9574, title: '🏔️ Whistler Village', day: 4, desc: 'Peak 2 Peak & Cloudraker Skybridge', color: '#A855F7' },
+  { lat: 50.3547, lng: -122.4854, title: '🥾 Joffre Lakes Provincial Park', day: 5, desc: '3 Turquoise Glacial Lakes 10km Hike', color: '#EC4899' },
+  { lat: 50.1345, lng: -122.9535, title: '♨️ Scandinave Spa Whistler', day: 5, desc: 'Thermal Baths & Cold Plunges', color: '#EC4899' },
+  { lat: 49.7108, lng: -124.8864, title: '✈️ Comox Airport (YQQ)', day: 6, desc: 'Island Air Transfer & SUV #2 Pickup', color: '#0284C7' },
+  { lat: 50.0410, lng: -125.3341, title: '🌲 Elk Falls Suspension Bridge', day: 6, desc: 'Campbell River Gorge Walk', color: '#F97316' },
+  { lat: 50.5471, lng: -126.8329, title: '⚓ Telegraph Cove Boardwalk', day: 6, desc: 'At Water’s Edge Outfitter & Water Taxi Launch', color: '#F97316' },
+  { lat: 50.5694, lng: -126.7028, title: '🐋 Hanson Island Orca Base Camp', day: 7, desc: '3-Day Safari Tent Glamping & Johnstone Strait Kayaking', color: '#FF2E93' }
 ];
 
 // State Management
@@ -218,10 +218,10 @@ function checkLockState() {
 // Load Schedule from LocalStorage or Default
 function loadData() {
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '7.0_interactive_leaflet_map') {
+  if (version !== '9.0_pretty_pink_map_palette') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '7.0_interactive_leaflet_map');
+    localStorage.setItem('vancouver_app_version', '9.0_pretty_pink_map_palette');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
@@ -301,7 +301,7 @@ function renderMetrics() {
   if (countElem) countElem.innerText = changeLog.length;
 }
 
-// Render Interactive Multi-Leg Leaflet Route Map
+// Render Interactive Multi-Leg Leaflet Route Map (Pretty Pink Palette)
 function initInteractiveRouteMap() {
   const mapContainer = document.getElementById('route-map-container');
   if (!mapContainer || typeof L === 'undefined') return;
@@ -328,12 +328,12 @@ function initInteractiveRouteMap() {
   activePolylineLayers.forEach(l => leafletMap.removeLayer(l));
   activePolylineLayers = [];
 
-  // Render 8 Distinct Colored Route Leg Polylines
+  // Render 8 Distinct Color-Coded Route Leg Polylines with Pretty Pink Aesthetics
   ROUTE_LEGS.forEach(leg => {
     const polylineOptions = {
       color: leg.color,
       weight: 6,
-      opacity: 0.85,
+      opacity: 0.95,
       dashArray: leg.isDash ? '8, 8' : null,
       lineCap: 'round'
     };
@@ -343,16 +343,16 @@ function initInteractiveRouteMap() {
 
     // Interactive Hover & Click Listeners on Leg Line
     polyline.on('mouseover', function(e) {
-      this.setStyle({ weight: 10, opacity: 1.0 });
+      this.setStyle({ weight: 11, opacity: 1.0 });
       polyline.bindTooltip(`
         <div style="font-size:0.9rem; font-weight:700; color:${leg.color};">${leg.name}</div>
         <div style="font-size:0.8rem; color:#94A3B8;">${leg.desc}</div>
-        <div style="font-size:0.75rem; color:#38BDF8; margin-top:4px;">👉 Click to view Day ${leg.day} Itinerary below</div>
+        <div style="font-size:0.75rem; color:#FF2E93; margin-top:4px;">👉 Click to inspect Day ${leg.day} Itinerary below</div>
       `, { sticky: true }).openTooltip();
     });
 
     polyline.on('mouseout', function(e) {
-      this.setStyle({ weight: 6, opacity: 0.85 });
+      this.setStyle({ weight: 6, opacity: 0.95 });
     });
 
     polyline.on('click', function() {
@@ -360,26 +360,26 @@ function initInteractiveRouteMap() {
     });
   });
 
-  // Render Waypoint Custom Circle Markers
+  // Render Waypoint Custom Circle Markers with Pink Glow Rings
   MAP_WAYPOINTS.forEach(wp => {
     const circle = L.circleMarker([wp.lat, wp.lng], {
-      radius: 7,
-      fillColor: '#F8FAFC',
-      color: '#38BDF8',
-      weight: 2,
+      radius: 8,
+      fillColor: wp.color || '#FF2E93',
+      color: '#FFFFFF',
+      weight: 2.5,
       opacity: 1,
-      fillOpacity: 0.9
+      fillOpacity: 0.95
     }).addTo(leafletMap);
     activePolylineLayers.push(circle);
 
     circle.bindTooltip(`
       <div style="font-size:0.9rem; font-weight:700; color:#F8FAFC;">${wp.title}</div>
       <div style="font-size:0.8rem; color:#94A3B8;">${wp.desc}</div>
-      <div style="font-size:0.75rem; color:#38BDF8; margin-top:4px;">👉 Click to view Day ${wp.day} events</div>
+      <div style="font-size:0.75rem; color:#FF2E93; margin-top:4px;">👉 Click to view Day ${wp.day} events</div>
     `, { sticky: true });
 
     circle.on('click', () => {
-      displayLegDetailPanel(wp.day, wp.title, '#38BDF8');
+      displayLegDetailPanel(wp.day, wp.title, wp.color || '#FF2E93');
     });
   });
 
@@ -435,7 +435,7 @@ function displayLegDetailPanel(dayNum, title, color) {
     <div class="event-card cat-${e.category}" style="padding:14px;">
       <div style="width:100%;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-          <strong style="font-size:0.85rem; color:var(--primary);">${e.startTime} - ${e.endTime}</strong>
+          <strong style="font-size:0.85rem; color:var(--pink-neon);">${e.startTime} - ${e.endTime}</strong>
           ${e.isLocked ? '<span class="lock-badge">🔒 Locked</span>' : ''}
         </div>
         <div style="font-size:0.95rem; font-weight:700; margin-bottom:4px; color:var(--text-main);">${e.title}</div>
@@ -483,7 +483,7 @@ function renderDayBoard() {
           <div class="event-card cat-${e.category}" style="margin-bottom:10px; padding:12px 14px;">
             <div style="width:100%;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <strong style="font-size:0.85rem; color:var(--primary);">${e.startTime} - ${e.endTime}</strong>
+                <strong style="font-size:0.85rem; color:var(--pink-neon);">${e.startTime} - ${e.endTime}</strong>
                 ${e.isLocked ? '<span class="lock-badge">🔒 Locked</span>' : ''}
               </div>
               <div style="font-size:0.95rem; font-weight:700; margin-bottom:4px;">${e.title}</div>
