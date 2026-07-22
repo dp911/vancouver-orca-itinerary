@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌲 Vancouver, Whistler & 3-Day Orca Glamping Master Itinerary</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Firebase SDKs for optional live cloud sync -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header & Navigation -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-badge">
+          <span class="pulse-dot"></span> REALTIME COLLABORATIVE
+        </div>
+        <h1>Vancouver, Whistler & Orca Expedition</h1>
+        <p class="subtitle">Aug 6 – Aug 15, 2026 • 9-Day Master Bucket-List Trip</p>
+      </div>
+
+      <!-- Realtime Metrics Bar -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon">🌙</div>
+          <div class="metric-info">
+            <span class="metric-value green" id="stat-sleep">8/8 Pass</span>
+            <span class="metric-label">8-Hr Sleep Guarantee</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">🐋</div>
+          <div class="metric-info">
+            <span class="metric-value emerald" id="stat-orca">99% Odds</span>
+            <span class="metric-label">3-Day Glamping Base Camp</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">🔒</div>
+          <div class="metric-info">
+            <span class="metric-value gold" id="stat-anchors">3 Anchors</span>
+            <span class="metric-label">Locked Constraints</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">📝</div>
+          <div class="metric-info">
+            <span class="metric-value cyan" id="stat-edits">0 Edits</span>
+            <span class="metric-label">Changelog Audit</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation Bar -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="timeline">
+        <span>📅</span> Master Timeline
+      </button>
+      <button class="nav-tab" data-tab="day-board">
+        <span>🗓️</span> Day Board
+      </button>
+      <button class="nav-tab" data-tab="seasickness">
+        <span>🛶</span> Seasickness Protocol
+      </button>
+      <button class="nav-tab" data-tab="changelog">
+        <span>📜</span> Audit Changelog <span class="badge-count" id="changelog-count">0</span>
+      </button>
+      <button class="nav-tab" data-tab="ai-guardian">
+        <span>🤖</span> Gemini AI Guardian
+      </button>
+      <button class="nav-tab" data-tab="settings">
+        <span>⚙️</span> Sync & Deployment
+      </button>
+
+      <button class="btn btn-primary add-event-btn" id="btn-add-event">
+        <span>+</span> Add Custom Event
+      </button>
+    </nav>
+
+    <!-- Main Content Panels -->
+    <main class="main-content">
+
+      <!-- View 1: Timeline -->
+      <section class="tab-panel active" id="panel-timeline">
+        <div class="panel-toolbar">
+          <div class="filter-group">
+            <button class="filter-chip active" data-filter="all">All Categories</button>
+            <button class="filter-chip" data-filter="flight">✈️ Flights</button>
+            <button class="filter-chip" data-filter="race">🏃 SeaWheeze Race</button>
+            <button class="filter-chip" data-filter="whistler">🏔️ Whistler Alpine</button>
+            <button class="filter-chip" data-filter="orca">🛶 Orca Glamping</button>
+            <button class="filter-chip" data-filter="ferry">⛴️ Ferries</button>
+            <button class="filter-chip" data-filter="sleep">🛌 Rest & Sleep</button>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" id="btn-export-json">📥 Export JSON</button>
+            <button class="btn btn-secondary" id="btn-reset-default">🔄 Reset to Master</button>
+          </div>
+        </div>
+
+        <div class="timeline-container" id="timeline-list">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </section>
+
+      <!-- View 2: Day Board -->
+      <section class="tab-panel" id="panel-day-board">
+        <div class="day-board-grid" id="day-board-grid">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </section>
+
+      <!-- View 3: Seasickness Protocol -->
+      <section class="tab-panel" id="panel-seasickness">
+        <div class="glass-card seasickness-card">
+          <div class="card-header">
+            <h2>🛶 6-Step Vomit-Free Seasickness Protocol for Johnstone Strait</h2>
+            <span class="pill-tag emerald">Glamping Base Camp Verified</span>
+          </div>
+          <p class="card-lead">Johnstone Strait is a sheltered coastal waterway, but tidal currents and afternoon chop can happen. Follow this protocol for a 100% enjoyable 3-day Orca experience.</p>
+          
+          <div class="protocol-checklist" id="protocol-checklist">
+            <!-- Checklist items rendered by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- View 4: Audit Changelog -->
+      <section class="tab-panel" id="panel-changelog">
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>📜 Real-Time Audit Changelog</h2>
+            <p class="subtitle">Every modification made by anyone with the link is recorded here with their name and rationale.</p>
+          </div>
+          <div class="changelog-list" id="changelog-list">
+            <!-- Changelog items rendered by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- View 5: Gemini AI Guardian -->
+      <section class="tab-panel" id="panel-ai-guardian">
+        <div class="glass-card ai-guardian-card">
+          <div class="ai-header">
+            <div class="ai-avatar">🤖</div>
+            <div>
+              <h2>Autonomous Gemini AI Trip Guardian</h2>
+              <p>Evaluates every edit in real-time, monitors the 8-hour sleep guarantee, and calculates drive logistics.</p>
+            </div>
+            <button class="btn btn-emerald" id="btn-run-ai">Run Autonomous Audit</button>
+          </div>
+
+          <div class="ai-output-container">
+            <div class="ai-status-badge" id="ai-status">
+              <span class="pulse-dot green"></span> Gemini AI Active & Monitoring
+            </div>
+
+            <div class="ai-box">
+              <h3>📌 Latest Impact Summary</h3>
+              <p id="ai-impact-text">All 8 nights currently maintain the required 8.0-hour sleep window. Drive and ferry logistics are fully verified.</p>
+            </div>
+
+            <div class="ai-box">
+              <h3>🌙 Nightly Sleep Rule Audit</h3>
+              <div class="sleep-grid" id="ai-sleep-grid">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <div class="ai-box">
+              <h3>⚠️ Active Warnings & Logistics Flags</h3>
+              <ul class="warning-list" id="ai-warning-list">
+                <!-- Rendered dynamically -->
+              </ul>
+            </div>
+
+            <div class="ai-box">
+              <h3>🪄 Actionable Recommendations</h3>
+              <ul class="rec-list" id="ai-rec-list">
+                <!-- Rendered dynamically -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 6: Deployment & Sync Settings -->
+      <section class="tab-panel" id="panel-settings">
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>⚙️ Multi-User Deployment & Cloud Sync Settings</h2>
+          </div>
+          <div class="settings-form">
+            <div class="form-group">
+              <label for="cfg-firebase-url">Firebase Realtime Database URL (Optional for live WebSockets sync across devices):</label>
+              <input type="url" id="cfg-firebase-url" placeholder="https://your-project-default-rtdb.firebaseio.com/">
+              <small class="help-text">Leave blank to use LocalStorage sync. Anyone with the link will sync to this cloud database when configured.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="cfg-gemini-key">Custom Gemini API Key (Optional):</label>
+              <input type="password" id="cfg-gemini-key" placeholder="AIzaSy...">
+              <small class="help-text">Vercel serverless function `/api/ai-optimize` will automatically use `process.env.GEMINI_API_KEY` when deployed.</small>
+            </div>
+
+            <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Edit / Add Event Glass Drawer Overlay -->
+  <div class="modal-overlay" id="modal-edit-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Edit Itinerary Event</h3>
+        <button class="modal-close" id="btn-modal-close">&times;</button>
+      </div>
+
+      <form id="form-edit-event">
+        <input type="hidden" id="edit-id">
+
+        <div class="form-group">
+          <label for="edit-event-title">Event Title *</label>
+          <input type="text" id="edit-event-title" required placeholder="e.g., Whistler Peak 2 Peak Gondola">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-day">Day *</label>
+            <select id="edit-day" required>
+              <option value="1">Day 1: Thurs Aug 6 (Arrival)</option>
+              <option value="2">Day 2: Fri Aug 7 (SeaWheeze Prep)</option>
+              <option value="3">Day 3: Sat Aug 8 (RACE DAY)</option>
+              <option value="4">Day 4: Sun Aug 9 (Whistler Branch)</option>
+              <option value="5">Day 5: Mon Aug 10 (Orca Glamping Day 1)</option>
+              <option value="6">Day 6: Tues Aug 11 (Orca Glamping Day 2)</option>
+              <option value="7">Day 7: Wed Aug 12 (Orca Glamping Day 3)</option>
+              <option value="8">Day 8: Thurs Aug 13 (Victoria & Ferry)</option>
+              <option value="9">Day 9: Fri Aug 14 (Vancouver Finale)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-category">Category *</label>
+            <select id="edit-category" required>
+              <option value="flight">✈️ Flight</option>
+              <option value="race">🏃 SeaWheeze Race</option>
+              <option value="whistler">🏔️ Whistler Alpine</option>
+              <option value="orca">🛶 Orca Glamping</option>
+              <option value="ferry">⛴️ Ferry</option>
+              <option value="sleep">🛌 Rest & Sleep</option>
+              <option value="dining">🍽️ Dining & Food</option>
+              <option value="city">🏙️ City Sightseeing</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-start-time">Start Time *</label>
+            <input type="time" id="edit-start-time" required>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-end-time">End Time *</label>
+            <input type="time" id="edit-end-time" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-location">Location / Details</label>
+          <input type="text" id="edit-location" placeholder="e.g., Hanson Island / Johnstone Strait">
+        </div>
+
+        <div class="form-group">
+          <label for="edit-notes">Notes / Logistics</label>
+          <textarea id="edit-notes" rows="2" placeholder="e.g., Take Bonine 1hr prior, wear spray skirt"></textarea>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="edit-is-locked">
+            <span class="checkbox-text">🔒 Lock as Protected Anchor (Flight/Race non-negotiable)</span>
+          </label>
+        </div>
+
+        <hr class="form-divider">
+
+        <div class="collaborator-section">
+          <h4>Required Collaborator Details for Audit Trail</h4>
+          <div class="form-group">
+            <label for="edit-author-name">Your Name *</label>
+            <input type="text" id="edit-author-name" required placeholder="e.g., Alex / Jordan">
+          </div>
+
+          <div class="form-group">
+            <label for="edit-change-reason">Reason for this Change *</label>
+            <input type="text" id="edit-change-reason" required placeholder="e.g., Adjusted gondola timing to catch earlier ferry">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-modal-save">Save & Run Autonomous AI Audit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
