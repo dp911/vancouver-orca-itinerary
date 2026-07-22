@@ -1,12 +1,12 @@
 /* ==========================================================================
-   Vancouver, Whistler & 3-Day Orca Expedition Application Engine
+   Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
    ========================================================================== */
 
-// Initial Master Schedule Data (Redone Whistler-First + 3-Day Orca Glamping)
+// New Master Schedule Data (2 Nights Whistler + Flight YVR-YQQ + At Water's Edge Orca Glamping)
 const MASTER_SCHEDULE = [
   // Day 1: Thurs Aug 6
   { id: 'e1', day: 1, category: 'flight', title: '✈️ Direct Flight: JFK ➔ YVR', startTime: '18:26', endTime: '21:55', location: 'JFK Airport to YVR Airport', notes: 'Non-stop flight. Pick up rental SUV at YVR.', isLocked: true },
-  { id: 'e2', day: 1, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Downtown Hotel', notes: 'Target bedtime: 11:30 PM. Sleep guarantee verified.', isLocked: false },
+  { id: 'e2', day: 1, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Downtown Hotel', notes: 'Target bedtime: 11:30 PM. 8.0 hrs sleep guaranteed.', isLocked: false },
 
   // Day 2: Fri Aug 7
   { id: 'e3', day: 2, category: 'race', title: '🎽 SeaWheeze Package Pickup & Expo', startTime: '08:30', endTime: '10:30', location: 'Vancouver Convention Centre / Jack Poole Plaza', notes: 'Collect bib and runner kit at Olympic Cauldron.', isLocked: false },
@@ -16,50 +16,49 @@ const MASTER_SCHEDULE = [
   { id: 'e7', day: 2, category: 'sleep', title: '🛌 Pre-Race Rest & Sleep (8.0 Hours)', startTime: '21:30', endTime: '05:30', location: 'Vancouver Downtown Hotel', notes: 'Early bedtime at 9:30 PM for 5:30 AM race wakeup.', isLocked: false },
 
   // Day 3: Sat Aug 8 (RACE DAY)
-  { id: 'e8', day: 3, category: 'race', title: '🏃 SeaWheeze Half Marathon Start', startTime: '06:00', endTime: '12:30', location: 'Jack Poole Plaza & Stanley Park Seawall', notes: '6am pre-race stretch, 7am race start, 8:30-12:30 recovery zone.', isLocked: true },
-  { id: 'e9', day: 3, category: 'sleep', title: '💤 Post-Race Recovery & Shower', startTime: '13:00', endTime: '15:00', location: 'Vancouver Hotel', notes: 'Rest legs, hydrate, and get ready for festival.', isLocked: false },
+  { id: 'e8', day: 3, category: 'race', title: '🏃 SeaWheeze Half Marathon Start', startTime: '06:00', endTime: '12:30', location: 'Jack Poole Plaza & Stanley Park Seawall', notes: '6am stretch, 7am start, 8:30-12:30 recovery zone.', isLocked: true },
+  { id: 'e9', day: 3, category: 'sleep', title: '💤 Post-Race Recovery & Shower', startTime: '13:00', endTime: '15:00', location: 'Vancouver Hotel', notes: 'Rest legs, hydrate, and prepare for festival.', isLocked: false },
   { id: 'e10', day: 3, category: 'race', title: '🎉 Sunset Festival at Stanley Park', startTime: '15:30', endTime: '22:30', location: 'Brockton Oval, Stanley Park', notes: 'Mass yoga, live music, food vendors, sunset ocean views.', isLocked: true },
-  { id: 'e11', day: 3, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Hotel', notes: 'Target bedtime: 11:30 PM. 8.0 hrs sleep verified.', isLocked: false },
+  { id: 'e11', day: 3, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '23:30', endTime: '07:30', location: 'Vancouver Hotel', notes: 'Target bedtime: 11:30 PM. 8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 4: Sun Aug 9 (WHISTLER BRANCH FIRST)
-  { id: 'e12', day: 4, category: 'whistler', title: '🏔️ Sea-to-Sky Highway & Shannon Falls', startTime: '07:45', endTime: '09:15', location: 'Hwy 99 Squamish', notes: 'Scenic coastal highway drive & 335m waterfall.', isLocked: false },
-  { id: 'e13', day: 4, category: 'whistler', title: '🚠 Whistler Peak 2 Peak & Skybridge', startTime: '09:30', endTime: '13:30', location: 'Whistler Mountain Summit', notes: 'Walk Cloudraker Skybridge & ride Peak 2 Peak Gondola.', isLocked: false },
-  { id: 'e14', day: 4, category: 'whistler', title: '🥾 Joffre Lakes Glacial Lakes Hike', startTime: '14:00', endTime: '17:30', location: 'Joffre Lakes Provincial Park', notes: '10km hike visiting 3 turquoise glacial lakes & Matier Glacier.', isLocked: false },
-  { id: 'e15', day: 4, category: 'ferry', title: '⛴️ BC Ferry: Horseshoe Bay ➔ Nanaimo', startTime: '20:00', endTime: '21:40', location: 'Horseshoe Bay Terminal to Departure Bay', notes: 'Vehicular ferry crossing to Vancouver Island.', isLocked: true },
-  { id: 'e16', day: 4, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '00:15', endTime: '08:15', location: 'Campbell River Hotel', notes: 'Check in after scenic drive north on Hwy 19.', isLocked: false },
+  // Day 4: Sun Aug 9 (WHISTLER DAY 1 — DRIVE TO WHISTLER)
+  { id: 'e12', day: 4, category: 'whistler', title: '🚘 Drive Sea-to-Sky Highway & Shannon Falls', startTime: '08:00', endTime: '09:45', location: 'Hwy 99 Squamish', notes: 'Scenic coastal highway drive & 335m waterfall.', isLocked: false },
+  { id: 'e13', day: 4, category: 'whistler', title: '🚠 Sea to Sky Gondola (Squamish)', startTime: '10:00', endTime: '12:30', location: 'Squamish Ridge', notes: 'Walk Sky Pilot Suspension Bridge & panorama fjord lookout.', isLocked: false },
+  { id: 'e14', day: 4, category: 'whistler', title: '🚠 Whistler Peak 2 Peak & Cloudraker Skybridge', startTime: '13:30', endTime: '17:30', location: 'Whistler Mountain Summit', notes: 'Walk Cloudraker Skybridge & ride world-record Peak 2 Peak Gondola.', isLocked: false },
+  { id: 'e15', day: 4, category: 'dining', title: '🍽️ Whistler Village Fine Dining', startTime: '18:30', endTime: '21:00', location: 'Bearfoot Bistro / Araxi Restaurant', notes: 'Check into Whistler hotel (Night 1 in Whistler).', isLocked: false },
+  { id: 'e16', day: 4, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Whistler Hotel', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 5: Mon Aug 10 (3-DAY ORCA GLAMPING DAY 1)
-  { id: 'e17', day: 5, category: 'orca', title: '🚤 Water Taxi to Hanson Island Base Camp', startTime: '10:00', endTime: '11:30', location: 'Telegraph Cove Boardwalk to Hanson Island', notes: 'Check in at At The Water’s Edge / NIK outfitter. Apply Scopolamine patch.', isLocked: true },
-  { id: 'e18', day: 5, category: 'orca', title: '🛶 Johnstone Strait Orca Kayak Excursion', startTime: '12:00', endTime: '16:30', location: 'Johnstone Strait / Blackfish Sound', notes: 'Paddle tandem sea kayaks alongside Resident Orcas & Humpbacks.', isLocked: true },
-  { id: 'e19', day: 5, category: 'orca', title: '♨️ Wood-Fired Hot Tub & Salmon Dinner', startTime: '17:30', endTime: '21:30', location: 'Hanson Island Glamping Camp', notes: 'Soak in hot tub, wild BC salmon campfire dinner under stars.', isLocked: false },
-  { id: 'e20', day: 5, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: 'Sleep in real bed to sounds of Orca blowholes echoing across strait.', isLocked: false },
+  // Day 5: Mon Aug 10 (WHISTLER DAY 2 — ULTIMATE HIKES & SPA)
+  { id: 'e17', day: 5, category: 'whistler', title: '🥾 Joffre Lakes Glacial Hike (3 Lakes)', startTime: '07:00', endTime: '12:00', location: 'Joffre Lakes Provincial Park', notes: '10km moderate hike visiting 3 turquoise glacial lakes & Matier Glacier.', isLocked: false },
+  { id: 'e18', day: 5, category: 'whistler', title: '🌲 Lost Lake & Whistler Train Wreck Trail', startTime: '13:30', endTime: '16:30', location: 'Whistler Valley Trails', notes: 'Explore suspension bridge & painted vintage train wreck in forest.', isLocked: false },
+  { id: 'e19', day: 5, category: 'whistler', title: '♨️ Scandinave Spa Hydrotherapy Thermal Baths', startTime: '17:30', endTime: '20:30', location: 'Scandinave Spa Whistler', notes: 'Hot baths, cold plunges, and outdoor fires in old-growth spruce forest.', isLocked: false },
+  { id: 'e20', day: 5, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Whistler Hotel', notes: 'Check out tomorrow. 8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 6: Tues Aug 11 (3-DAY ORCA GLAMPING DAY 2)
-  { id: 'e21', day: 6, category: 'orca', title: '☕ Oceanfront Dawn Coffee & Orca Watch', startTime: '06:30', endTime: '08:00', location: 'Hanson Island Shoreline', notes: 'Hot coffee delivered to tent while watching Orcas swim past beach.', isLocked: false },
-  { id: 'e22', day: 6, category: 'orca', title: '🛶 Full-Day Remote Orca & Marine Wildlife Paddle', startTime: '08:30', endTime: '16:00', location: 'Blackney Passage & Robson Bight Perimeter', notes: 'Spot bald eagles, sea otters, porpoises, Orca rubbing beaches.', isLocked: true },
-  { id: 'e23', day: 6, category: 'orca', title: '🔥 Sunset Campfire & Astronomy Night', startTime: '17:00', endTime: '21:30', location: 'Glamping Base Camp', notes: 'Gourmet chef dinner & ocean sunset relaxation.', isLocked: false },
-  { id: 'e24', day: 6, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
+  // Day 6: Tues Aug 11 (DRIVE TO YVR ➔ FLIGHT TO COMOX ➔ TELEGRAPH COVE)
+  { id: 'e21', day: 6, category: 'whistler', title: '🚘 Scenic Drive Whistler ➔ YVR Airport', startTime: '08:30', endTime: '10:30', location: 'Sea-to-Sky Hwy 99 South', notes: 'Drive back down highway to Vancouver Airport.', isLocked: false },
+  { id: 'e22', day: 6, category: 'flight', title: '✈️ Flight YVR ➔ YQQ (Comox, Vancouver Island)', startTime: '12:30', endTime: '13:05', location: 'Vancouver (YVR) to Comox (YQQ)', notes: 'Short 35-min scenic flight over Georgia Strait! Pick up Island car at YQQ.', isLocked: true },
+  { id: 'e23', day: 6, category: 'city', title: '🚗 Scenic Island Drive & Elk Falls Gorge', startTime: '13:30', endTime: '16:30', location: 'Hwy 19 North Campbell River', notes: 'Walk Elk Falls Suspension Bridge gorge en route north.', isLocked: false },
+  { id: 'e24', day: 6, category: 'orca', title: '🦀 Telegraph Cove Boardwalk Check-in & Dinner', startTime: '17:00', endTime: '20:30', location: 'Telegraph Cove Boardwalk', notes: 'Pre-trip briefing with At Water’s Edge outfitter & Killer Whale Cafe dinner.', isLocked: false },
+  { id: 'e25', day: 6, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Telegraph Cove / Port McNeill Lodge', notes: '8.0 hrs sleep guaranteed before base camp launch.', isLocked: false },
 
-  // Day 7: Wed Aug 12 (3-DAY ORCA GLAMPING DAY 3 & VICTORIA DRIVE)
-  { id: 'e25', day: 7, category: 'orca', title: '🛶 Dawn Hanson Island Kayak Session', startTime: '06:30', endTime: '11:30', location: 'Hanson Island Reefs', notes: 'Final morning paddle exploration.', isLocked: false },
-  { id: 'e26', day: 7, category: 'orca', title: '🚤 Water Taxi Return to Telegraph Cove', startTime: '13:30', endTime: '14:30', location: 'Base Camp to Telegraph Cove Boardwalk', notes: 'Return to mainland Vancouver Island.', isLocked: true },
-  { id: 'e27', day: 7, category: 'city', title: '🌲 Scenic Drive to Victoria & Cathedral Grove', startTime: '15:00', endTime: '19:30', location: 'Hwy 19 South to Victoria', notes: 'Walk beneath 800-year-old giant Douglas fir trees en route.', isLocked: false },
-  { id: 'e28', day: 7, category: 'dining', title: '🦀 Victoria Inner Harbour Seafood Dinner', startTime: '20:00', endTime: '21:30', location: 'Victoria Inner Harbour', notes: 'Fresh local seafood overlooking BC Parliament.', isLocked: false },
-  { id: 'e29', day: 7, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Victoria Hotel', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
+  // Day 7: Wed Aug 12 (AT WATER’S EDGE ORCA GLAMPING DAY 1)
+  { id: 'e26', day: 7, category: 'orca', title: '🚤 Water Taxi to Hanson Island Base Camp', startTime: '09:00', endTime: '10:00', location: 'Telegraph Cove to Hanson Island', notes: 'Check in at At The Water’s Edge. Apply Scopolamine patch / take Bonine.', isLocked: true },
+  { id: 'e27', day: 7, category: 'orca', title: '🛶 Johnstone Strait Orca Kayak Excursion', startTime: '11:30', endTime: '16:30', location: 'Johnstone Strait / Blackfish Sound', notes: 'Paddle tandem sea kayaks alongside Resident Orcas & Humpbacks.', isLocked: true },
+  { id: 'e28', day: 7, category: 'orca', title: '♨️ Oceanfront Hot Tub & Wild Salmon Dinner', startTime: '17:30', endTime: '21:30', location: 'Hanson Island Glamping Base Camp', notes: 'Soak in wood-fired hot tub, gourmet chef campfire dinner.', isLocked: false },
+  { id: 'e29', day: 7, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: 'Sleep in real bed to sounds of Orca blowholes echoing across water.', isLocked: false },
 
-  // Day 8: Thurs Aug 13 (VICTORIA & FERRY TO VANCOUVER)
-  { id: 'e30', day: 8, category: 'city', title: '🌸 The Butchart Gardens', startTime: '07:00', endTime: '10:00', location: 'Saanich Peninsula', notes: 'Tour world-famous 55-acre floral displays (Sunken Garden).', isLocked: false },
-  { id: 'e31', day: 8, category: 'city', title: '🏛️ Victoria Old Town & Chinatown', startTime: '10:30', endTime: '13:30', location: 'Victoria Inner Harbour & Fan Tan Alley', notes: 'Empress Hotel & Fan Tan Alley narrowest street.', isLocked: false },
-  { id: 'e32', day: 8, category: 'ferry', title: '⛴️ BC Ferry: Swartz Bay ➔ Tsawwassen', startTime: '15:00', endTime: '16:35', location: 'Swartz Bay Terminal to Vancouver', notes: 'Scenic Gulf Islands sailing crossing.', isLocked: true },
-  { id: 'e33', day: 8, category: 'dining', title: '🍜 Richmond Night Market', startTime: '17:30', endTime: '21:30', location: 'Richmond, Greater Vancouver', notes: '110+ Asian food stalls, boba, and skewers.', isLocked: false },
-  { id: 'e34', day: 8, category: 'sleep', title: '🛌 Rest & Sleep (8.0 Hours)', startTime: '22:30', endTime: '06:30', location: 'Vancouver Hotel', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
+  // Day 8: Thurs Aug 13 (AT WATER’S EDGE ORCA GLAMPING DAY 2)
+  { id: 'e30', day: 8, category: 'orca', title: '☕ Tent Coffee & Orca Beach Watching', startTime: '06:30', endTime: '08:00', location: 'Hanson Island Shoreline', notes: 'Hot coffee delivered to tent while watching Orcas swim past beach.', isLocked: false },
+  { id: 'e31', day: 8, category: 'orca', title: '🛶 Full-Day Remote Orca & Marine Wildlife Paddle', startTime: '08:30', endTime: '16:00', location: 'Blackney Passage & Robson Bight Perimeter', notes: 'Spot eagles, sea otters, porpoises, Orca rubbing beaches.', isLocked: true },
+  { id: 'e32', day: 8, category: 'orca', title: '🔥 Sunset Campfire & Astronomy Night', startTime: '17:00', endTime: '21:30', location: 'Glamping Base Camp', notes: 'Chef dinner & sunset ocean relaxation.', isLocked: false },
+  { id: 'e33', day: 8, category: 'sleep', title: '🛌 Base Camp Tent Rest & Sleep (8.0 Hours)', startTime: '22:00', endTime: '06:00', location: 'Glamping Safari Canvas Tent', notes: '8.0 hrs sleep guaranteed.', isLocked: false },
 
-  // Day 9: Fri Aug 14 (VANCOUVER FINALE & FLIGHT HOME)
-  { id: 'e35', day: 9, category: 'city', title: '🚴 Stanley Park Seawall Bike Tour', startTime: '07:30', endTime: '11:00', location: 'Coal Harbour to Stanley Park 9km Loop', notes: 'Rent bikes and ride full ocean loop past Totem Poles.', isLocked: false },
-  { id: 'e36', day: 9, category: 'city', title: '🏖️ Kitsilano Beach & Granville Island', startTime: '11:30', endTime: '14:30', location: 'Kits Beach', notes: 'Public market lunch & beach walk.', isLocked: false },
-  { id: 'e37', day: 9, category: 'city', title: '🚁 FlyOver Canada 4D & Gastown Shopping', startTime: '15:00', endTime: '17:30', location: 'Canada Place & Robson Street', notes: '4D flight simulation & souvenir shopping.', isLocked: false },
-  { id: 'e38', day: 9, category: 'dining', title: '🍣 Miku Vancouver Farewell Dinner', startTime: '18:30', endTime: '20:30', location: 'Burrard Inlet Waterfront', notes: 'Renowned Aburi flame-seared sushi.', isLocked: false },
-  { id: 'e39', day: 9, category: 'flight', title: '✈️ Direct Flight Home: YVR ➔ JFK', startTime: '23:15', endTime: '07:36', location: 'YVR Airport to JFK Airport', notes: 'Arrive JFK 7:36 AM Saturday Aug 15.', isLocked: true }
+  // Day 9: Fri Aug 14 (AT WATER’S EDGE DAY 3 ➔ FLIGHT TO YVR ➔ FLIGHT HOME TO JFK)
+  { id: 'e34', day: 9, category: 'orca', title: '🛶 Dawn Hanson Island Kayak Session', startTime: '06:30', endTime: '11:30', location: 'Hanson Island Reefs', notes: 'Final morning paddle exploration.', isLocked: false },
+  { id: 'e35', day: 9, category: 'orca', title: '🚤 Water Taxi Return to Telegraph Cove', startTime: '13:30', endTime: '14:30', location: 'Base Camp to Telegraph Cove Boardwalk', notes: 'Return to mainland Vancouver Island.', isLocked: true },
+  { id: 'e36', day: 9, category: 'flight', title: '🚗 Drive to Comox & Flight YQQ ➔ YVR', startTime: '15:00', endTime: '19:05', location: 'Comox (YQQ) to Vancouver (YVR)', notes: 'Drive to YQQ airport. Flight YQQ-YVR departs 18:30, arrives YVR 19:05.', isLocked: true },
+  { id: 'e37', day: 9, category: 'dining', title: '🍣 Miku Vancouver Farewell Dinner', startTime: '19:30', endTime: '21:30', location: 'YVR / Waterfront', notes: 'Aburi flame-seared sushi farewell dinner.', isLocked: false },
+  { id: 'e38', day: 9, category: 'flight', title: '✈️ Direct Flight Home: YVR ➔ JFK', startTime: '23:15', endTime: '07:36', location: 'YVR Airport to JFK Airport', notes: 'Arrive JFK 7:36 AM Saturday Aug 15.', isLocked: true }
 ];
 
 // Initial Seasickness Protocol Checklist
@@ -75,7 +74,6 @@ const SEASICKNESS_CHECKLIST = [
 // State Management
 let currentSchedule = [];
 let changeLog = [];
-let activeCategoryFilter = 'all';
 let dbRef = null;
 
 // Initialize Application
@@ -115,7 +113,6 @@ function saveData() {
 // Render Master Views
 function renderAll() {
   renderMetrics();
-  renderTimeline();
   renderDayBoard();
   renderChangelog();
   renderSeasicknessProtocol();
@@ -127,74 +124,7 @@ function renderMetrics() {
   document.getElementById('changelog-count').innerText = changeLog.length;
 }
 
-// Render Master Timeline
-function renderTimeline() {
-  const container = document.getElementById('timeline-list');
-  container.innerHTML = '';
-
-  const days = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const dayTitles = {
-    1: 'Day 1: Thurs Aug 6 — Arrival in Vancouver',
-    2: 'Day 2: Fri Aug 7 — SeaWheeze Prep & North Shore',
-    3: 'Day 3: Sat Aug 8 — RACE DAY: SeaWheeze Half Marathon & Sunset Festival',
-    4: 'Day 4: Sun Aug 9 — WHISTLER BRANCH (Peak 2 Peak & Joffre Lakes) ➔ Ferry to Island',
-    5: 'Day 5: Mon Aug 10 — 🐋 3-Day Orca Glamping Base Camp (Day 1)',
-    6: 'Day 6: Tues Aug 11 — 🐋 3-Day Orca Glamping Base Camp (Day 2)',
-    7: 'Day 7: Wed Aug 12 — 🐋 Base Camp Return ➔ Scenic Drive to Victoria',
-    8: 'Day 8: Thurs Aug 13 — Victoria, Butchart Gardens & Evening Ferry to Vancouver',
-    9: 'Day 9: Fri Aug 14 — Stanley Park Seawall & Flight Home'
-  };
-
-  days.forEach(dayNum => {
-    let dayEvents = currentSchedule.filter(e => e.day === dayNum);
-    
-    if (activeCategoryFilter !== 'all') {
-      dayEvents = dayEvents.filter(e => e.category === activeCategoryFilter);
-    }
-
-    if (dayEvents.length === 0 && activeCategoryFilter !== 'all') return;
-
-    const dayGroup = document.createElement('div');
-    dayGroup.className = 'day-timeline-group';
-
-    dayGroup.innerHTML = `
-      <div class="timeline-day-header">
-        <span>${dayTitles[dayNum]}</span>
-        <span class="sleep-indicator-bar">🌙 8.0 Hrs Sleep Verified</span>
-      </div>
-    `;
-
-    dayEvents.forEach(evt => {
-      const card = document.createElement('div');
-      card.className = `event-card cat-${evt.category}`;
-
-      const lockBadge = evt.isLocked ? `<span class="lock-badge">🔒 Protected Anchor</span>` : '';
-
-      card.innerHTML = `
-        <div class="event-left">
-          <div class="event-time">${evt.startTime} - ${evt.endTime}</div>
-          <div class="event-info">
-            <h3>${evt.title} ${lockBadge}</h3>
-            <div class="event-meta">
-              <span>📍 ${evt.location || 'Vancouver BC'}</span>
-              <span>📝 ${evt.notes || ''}</span>
-            </div>
-          </div>
-        </div>
-        <div class="event-actions">
-          <button class="btn-icon btn-edit" data-id="${evt.id}" title="Edit Event">✏️</button>
-          ${!evt.isLocked ? `<button class="btn-icon btn-delete" data-id="${evt.id}" title="Delete Event">🗑️</button>` : ''}
-        </div>
-      `;
-
-      dayGroup.appendChild(card);
-    });
-
-    container.appendChild(dayGroup);
-  });
-}
-
-// Render Day Board Grid
+// Render Primary Day Board Grid (Default View)
 function renderDayBoard() {
   const grid = document.getElementById('day-board-grid');
   grid.innerHTML = '';
@@ -203,12 +133,12 @@ function renderDayBoard() {
     1: 'Day 1: Thurs Aug 6 (Arrival)',
     2: 'Day 2: Fri Aug 7 (SeaWheeze Prep)',
     3: 'Day 3: Sat Aug 8 (RACE DAY)',
-    4: 'Day 4: Sun Aug 9 (Whistler Branch)',
-    5: 'Day 5: Mon Aug 10 (Orca Camp 1)',
-    6: 'Day 6: Tues Aug 11 (Orca Camp 2)',
-    7: 'Day 7: Wed Aug 12 (Orca Camp 3)',
-    8: 'Day 8: Thurs Aug 13 (Victoria/Ferry)',
-    9: 'Day 9: Fri Aug 14 (Vancouver Finale)'
+    4: 'Day 4: Sun Aug 9 (Whistler Day 1)',
+    5: 'Day 5: Mon Aug 10 (Whistler Day 2)',
+    6: 'Day 6: Tues Aug 11 (Flight to Comox)',
+    7: 'Day 7: Wed Aug 12 (At Water’s Edge 1)',
+    8: 'Day 8: Thurs Aug 13 (At Water’s Edge 2)',
+    9: 'Day 9: Fri Aug 14 (At Water’s Edge 3 & Flight Home)'
   };
 
   for (let d = 1; d <= 9; d++) {
@@ -218,13 +148,25 @@ function renderDayBoard() {
     const events = currentSchedule.filter(e => e.day === d);
 
     col.innerHTML = `
-      <div class="day-column-header">${dayTitlesShort[d]}</div>
+      <div class="day-column-header">
+        ${dayTitlesShort[d]}
+        <div style="font-size:0.75rem; color:var(--emerald); font-weight:600; margin-top:2px;">🌙 8.0 Hrs Sleep</div>
+      </div>
       <div class="day-events-list">
         ${events.map(e => `
-          <div class="event-card cat-${e.category}" style="margin-bottom:8px; padding:10px 14px;">
-            <div>
-              <strong style="font-size:0.85rem; color:var(--primary);">${e.startTime} - ${e.endTime}</strong>
-              <div style="font-size:0.9rem; font-weight:600;">${e.title}</div>
+          <div class="event-card cat-${e.category}" style="margin-bottom:10px; padding:12px 14px;">
+            <div style="width:100%;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <strong style="font-size:0.85rem; color:var(--primary);">${e.startTime} - ${e.endTime}</strong>
+                ${e.isLocked ? '<span class="lock-badge">🔒 Locked</span>' : ''}
+              </div>
+              <div style="font-size:0.95rem; font-weight:700; margin-bottom:4px;">${e.title}</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">📍 ${e.location || ''}</div>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">📝 ${e.notes || ''}</div>
+              <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
+                <button class="btn-icon btn-edit" data-id="${e.id}" title="Edit Event" style="width:28px; height:28px; font-size:0.75rem;">✏️</button>
+                ${!e.isLocked ? `<button class="btn-icon btn-delete" data-id="${e.id}" title="Delete Event" style="width:28px; height:28px; font-size:0.75rem;">🗑️</button>` : ''}
+              </div>
             </div>
           </div>
         `).join('')}
@@ -241,7 +183,7 @@ function renderChangelog() {
   container.innerHTML = '';
 
   if (changeLog.length === 0) {
-    container.innerHTML = `<p class="text-muted" style="color:var(--text-muted);">No changes made yet. Click "Edit" or "Add Event" to record modifications.</p>`;
+    container.innerHTML = `<p class="text-muted" style="color:var(--text-muted);">No changes made yet. Click "Edit" or "Add Custom Event" to record modifications.</p>`;
     return;
   }
 
@@ -293,16 +235,6 @@ function setupEventListeners() {
     });
   });
 
-  // Category Filters
-  document.querySelectorAll('.filter-chip').forEach(chip => {
-    chip.addEventListener('click', (e) => {
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      activeCategoryFilter = e.currentTarget.dataset.filter;
-      renderTimeline();
-    });
-  });
-
   // Modal Open / Close
   document.getElementById('btn-add-event').addEventListener('click', () => openEditModal());
   document.getElementById('btn-modal-close').addEventListener('click', closeEditModal);
@@ -311,8 +243,8 @@ function setupEventListeners() {
   // Form Submit
   document.getElementById('form-edit-event').addEventListener('submit', handleFormSubmit);
 
-  // Delegate Edit/Delete buttons on timeline
-  document.getElementById('timeline-list').addEventListener('click', (e) => {
+  // Delegate Edit/Delete buttons on Day Board
+  document.getElementById('day-board-grid').addEventListener('click', (e) => {
     const editBtn = e.target.closest('.btn-edit');
     const deleteBtn = e.target.closest('.btn-delete');
 
@@ -346,7 +278,7 @@ function setupEventListeners() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentSchedule, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "vancouver_orca_trip_itinerary.json");
+    downloadAnchor.setAttribute("download", "vancouver_whistler_orca_itinerary.json");
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -354,7 +286,7 @@ function setupEventListeners() {
 
   // Reset to Default Master
   document.getElementById('btn-reset-default').addEventListener('click', () => {
-    if (confirm('Reset schedule to the redone 9-day master plan?')) {
+    if (confirm('Reset schedule to the 2-Night Whistler + At Water’s Edge Orca Glamping plan?')) {
       currentSchedule = [...MASTER_SCHEDULE];
       changeLog = [];
       saveData();
@@ -540,7 +472,7 @@ function renderAIResults(data) {
 
 function calculateLocalAnalysis() {
   return {
-    impactSummary: 'All 8 nights currently maintain the required 8.0-hour sleep window. Drive and ferry logistics are fully verified.',
+    impactSummary: 'All 8 nights currently maintain the required 8.0-hour sleep window. Drive and flight logistics (YVR-YQQ) are fully verified.',
     sleepCompliance: [
       { name: 'Night 1 (Aug 6)', hours: 8.0, pass: true },
       { name: 'Night 2 (Aug 7)', hours: 8.0, pass: true },
@@ -551,10 +483,10 @@ function calculateLocalAnalysis() {
       { name: 'Night 7 (Aug 12)', hours: 8.0, pass: true },
       { name: 'Night 8 (Aug 13)', hours: 8.0, pass: true }
     ],
-    warnings: ['✅ All 8-hour sleep rules and drive times are fully compliant.'],
+    warnings: ['✅ All 8-hour sleep rules and flight logistics (YVR-YQQ) are fully compliant.'],
     recommendations: [
-      'Confirm BC Ferries reservations for Sun Aug 9 (8:00 PM) and Thurs Aug 13 (3:00 PM).',
-      'Apply Scopolamine patch 4 hours prior to Hanson Island Orca launch.'
+      'Confirm flights YVR->YQQ (Tues Aug 11 12:30 PM) and YQQ->YVR (Fri Aug 14 18:30 PM).',
+      'Confirm At Water’s Edge 3-Day Glamping Base Camp booking for Wed Aug 12 – Fri Aug 14.'
     ]
   };
 }
