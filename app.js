@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Fully Complete Schedule with All Intermediary Transportation & Logistics
+   Maximally Beautiful Master Timeline + Detailed Day Board Dashboard
    ========================================================================== */
 
 const MASTER_SCHEDULE = [
@@ -104,6 +104,7 @@ const SEASICKNESS_CHECKLIST = [
 // State Management
 let currentSchedule = [];
 let changeLog = [];
+let activeCategoryFilter = 'all';
 let dbRef = null;
 
 // Initialize Application
@@ -116,10 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // Load Schedule from LocalStorage or Default
 function loadData() {
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '3.0_transports') {
+  if (version !== '4.0_master_timeline_beauty') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '3.0_transports');
+    localStorage.setItem('vancouver_app_version', '4.0_master_timeline_beauty');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
@@ -150,6 +151,7 @@ function saveData() {
 // Render Master Views
 function renderAll() {
   renderMetrics();
+  renderTimeline();
   renderDayBoard();
   renderChangelog();
   renderSeasicknessProtocol();
@@ -161,13 +163,82 @@ function renderMetrics() {
   document.getElementById('changelog-count').innerText = changeLog.length;
 }
 
-// Render Primary Day Board Grid (Default View)
+// Render Maximally Beautiful Master Timeline
+function renderTimeline() {
+  const container = document.getElementById('timeline-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const days = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const dayTitles = {
+    1: 'Day 1: Thurs Aug 6 — Arrival & SUV Pickup at YVR',
+    2: 'Day 2: Fri Aug 7 — SeaWheeze Prep & Vancouver Highlights',
+    3: 'Day 3: Sat Aug 8 — RACE DAY: SeaWheeze Half Marathon & Sunset Festival',
+    4: 'Day 4: Sun Aug 9 — DRIVE TO WHISTLER (Peak 2 Peak & Cloudraker Skybridge)',
+    5: 'Day 5: Mon Aug 10 — ULTIMATE WHISTLER HIKES (Joffre Lakes & Scandinave Spa)',
+    6: 'Day 6: Tues Aug 11 — Drive to YVR ➔ Flight YVR-YQQ (Comox) ➔ Drive to Telegraph Cove',
+    7: 'Day 7: Wed Aug 12 — 🐋 AT WATER’S EDGE ORCA GLAMPING BASE CAMP (Day 1)',
+    8: 'Day 8: Thurs Aug 13 — 🐋 AT WATER’S EDGE ORCA GLAMPING BASE CAMP (Day 2)',
+    9: 'Day 9: Fri Aug 14 — 🐋 Base Camp Day 3 ➔ Flight YQQ-YVR ➔ Flight Home to JFK'
+  };
+
+  days.forEach(dayNum => {
+    let dayEvents = currentSchedule.filter(e => e.day === dayNum);
+    
+    if (activeCategoryFilter !== 'all') {
+      dayEvents = dayEvents.filter(e => e.category === activeCategoryFilter);
+    }
+
+    if (dayEvents.length === 0 && activeCategoryFilter !== 'all') return;
+
+    const dayGroup = document.createElement('div');
+    dayGroup.className = 'day-timeline-group';
+
+    dayGroup.innerHTML = `
+      <div class="timeline-day-header">
+        <span>${dayTitles[dayNum]}</span>
+        <span class="sleep-indicator-bar">🌙 8.0 Hrs Sleep Guaranteed</span>
+      </div>
+    `;
+
+    dayEvents.forEach(evt => {
+      const card = document.createElement('div');
+      card.className = `event-card cat-${evt.category}`;
+
+      const lockBadge = evt.isLocked ? `<span class="lock-badge">🔒 Protected Anchor</span>` : '';
+
+      card.innerHTML = `
+        <div class="event-left">
+          <div class="event-time">${evt.startTime} - ${evt.endTime}</div>
+          <div class="event-info">
+            <h3>${evt.title} ${lockBadge}</h3>
+            <div class="event-meta">
+              <span>📍 ${evt.location || 'Vancouver / BC'}</span>
+              <span>📝 ${evt.notes || ''}</span>
+            </div>
+          </div>
+        </div>
+        <div class="event-actions">
+          <button class="btn-icon btn-edit" data-id="${evt.id}" title="Edit Event">✏️</button>
+          ${!evt.isLocked ? `<button class="btn-icon btn-delete" data-id="${evt.id}" title="Delete Event">🗑️</button>` : ''}
+        </div>
+      `;
+
+      dayGroup.appendChild(card);
+    });
+
+    container.appendChild(dayGroup);
+  });
+}
+
+// Render Primary Day Board Grid
 function renderDayBoard() {
   const grid = document.getElementById('day-board-grid');
+  if (!grid) return;
   grid.innerHTML = '';
 
   const dayTitlesShort = {
-    1: 'Day 1: Thurs Aug 6 (Arrival & Car Pick)',
+    1: 'Day 1: Thurs Aug 6 (Arrival)',
     2: 'Day 2: Fri Aug 7 (SeaWheeze Prep)',
     3: 'Day 3: Sat Aug 8 (RACE DAY)',
     4: 'Day 4: Sun Aug 9 (Drive to Whistler)',
@@ -217,6 +288,7 @@ function renderDayBoard() {
 // Render Changelog
 function renderChangelog() {
   const container = document.getElementById('changelog-list');
+  if (!container) return;
   container.innerHTML = '';
 
   if (changeLog.length === 0) {
@@ -242,6 +314,7 @@ function renderChangelog() {
 // Render Seasickness Protocol Checklist
 function renderSeasicknessProtocol() {
   const container = document.getElementById('protocol-checklist');
+  if (!container) return;
   container.innerHTML = '';
 
   SEASICKNESS_CHECKLIST.forEach(item => {
@@ -272,6 +345,16 @@ function setupEventListeners() {
     });
   });
 
+  // Category Filters
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      activeCategoryFilter = e.currentTarget.dataset.filter;
+      renderTimeline();
+    });
+  });
+
   // Modal Open / Close
   document.getElementById('btn-add-event').addEventListener('click', () => openEditModal());
   document.getElementById('btn-modal-close').addEventListener('click', closeEditModal);
@@ -280,25 +363,30 @@ function setupEventListeners() {
   // Form Submit
   document.getElementById('form-edit-event').addEventListener('submit', handleFormSubmit);
 
-  // Delegate Edit/Delete buttons on Day Board
-  document.getElementById('day-board-grid').addEventListener('click', (e) => {
-    const editBtn = e.target.closest('.btn-edit');
-    const deleteBtn = e.target.closest('.btn-delete');
+  // Delegate Edit/Delete buttons on Timeline & Day Board
+  ['timeline-list', 'day-board-grid'].forEach(containerId => {
+    const elem = document.getElementById(containerId);
+    if (!elem) return;
 
-    if (editBtn) {
-      const evtId = editBtn.dataset.id;
-      const evt = currentSchedule.find(s => s.id === evtId);
-      if (evt) openEditModal(evt);
-    }
+    elem.addEventListener('click', (e) => {
+      const editBtn = e.target.closest('.btn-edit');
+      const deleteBtn = e.target.closest('.btn-delete');
 
-    if (deleteBtn) {
-      const evtId = deleteBtn.dataset.id;
-      const author = prompt('Please enter your name for deleting this event:');
-      const reason = prompt('Reason for deleting this event:');
-      if (author && reason) {
-        deleteEvent(evtId, author, reason);
+      if (editBtn) {
+        const evtId = editBtn.dataset.id;
+        const evt = currentSchedule.find(s => s.id === evtId);
+        if (evt) openEditModal(evt);
       }
-    }
+
+      if (deleteBtn) {
+        const evtId = deleteBtn.dataset.id;
+        const author = prompt('Please enter your name for deleting this event:');
+        const reason = prompt('Reason for deleting this event:');
+        if (author && reason) {
+          deleteEvent(evtId, author, reason);
+        }
+      }
+    });
   });
 
   // Delegate Revert buttons on Changelog
