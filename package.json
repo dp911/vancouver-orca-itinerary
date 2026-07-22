@@ -1,28 +1,8 @@
 {
-  "name": "vancouver-orca-itinerary-app",
+  "name": "vancouver-orca-itinerary",
   "version": "1.0.0",
-  "description": "Collaborative Vancouver, Whistler & Orca Glamping Itinerary Dashboard with Autonomous Gemini AI Optimizer",
-  "main": "index.html",
-  "scripts": {
-    "start": "serve .",
-    "dev": "serve .",
-    "build": "echo 'No build step required for static site'"
-  },
-  "keywords": [
-    "vancouver",
-    "orca-kayaking",
-    "whistler",
-    "itinerary",
-    "gemini-ai",
-    "vercel",
-    "firebase"
-  ],
-  "author": "Antigravity",
-  "license": "MIT",
+  "description": "Collaborative Vancouver, 2-Night Whistler & Orca Expedition Dashboard",
   "dependencies": {
-    "@google/genai": "^0.1.1"
-  },
-  "devDependencies": {
-    "serve": "^14.2.1"
+    "@google/generative-ai": "^0.24.1"
   }
 }

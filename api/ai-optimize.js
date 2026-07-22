@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default async function handler(req, res) {
   // CORS Headers
@@ -33,7 +33,8 @@ export default async function handler(req, res) {
       });
     }
 
-    const ai = new GoogleGenAI({ apiKey });
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const systemPrompt = `You are the Autonomous Gemini Trip Guardian AI for the 9-day Vancouver, 2-Night Whistler & At Water's Edge Orca Glamping Expedition.
     
@@ -57,20 +58,14 @@ export default async function handler(req, res) {
     const userPrompt = `Modified Event: ${JSON.stringify(modifiedEvent, null, 2)}
     Current Schedule: ${JSON.stringify(schedule, null, 2)}`;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: [
-        { role: 'user', parts: [{ text: systemPrompt + '\n\n' + userPrompt }] }
-      ],
-      config: {
-        responseMimeType: 'application/json'
-      }
-    });
+    const result = await model.generateContent(systemPrompt + '\n\n' + userPrompt);
+    const text = result.response.text();
 
-    const aiOutput = JSON.parse(response.text);
+    const cleanedJsonText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    const aiOutput = JSON.parse(cleanedJsonText);
 
     return res.status(200).json({
-      source: 'gemini-2.0-flash',
+      source: 'gemini-1.5-flash',
       ...aiOutput
     });
 
