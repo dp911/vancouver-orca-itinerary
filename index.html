@@ -13,6 +13,23 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
+  <!-- Full Screen Private Passcode Lock Gate -->
+  <div class="lock-screen-overlay active" id="app-lock-screen">
+    <div class="lock-card">
+      <div class="lock-icon">🔒</div>
+      <h2>Private Expedition Access</h2>
+      <p class="subtitle">Enter your trip group passcode to view and edit the itinerary.</p>
+      
+      <form id="form-lock-gate" style="margin-top:20px;">
+        <div class="form-group">
+          <input type="password" id="lock-passcode-input" placeholder="Enter Passcode (Default: 2026)" required style="text-align:center; font-size:1.2rem; letter-spacing:2px;">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:14px; font-size:1rem; margin-top:10px;">Unlock Itinerary</button>
+        <p id="lock-error-msg" style="color:var(--rose); font-size:0.85rem; margin-top:10px; display:none;">⚠️ Incorrect passcode. Please try again.</p>
+      </form>
+    </div>
+  </div>
+
   <div class="app-container">
     <!-- Header & Navigation -->
     <header class="app-header">
@@ -78,7 +95,7 @@
         <span>🤖</span> Gemini AI Guardian
       </button>
       <button class="nav-tab" data-tab="settings">
-        <span>⚙️</span> Sync & Deployment
+        <span>⚙️</span> Sync & Security
       </button>
 
       <button class="btn btn-primary add-event-btn" id="btn-add-event">
@@ -202,9 +219,15 @@
       <section class="tab-panel" id="panel-settings">
         <div class="glass-card">
           <div class="card-header">
-            <h2>⚙️ Multi-User Deployment & Cloud Sync Settings</h2>
+            <h2>⚙️ Multi-User Security & Cloud Sync Settings</h2>
           </div>
           <div class="settings-form">
+            <div class="form-group">
+              <label for="cfg-app-passcode">Trip Group Private Passcode (PIN):</label>
+              <input type="text" id="cfg-app-passcode" placeholder="Default: 2026">
+              <small class="help-text">Anyone visiting your website must enter this passcode to view or edit the itinerary.</small>
+            </div>
+
             <div class="form-group">
               <label for="cfg-firebase-url">Firebase Realtime Database URL (Optional for live WebSockets sync across devices):</label>
               <input type="url" id="cfg-firebase-url" placeholder="https://your-project-default-rtdb.firebaseio.com/">
@@ -217,7 +240,10 @@
               <small class="help-text">Vercel serverless function `/api/ai-optimize` will automatically use `process.env.GEMINI_API_KEY` when deployed.</small>
             </div>
 
-            <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
+            <div style="display:flex; gap:12px;">
+              <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
+              <button class="btn btn-secondary" id="btn-lock-app">🔒 Lock App Now</button>
+            </div>
           </div>
         </div>
       </section>

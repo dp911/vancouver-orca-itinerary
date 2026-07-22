@@ -109,11 +109,24 @@ let dbRef = null;
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
+  checkLockState();
   loadData();
   initFirebaseSync();
   setupEventListeners();
   renderAll();
 });
+
+// Passcode Protection Gate Logic
+function checkLockState() {
+  const isUnlocked = sessionStorage.getItem('vancouver_unlocked') === 'true';
+  const lockOverlay = document.getElementById('app-lock-screen');
+  
+  if (isUnlocked && lockOverlay) {
+    lockOverlay.classList.remove('active');
+  } else if (lockOverlay) {
+    lockOverlay.classList.add('active');
+  }
+}
 
 // Load Schedule from LocalStorage or Default
 function loadData() {
@@ -145,12 +158,15 @@ function loadData() {
 function initFirebaseSync() {
   const fbUrl = localStorage.getItem('vancouver_firebase_url');
   const gemKey = localStorage.getItem('vancouver_gemini_key');
+  const passCode = localStorage.getItem('vancouver_passcode') || '2026';
 
   const fbInput = document.getElementById('cfg-firebase-url');
   const gemInput = document.getElementById('cfg-gemini-key');
+  const passInput = document.getElementById('cfg-app-passcode');
 
   if (fbInput && fbUrl) fbInput.value = fbUrl;
   if (gemInput && gemKey) gemInput.value = gemKey;
+  if (passInput) passInput.value = passCode;
 
   if (fbUrl && typeof firebase !== 'undefined') {
     try {
@@ -165,7 +181,6 @@ function initFirebaseSync() {
           changeLog = val.log || [];
           renderAll();
         } else {
-          // Database is empty! Seed it with the master 68-event schedule immediately!
           console.log('🔥 Initializing empty Firebase DB with master schedule...');
           dbRef.set({ schedule: currentSchedule, log: changeLog });
         }
@@ -372,6 +387,34 @@ function renderSeasicknessProtocol() {
 
 // Event Listeners Setup
 function setupEventListeners() {
+  // Lock Gate Form Submission
+  const formLock = document.getElementById('form-lock-gate');
+  if (formLock) {
+    formLock.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const enteredPass = document.getElementById('lock-passcode-input')?.value?.trim();
+      const currentPass = localStorage.getItem('vancouver_passcode') || '2026';
+      const errorMsg = document.getElementById('lock-error-msg');
+
+      if (enteredPass === currentPass) {
+        sessionStorage.setItem('vancouver_unlocked', 'true');
+        document.getElementById('app-lock-screen')?.classList.remove('active');
+        if (errorMsg) errorMsg.style.display = 'none';
+      } else {
+        if (errorMsg) errorMsg.style.display = 'block';
+      }
+    });
+  }
+
+  // Lock App Button
+  const btnLockApp = document.getElementById('btn-lock-app');
+  if (btnLockApp) {
+    btnLockApp.addEventListener('click', () => {
+      sessionStorage.removeItem('vancouver_unlocked');
+      document.getElementById('app-lock-screen')?.classList.add('active');
+    });
+  }
+
   // Navigation Tabs
   document.querySelectorAll('.nav-tab').forEach(tab => {
     tab.addEventListener('click', (e) => {
@@ -414,12 +457,15 @@ function setupEventListeners() {
     btnSaveSettings.addEventListener('click', () => {
       const fbUrl = document.getElementById('cfg-firebase-url')?.value?.trim();
       const gemKey = document.getElementById('cfg-gemini-key')?.value?.trim();
+      const passCode = document.getElementById('cfg-app-passcode')?.value?.trim();
+
+      if (passCode) localStorage.setItem('vancouver_passcode', passCode);
       if (fbUrl) {
         localStorage.setItem('vancouver_firebase_url', fbUrl);
         initFirebaseSync();
       }
       if (gemKey) localStorage.setItem('vancouver_gemini_key', gemKey);
-      alert('⚙️ Firebase URL saved successfully! Realtime cloud sync is active.');
+      alert('⚙️ Security Passcode & Settings saved successfully!');
     });
   }
 
