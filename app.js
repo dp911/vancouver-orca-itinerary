@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Interactive Multi-Leg Route Map with Smooth Curved Non-Overlapping Arcs
+   Interactive Multi-Leg Route Map with Clean Leg Titles & Non-Overlapping Paths
    ========================================================================== */
 
 const MASTER_SCHEDULE = [
@@ -101,7 +101,7 @@ const SEASICKNESS_CHECKLIST = [
   { id: 'chk6', title: 'Visual Horizon Focus', desc: 'Keep gaze on forested Hanson Island coastline; avoid looking down at phone screens.', checked: true }
 ];
 
-// 8 Distinct Color-Coded Route Legs with Smooth Curved Bezier Arcs (Non-Overlapping)
+// 8 Distinct Color-Coded Route Legs with Smooth Non-Overlapping Vector Paths
 const ROUTE_LEGS = [
   {
     id: 1,
@@ -122,10 +122,10 @@ const ROUTE_LEGS = [
   {
     id: 3,
     day: 4,
-    name: 'Leg 3: Sea-to-Sky Hwy 99 ➔ Whistler (Northbound West Curved Arc)',
+    name: 'Leg 3: Sea-to-Sky Hwy 99 ➔ Whistler',
     color: '#A855F7', // Vibrant Purple
     coords: [[49.2827, -123.1207], [49.4800, -123.3200], [49.6693, -123.2200], [49.9000, -123.1200], [50.1163, -122.9724]],
-    desc: 'Day 4 (Aug 9): Northbound drive along curved Sea-to-Sky Hwy 99, Shannon Falls, Sea to Sky Gondola, Whistler Peak 2 Peak Gondola.'
+    desc: 'Day 4 (Aug 9): Drive along Sea-to-Sky Hwy 99, Shannon Falls, Sea to Sky Gondola, Whistler Peak 2 Peak Gondola.'
   },
   {
     id: 4,
@@ -138,36 +138,36 @@ const ROUTE_LEGS = [
   {
     id: 5,
     day: 6,
-    name: 'Leg 5: Whistler ➔ YVR (Southbound East Curved Arc) & Flight YQQ',
+    name: 'Leg 5: Whistler ➔ YVR & Flight YQQ',
     color: '#0284C7', // Ocean Blue
     coords: [[50.1163, -122.9424], [49.9000, -122.8500], [49.6693, -123.0200], [49.3500, -123.0500], [49.1967, -123.1665], [49.4800, -124.0300], [49.7108, -124.8864]],
     isDash: true,
-    desc: 'Day 6 (Aug 11 Part 1): Southbound drive along curved Sea-to-Sky Hwy 99 to YVR, 12:30 PM flight across Georgia Strait to Comox YQQ.'
+    desc: 'Day 6 (Aug 11 Part 1): Drive along Sea-to-Sky Hwy 99 to YVR, 12:30 PM flight across Georgia Strait to Comox YQQ.'
   },
   {
     id: 6,
     day: 6,
-    name: 'Leg 6: Drive Comox ➔ Telegraph Cove (Northbound West Curved Arc)',
+    name: 'Leg 6: Drive Comox ➔ Telegraph Cove',
     color: '#F97316', // Neon Orange
     coords: [[49.7108, -124.8864], [50.0410, -125.4200], [50.3000, -126.1500], [50.5471, -126.8329]],
-    desc: 'Day 6 (Aug 11 Part 2): Island SUV #2 pickup, Northbound drive via Elk Falls Suspension Bridge to Telegraph Cove.'
+    desc: 'Day 6 (Aug 11 Part 2): Island SUV #2 pickup, drive via Elk Falls Suspension Bridge to Telegraph Cove.'
   },
   {
     id: 7,
     day: 7,
-    name: 'Leg 7: At Water’s Edge Hanson Island Base Camp (North Sea Curved Arc)',
+    name: 'Leg 7: At Water’s Edge Hanson Island Base Camp',
     color: '#10B981', // Emerald Orca
     coords: [[50.5471, -126.8329], [50.5900, -126.7700], [50.5694, -126.7028]],
-    desc: 'Day 7 & 8 (Aug 12-13): North water taxi arc to Hanson Island safari tents, tandem sea kayaking with Resident Orcas, cedar sauna.'
+    desc: 'Day 7 & 8 (Aug 12-13): Water taxi to Hanson Island safari tents, tandem sea kayaking with Resident Orcas, cedar sauna.'
   },
   {
     id: 8,
     day: 9,
-    name: 'Leg 8: Water Taxi Return (South Sea Arc) ➔ Flight YQQ-YVR-JFK',
+    name: 'Leg 8: Water Taxi Return ➔ Flight YQQ-YVR-JFK',
     color: '#F43F5E', // Rose Red
     coords: [[50.5694, -126.7028], [50.5200, -126.7600], [50.5471, -126.8209], [50.2500, -125.1000], [49.7108, -124.8744], [49.4000, -123.7000], [49.1967, -123.1815]],
     isDash: true,
-    desc: 'Day 9 (Aug 14): South water taxi return arc, Southbound drive to Comox YQQ, 6:30 PM flight YQQ ➔ YVR, Miku Aburi sushi, 11:15 PM flight home.'
+    desc: 'Day 9 (Aug 14): Water taxi return, drive to Comox YQQ, 6:30 PM flight YQQ ➔ YVR, Miku Aburi sushi, 11:15 PM flight home.'
   }
 ];
 
@@ -218,10 +218,10 @@ function checkLockState() {
 // Load Schedule from LocalStorage or Default
 function loadData() {
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '11.0_curved_legs_refined_aesthetic') {
+  if (version !== '13.0_clean_leg_names_no_directional_labels') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '11.0_curved_legs_refined_aesthetic');
+    localStorage.setItem('vancouver_app_version', '13.0_clean_leg_names_no_directional_labels');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
@@ -301,7 +301,7 @@ function renderMetrics() {
   if (countElem) countElem.innerText = changeLog.length;
 }
 
-// Render Interactive Multi-Leg Leaflet Route Map with Smooth Curved Bezier Arcs
+// Render Interactive Multi-Leg Leaflet Route Map
 function initInteractiveRouteMap() {
   const mapContainer = document.getElementById('route-map-container');
   if (!mapContainer || typeof L === 'undefined') return;
@@ -328,7 +328,7 @@ function initInteractiveRouteMap() {
   activePolylineLayers.forEach(l => leafletMap.removeLayer(l));
   activePolylineLayers = [];
 
-  // Render 8 Distinct Color-Coded Route Leg Curved Polylines
+  // Render 8 Distinct Color-Coded Route Leg Polylines
   ROUTE_LEGS.forEach(leg => {
     const polylineOptions = {
       color: leg.color,
