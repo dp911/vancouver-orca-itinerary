@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vancouver, 2-Night Whistler & At Water's Edge 3-Day Orca Glamping Engine
-   Interactive Multi-Leg Route Map with Pretty Pink Palette & Non-Overlapping Paths
+   Interactive Multi-Leg Route Map with Pretty Pink Floral Palette & Non-Overlapping Paths
    ========================================================================== */
 
 const MASTER_SCHEDULE = [
@@ -171,7 +171,7 @@ const ROUTE_LEGS = [
   }
 ];
 
-// Map Waypoint Markers with Pink Halo Ring Highlights!
+// Map Waypoint Markers with Pink Halo Highlights!
 const MAP_WAYPOINTS = [
   { lat: 49.1967, lng: -123.1815, title: '🛫 YVR Vancouver Airport', day: 1, desc: 'Baggage claim & Rental SUV Pickup', color: '#38BDF8' },
   { lat: 49.2827, lng: -123.1207, title: '🏙️ Downtown Vancouver', day: 2, desc: 'Coal Harbour Hotel & City Base', color: '#FF2E93' },
@@ -218,10 +218,10 @@ function checkLockState() {
 // Load Schedule from LocalStorage or Default
 function loadData() {
   const version = localStorage.getItem('vancouver_app_version');
-  if (version !== '9.0_pretty_pink_map_palette') {
+  if (version !== '10.0_pretty_pink_flowers_force_reset') {
     localStorage.removeItem('vancouver_schedule');
     localStorage.removeItem('vancouver_changelog');
-    localStorage.setItem('vancouver_app_version', '9.0_pretty_pink_map_palette');
+    localStorage.setItem('vancouver_app_version', '10.0_pretty_pink_flowers_force_reset');
   }
 
   const savedSchedule = localStorage.getItem('vancouver_schedule');
